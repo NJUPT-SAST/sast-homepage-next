@@ -1,0 +1,146 @@
+.footer {
+  margin-top: calc(0.2 * var(--footer-unit));
+  background: #353535;
+  --footer-unit: 100px;
+}
+
+.footerInner {
+  position: relative;
+  width: min(calc(19.2 * var(--footer-unit)), calc(100% - 48px));
+  min-height: calc(2.3 * var(--footer-unit));
+  margin: 0 auto;
+  font-size: var(--footer-unit);
+}
+
+.footerLogo {
+  position: absolute;
+  top: 0.7em;
+  left: 4.5em;
+  width: 1.35em;
+  height: auto;
+}
+
+.footerDetail {
+  position: absolute;
+  top: calc(0.88 * var(--footer-unit));
+  left: calc(6.52 * var(--footer-unit));
+  color: #dcdfe6;
+  font-size: 0.14em;
+  line-height: 2;
+}
+
+.footerDetail p {
+  display: flex;
+  align-items: center;
+  gap: calc(0.1 * var(--footer-unit));
+  margin: 0;
+}
+
+.footerIcon {
+  width: calc(0.15 * var(--footer-unit));
+  height: calc(0.15 * var(--footer-unit));
+}
+
+.footerDivider {
+  position: absolute;
+  top: 1.88em;
+  left: 4.22em;
+  width: 9.6em;
+  height: 0.01em;
+  background: #4a4a4a;
+}
+
+.footerQr {
+  position: absolute;
+  top: 0.49em;
+  left: 12.23em;
+  width: 1.04em;
+  text-align: center;
+  color: #dcdfe6;
+}
+
+.qrImage {
+  width: 1.04em;
+  height: 1.04em;
+}
+
+.qrRemark {
+  margin: calc(0.08 * var(--footer-unit)) 0 0;
+  font-size: 0.14em;
+}
+
+.copyright {
+  position: absolute;
+  top: calc(1.99 * var(--footer-unit));
+  left: calc(4.28 * var(--footer-unit));
+  width: calc(6.64 * var(--footer-unit));
+  margin: 0;
+  text-align: center;
+  color: #dcdfe6;
+  font-size: 0.14em;
+}
+
+@media (max-width: 767px) {
+  .footer {
+    margin-top: 0;
+    --footer-unit: calc(100vw / 3.75);
+  }
+
+  .footerInner {
+    width: 3.75em;
+    min-height: 3.9em;
+  }
+
+  .footerLogo {
+    top: 0.41em;
+    left: 1.2em;
+    width: 1.35em;
+  }
+
+  .footerDetail {
+    top: calc(1.37 * var(--footer-unit));
+    left: 0;
+    width: 100%;
+    font-size: 0.12em;
+    text-align: center;
+  }
+
+  .footerDetail p {
+    justify-content: center;
+  }
+
+  .footerDivider {
+    top: 1.89em;
+    left: 0.38em;
+    width: 2.99em;
+  }
+
+  .footerQr {
+    top: 2.08em;
+    left: 1.36em;
+    width: 1.04em;
+  }
+
+  .qrRemark {
+    font-size: 0.1em;
+  }
+
+  .copyright {
+    top: calc(3.61 * var(--footer-unit));
+    left: 0;
+    width: 100%;
+    font-size: 0.1em;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1279px) {
+  .footer {
+    --footer-unit: calc(100vw / 12.8);
+  }
+}
+
+@media (min-width: 1921px) {
+  .footer {
+    --footer-unit: calc(100vw / 19.2);
+  }
+}

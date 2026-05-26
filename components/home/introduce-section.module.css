@@ -1,0 +1,269 @@
+.introduce {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  padding: calc(0.24 * var(--introduce-unit)) 0 calc(0.6 * var(--introduce-unit));
+  --introduce-unit: 100px;
+}
+
+.waveLayer {
+  position: absolute;
+  top: calc(0.7 * var(--introduce-unit));
+  left: 50%;
+  width: 19.2em;
+  height: 9.77em;
+  overflow: hidden;
+  transform: translateX(-50%);
+  pointer-events: none;
+  font-size: var(--introduce-unit);
+}
+
+.wave1,
+.wave2,
+.wave3 {
+  position: absolute;
+  left: -3.5em;
+  max-width: none;
+  height: auto;
+}
+
+.wave1 {
+  top: 0.9em;
+  width: 22.86em;
+  z-index: 1;
+  animation: waveA 3s linear infinite alternate;
+}
+
+.wave2 {
+  top: 0;
+  width: 24.88em;
+  z-index: 2;
+  animation: waveB 3s linear infinite alternate;
+}
+
+.wave3 {
+  top: 0.75em;
+  width: 24.24em;
+  z-index: 0;
+  animation: waveC 6s linear infinite alternate;
+}
+
+.introduceInner {
+  position: relative;
+  display: grid;
+  grid-template-columns: 4.73em 5.35em;
+  justify-content: space-between;
+  align-items: start;
+  width: min(calc(13.42 * var(--introduce-unit)), calc(100% - 48px));
+  min-height: calc(6.2 * var(--introduce-unit));
+  margin: 0 auto;
+  padding-top: calc(1.95 * var(--introduce-unit));
+  font-size: var(--introduce-unit);
+}
+
+.summaryColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4em;
+  width: 4.73em;
+  margin-left: 1em;
+  margin-top: 0.8em;
+}
+
+.summaryItem {
+  display: grid;
+  grid-template-columns: 0.5em 1fr;
+  column-gap: 0.21em;
+  align-items: start;
+  width: 4.73em;
+}
+
+.summaryIcon {
+  width: 0.5em;
+  height: 0.5em;
+}
+
+.summaryTitle {
+  margin: 0;
+  font-size: 0.24em;
+  line-height: 1;
+  font-weight: 700;
+}
+
+.summaryText {
+  width: calc(4.02 * var(--introduce-unit));
+  margin: calc(0.18 * var(--introduce-unit)) 0 0;
+  font-size: 0.14em;
+  line-height: 1.45;
+  color: #606266;
+}
+
+.aboutColumn {
+  position: relative;
+  width: 5.35em;
+  min-height: 4.63em;
+}
+
+.question {
+  width: calc(3.56 * var(--introduce-unit));
+  margin: 0 0 calc(0.42 * var(--introduce-unit));
+  font-size: 0.36em;
+  line-height: 1.15;
+  font-weight: 700;
+  color: #27a29c;
+}
+
+.answer {
+  position: relative;
+  z-index: 2;
+  width: calc(3.34 * var(--introduce-unit));
+  margin: 0;
+  font-size: 0.14em;
+  line-height: 1.72;
+  color: #606266;
+}
+
+.tree {
+  position: absolute;
+  top: -1.02em;
+  right: 0;
+  width: 5.35em;
+  height: auto;
+  z-index: 1;
+}
+
+@keyframes waveA {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(-3deg);
+  }
+}
+
+@keyframes waveB {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(10deg);
+  }
+}
+
+@keyframes waveC {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    transform: rotate(0.8deg);
+  }
+
+  100% {
+    transform: rotate(-0.8deg);
+  }
+}
+
+@media (max-width: 767px) {
+  .introduce {
+    padding: 0 0 calc(0.4 * var(--introduce-unit));
+    --introduce-unit: calc(100vw / 3.75);
+  }
+
+  .waveLayer {
+    top: 5.8em;
+    left: 0;
+    width: 3.75em;
+    height: 12em;
+    transform: none;
+  }
+
+  .wave1 {
+    top: 0.97em;
+    left: -9.5em;
+    width: 22.86em;
+  }
+
+  .wave2 {
+    top: 0.1em;
+    left: -10.5em;
+    width: 24.88em;
+  }
+
+  .wave3 {
+    top: 0.85em;
+    left: -10.5em;
+    width: 24.24em;
+  }
+
+  .introduceInner {
+    grid-template-columns: 1fr;
+    justify-content: initial;
+    width: min(3.13em, calc(100% - 28px));
+    min-height: auto;
+    padding-top: 7.66em;
+    gap: 0.36em;
+  }
+
+  .aboutColumn {
+    width: 100%;
+    min-height: auto;
+  }
+
+  .question {
+    width: calc(1.79 * var(--introduce-unit));
+    margin: 0 auto;
+    font-size: 0.3em;
+    text-align: center;
+  }
+
+  .answer,
+  .tree {
+    display: none;
+  }
+
+  .summaryColumn {
+    width: 2.5em;
+    margin: 0 auto;
+    gap: 0.28em;
+  }
+
+  .summaryItem {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    width: 2.5em;
+    row-gap: 0.1em;
+  }
+
+  .summaryIcon {
+    width: 0.42em;
+    height: 0.42em;
+  }
+
+  .summaryTitle {
+    font-size: 0.2em;
+    text-align: center;
+  }
+
+  .summaryText {
+    width: calc(2.5 * var(--introduce-unit));
+    margin-top: 0;
+    font-size: 0.12em;
+    line-height: 1.68;
+    text-align: center;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1279px) {
+  .introduce {
+    --introduce-unit: calc(100vw / 12.8);
+  }
+}
+
+@media (min-width: 1921px) {
+  .introduce {
+    --introduce-unit: calc(100vw / 19.2);
+  }
+}

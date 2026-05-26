@@ -1,0 +1,144 @@
+.dataSection {
+  padding: calc(0.4 * var(--data-unit)) 0 calc(0.48 * var(--data-unit));
+  --data-unit: 100px;
+}
+
+.dataInner {
+  position: relative;
+  width: min(calc(10.58 * var(--data-unit)), calc(100% - 48px));
+  margin: 0 auto;
+  font-size: var(--data-unit);
+}
+
+.dataTitle {
+  width: 2.01em;
+  height: auto;
+  margin-left: 0.2em;
+}
+
+.dataGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 5.14em);
+  gap: 0.3em;
+  margin-top: 0.36em;
+}
+
+.dataCard {
+  display: flex;
+  align-items: center;
+  min-height: 1.08em;
+  padding: 0.2em 0.3em 0.2em 0.35em;
+  background: #fff;
+  box-shadow: 0 0 0.15em rgba(219, 219, 219, 0.5);
+  border-radius: 0.13em;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dataCard:hover {
+  background: #03e5bf;
+  box-shadow: 0 0 0.15em rgba(169, 169, 169, 0.47);
+}
+
+.dataNum {
+  display: flex;
+  align-items: flex-end;
+  min-width: calc(1.5 * var(--data-unit));
+  font-size: 0.18em;
+  font-weight: 700;
+  transition: color 0.2s ease;
+}
+
+.dataCard:hover .dataNum {
+  color: #fff;
+}
+
+.sky {
+  color: #53a0fd;
+}
+
+.mint {
+  color: #27a29c;
+}
+
+.dataValue {
+  font-size: 3.555556em;
+  line-height: 0.95;
+}
+
+.dataUnit {
+  margin-left: calc(0.06 * var(--data-unit));
+  margin-bottom: calc(0.08 * var(--data-unit));
+  font-size: 1em;
+}
+
+.dataText {
+  width: calc(2.7 * var(--data-unit));
+  margin: 0 0 0 calc(0.35 * var(--data-unit));
+  font-size: 0.14em;
+  line-height: 1.45;
+  color: #606266;
+  transition: color 0.2s ease;
+}
+
+.dataCard:hover .dataText {
+  color: #606266;
+}
+
+@media (max-width: 767px) {
+  .dataSection {
+    padding: calc(0.28 * var(--data-unit)) 0 calc(0.3 * var(--data-unit));
+    --data-unit: calc(100vw / 3.75);
+  }
+
+  .dataInner {
+    width: min(3.13em, calc(100% - 28px));
+  }
+
+  .dataTitle {
+    width: 1.6em;
+    margin-left: 0;
+  }
+
+  .dataGrid {
+    grid-template-columns: 1fr;
+    gap: 0.21em;
+    margin-top: 0.24em;
+  }
+
+  .dataCard {
+    min-height: 1.08em;
+    padding: 0.18em 0.18em 0.18em 0.21em;
+  }
+
+  .dataNum {
+    min-width: calc(0.96 * var(--data-unit));
+    font-size: 0.14em;
+  }
+
+  .dataValue {
+    font-size: 2.571429em;
+  }
+
+  .dataUnit {
+    margin-bottom: calc(0.04 * var(--data-unit));
+  }
+
+  .dataText {
+    width: auto;
+    margin-left: calc(0.21 * var(--data-unit));
+    font-size: 0.12em;
+    line-height: 1.55;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1279px) {
+  .dataSection {
+    --data-unit: calc(100vw / 12.8);
+  }
+}
+
+@media (min-width: 1921px) {
+  .dataSection {
+    --data-unit: calc(100vw / 19.2);
+  }
+}

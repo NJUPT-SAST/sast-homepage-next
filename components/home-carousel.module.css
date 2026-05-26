@@ -1,0 +1,172 @@
+.carousel {
+  position: relative;
+  width: 100%;
+  min-height: calc(6.75 * var(--carousel-unit));
+  padding-top: calc(1.8 * var(--carousel-unit));
+  font-size: var(--carousel-unit);
+  --carousel-unit: 100px;
+}
+
+.card {
+  position: relative;
+  width: min(10.8em, 100%);
+  height: 4.18em;
+  margin: 0 auto;
+  background: #fff;
+  box-shadow: 0 0.13em 0.59em 0.02em rgba(192, 196, 204, 0.92);
+  border-radius: 0.26em;
+}
+
+.slideImage {
+  position: absolute;
+  z-index: 1;
+  height: auto;
+}
+
+.card[data-slide="0"] .slideImage {
+  width: 5.27em;
+  left: 0.67em;
+  top: -0.15em;
+}
+
+.card[data-slide="1"] .slideImage {
+  width: 5.66em;
+  left: 0.54em;
+  top: -0.15em;
+}
+
+.card[data-slide="2"] .slideImage {
+  width: 6.5em;
+  left: 0;
+  top: -0.22em;
+}
+
+.textPanel {
+  position: absolute;
+  right: 0.83em;
+  top: 0.57em;
+  width: 3.5em;
+  z-index: 2;
+}
+
+.title {
+  margin: 0;
+  font-size: 0.48em;
+  line-height: 1.1;
+  font-weight: 700;
+}
+
+.line {
+  width: 3.45em;
+  height: 1px;
+  margin: 0.18em 0;
+  background: #c0c4cc;
+}
+
+.text {
+  margin: 0 0 0.16em;
+  font-size: 0.14em;
+  line-height: 1.9;
+  color: #606266;
+}
+
+.more {
+  margin: 0;
+  font-size: 0.18em;
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+.indicators {
+  display: flex;
+  justify-content: center;
+  gap: 0.14em;
+  margin-top: 0.38em;
+}
+
+.indicator {
+  width: 0.14em;
+  height: 0.14em;
+  border: 0;
+  border-radius: 50%;
+  background: #d8d8d8;
+  cursor: pointer;
+}
+
+.active {
+  background: #53a0fd;
+}
+
+@media (max-width: 767px) {
+  .carousel {
+    min-height: calc(5.8 * var(--carousel-unit));
+    padding-top: calc(0.96 * var(--carousel-unit));
+    --carousel-unit: calc(100vw / 3.75);
+  }
+
+  .card {
+    width: 100%;
+    height: 3.66em;
+  }
+
+  .card[data-slide="0"] .slideImage {
+    width: 2.2em;
+    left: 0.52em;
+    top: -0.08em;
+  }
+
+  .card[data-slide="1"] .slideImage {
+    width: 2.36em;
+    left: 0.48em;
+    top: -0.08em;
+  }
+
+  .card[data-slide="2"] .slideImage {
+    width: 2.7em;
+    left: 0.25em;
+    top: -0.12em;
+  }
+
+  .textPanel {
+    top: 1.37em;
+    left: 0.25em;
+    right: auto;
+    width: calc(100% - 0.5em);
+  }
+
+  .title {
+    font-size: 0.3em;
+    text-align: center;
+  }
+
+  .line {
+    width: 100%;
+    margin: 0.12em 0;
+  }
+
+  .text {
+    margin-bottom: 0.1em;
+    font-size: 0.12em;
+    line-height: 1.8;
+  }
+
+  .more {
+    font-size: 0.14em;
+  }
+
+  .indicators {
+    margin-top: 0.2em;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1279px) {
+  .carousel {
+    --carousel-unit: calc(100vw / 12.8);
+  }
+}
+
+@media (min-width: 1921px) {
+  .carousel {
+    --carousel-unit: calc(100vw / 19.2);
+  }
+}
