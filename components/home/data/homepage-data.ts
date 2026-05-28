@@ -1,4 +1,4 @@
-import type { CarouselSlide } from "@/components/home-carousel";
+import type { CarouselSlide } from "@/components/home/carousel";
 
 export const slides: CarouselSlide[] = [
   {
@@ -93,7 +93,7 @@ export const stats = [
   },
   {
     value: "362",
-    unit: "㎡",
+    unit: "m²",
     text: "大学生活动中心的活动空间承载着日常学习、讨论和项目孵化。",
     tone: "sky",
   },
@@ -102,107 +102,5 @@ export const stats = [
     unit: "+",
     text: "直属社团与不同方向的实践平台让技术文化持续外溢。",
     tone: "mint",
-  },
-];
-
-export type PersonSize = "small" | "medium" | "large";
-export type PersonSlot =
-  | "p1"
-  | "p2"
-  | "p3"
-  | "p4"
-  | "p5"
-  | "p6"
-  | "p7"
-  | "p8"
-  | "p9"
-  | "p10"
-  | "p11";
-
-export type Person = {
-  image: string;
-  name: string;
-  note: string;
-  size: PersonSize;
-  slot: PersonSlot;
-};
-
-export const people: Person[] = [
-  {
-    image: "/home/people/person-1.png",
-    name: "鞠林",
-    note: "曾任校科协主席。现为百度高级研发工程师。",
-    size: "small",
-    slot: "p1",
-  },
-  {
-    image: "/home/people/person-2.png",
-    name: "柏超宇",
-    note: "2015级。东南大学网络空间安全硕士在读。",
-    size: "small",
-    slot: "p2",
-  },
-  {
-    image: "/home/people/person-3.png",
-    name: "王悉宇",
-    note: "2015级。现就职于阿里云数据库产品事业部。",
-    size: "small",
-    slot: "p3",
-  },
-  {
-    image: "/home/people/person-4.png",
-    name: "顾怡",
-    note: "第25届校科协主席、青柚工作室创始人，主导开发多项校园产品。",
-    size: "large",
-    slot: "p4",
-  },
-  {
-    image: "/home/people/person-5.png",
-    name: "郑志远",
-    note: "2014级。现就职于杭州阿里巴巴集团，曾获蓝桥杯全国一等奖。",
-    size: "medium",
-    slot: "p5",
-  },
-  {
-    image: "/home/people/person-6.png",
-    name: "孙放",
-    note: "2008级。现就职于阿里云，第12届创新杯一等奖。",
-    size: "medium",
-    slot: "p6",
-  },
-  {
-    image: "/home/people/person-7.png",
-    name: "高飞",
-    note: "曾任校科协主席，ACM亚洲区域赛铜奖，创青春大创竞赛金奖。",
-    size: "medium",
-    slot: "p7",
-  },
-  {
-    image: "/home/people/person-8.png",
-    name: "任然",
-    note: "曾任校科协主席。美国第一银行高级经理，国际电信联盟青年领袖。",
-    size: "medium",
-    slot: "p8",
-  },
-  {
-    image: "/home/people/person-9.png",
-    name: "谭康威",
-    note: "第27届校科协主席，参与开发南邮小程序等多项校园产品。",
-    size: "large",
-    slot: "p9",
-  },
-  {
-    image: "/home/people/person-10.png",
-    name: "王凯",
-    note: "曾任校科协主席，现北京大学研究生院在读，江苏省电赛一等奖。",
-    size: "medium",
-    slot: "p10",
-  },
-  {
-    image: "/home/people/person-11.png",
-    name: "沈天弋",
-    note: "曾任计算机部部长，现为 Google 北美总部软件工程师。",
-    size: "medium",
-    slot: "p11",
   },
 ];

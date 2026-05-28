@@ -1,5 +1,7 @@
 .dataSection {
+  position: relative;
   padding: calc(0.4 * var(--data-unit)) 0 calc(0.48 * var(--data-unit));
+  overflow: hidden;
   --data-unit: 100px;
 }
 
@@ -7,7 +9,98 @@
   position: relative;
   width: min(calc(10.58 * var(--data-unit)), calc(100% - 48px));
   margin: 0 auto;
+  z-index: 2;
   font-size: var(--data-unit);
+}
+
+.dataBackground {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.dataBackgroundScene {
+  position: absolute;
+  top: 1.1em;
+  left: 50%;
+  width: 19.2em;
+  height: 5.12em;
+  transform: translateX(-50%);
+  font-size: var(--data-unit);
+}
+
+.shape {
+  position: absolute;
+  height: auto;
+  opacity: 0.92;
+  pointer-events: none;
+  user-select: none;
+}
+
+.rectangle11 {
+  left: 2.27em;
+  top: 2.61em;
+  width: 1.16em;
+  z-index: 3;
+}
+
+.rectangle12 {
+  left: 2.95em;
+  top: 2.61em;
+  width: 1.64em;
+  z-index: 2;
+}
+
+.rectangle13 {
+  left: 2.85em;
+  top: 0;
+  width: 3.5em;
+  z-index: 1;
+}
+
+.rectangle14 {
+  left: 5.07em;
+  top: 0.47em;
+  width: 1.28em;
+  z-index: 0;
+}
+
+.rectangle15 {
+  left: 6.35em;
+  top: 2.79em;
+  width: 1.28em;
+  z-index: 3;
+}
+
+.rectangle16 {
+  left: 12.86em;
+  top: 1.75em;
+  width: 3.36em;
+  z-index: 0;
+}
+
+.rectangle17 {
+  left: 14.03em;
+  top: 1.24em;
+  width: 2.19em;
+  z-index: 1;
+}
+
+.rectangle18 {
+  left: 15.4em;
+  top: 1.56em;
+  width: 1.64em;
+  z-index: 2;
+}
+
+.rectangle19 {
+  left: 15.87em;
+  top: 0.79em;
+  width: 1.17em;
+  z-index: 3;
 }
 
 .dataTitle {
@@ -86,7 +179,7 @@
 
 @media (max-width: 767px) {
   .dataSection {
-    padding: calc(0.28 * var(--data-unit)) 0 calc(0.3 * var(--data-unit));
+    padding: calc(0.32 * var(--data-unit)) 0;
     --data-unit: calc(100vw / 3.75);
   }
 
@@ -97,6 +190,10 @@
   .dataTitle {
     width: 1.6em;
     margin-left: 0;
+  }
+
+  .dataBackground {
+    display: none;
   }
 
   .dataGrid {
@@ -128,6 +225,10 @@
     margin-left: calc(0.21 * var(--data-unit));
     font-size: 0.12em;
     line-height: 1.55;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
   }
 }
 

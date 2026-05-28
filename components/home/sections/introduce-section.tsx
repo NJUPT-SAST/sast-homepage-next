@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { summaries } from "@/components/home/homepage-data";
+import { summaries } from "@/components/home/data/homepage-data";
 import styles from "./introduce-section.module.css";
 
 export default function IntroduceSection() {
@@ -28,6 +28,14 @@ export default function IntroduceSection() {
 
         <div className={styles.aboutColumn}>
           <h2 className={styles.question}>南邮校科协，我们是谁?</h2>
+          <Image
+            src="/home/illustrations/tree.png"
+            alt=""
+            width={535}
+            height={463}
+            className={styles.tree}
+            aria-hidden
+          />
           <p className={styles.answer}>
             南京邮电大学大学生科学技术协会（Students&apos; Association for Science and
             Technology），简称 SAST，中文简称南邮校科协，成立于 1992 年。
@@ -43,14 +51,6 @@ export default function IntroduceSection() {
             南邮校科协始终以“增强科技意识，活跃学术气氛，提高创新能力，培养科技人才”为目标，
             努力让更多的南邮学子在这里点燃梦想，成功启航。
           </p>
-          <Image
-            src="/home/illustrations/tree.png"
-            alt=""
-            width={535}
-            height={463}
-            className={styles.tree}
-            aria-hidden
-          />
         </div>
       </div>
     </section>

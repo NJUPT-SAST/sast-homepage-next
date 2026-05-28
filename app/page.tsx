@@ -1,8 +1,5 @@
-import HeroSection from "@/components/home/hero-section";
-import IntroduceSection from "@/components/home/introduce-section";
-import DataSection from "@/components/home/data-section";
-import PeopleSection from "@/components/home/people-section";
-import SiteFooter from "@/components/home/site-footer";
+import { DataSection, HeroSection, IntroduceSection } from "@/components/home";
+import { SiteFooter } from "@/components/layout";
 import styles from "./page.module.css";
 
 export default function Home() {
@@ -11,7 +8,6 @@ export default function Home() {
       <HeroSection />
       <IntroduceSection />
       <DataSection />
-      <PeopleSection />
       <SiteFooter />
     </main>
   );

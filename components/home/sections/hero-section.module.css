@@ -8,7 +8,7 @@
 
 .heroInner {
   position: relative;
-  width: min(1200px, calc(100% - 48px));
+  width: min(calc(12 * var(--hero-unit)), calc(100% - 48px));
   min-height: calc(8.75 * var(--hero-unit));
   margin: 0 auto;
   z-index: 2;
@@ -18,7 +18,7 @@
   position: absolute;
   inset: 0;
   width: 100%;
-  overflow: hidden;
+  overflow: visible;
   pointer-events: none;
   z-index: 1;
 }
@@ -122,31 +122,38 @@
 
 @media (max-width: 767px) {
   .hero {
+    min-height: 6.42em;
+    overflow: visible;
+    z-index: 2;
     --hero-unit: calc(100vw / 3.75);
   }
 
   .heroInner {
-    width: min(100% - 28px, 360px);
+    width: 3.75em;
+    min-height: 6.42em;
+    margin: 0 auto;
+    font-size: var(--hero-unit);
   }
 
   .heroBackgroundScene {
     left: 0;
     width: 3.75em;
-    height: 6.3em;
+    height: 6.42em;
     transform: none;
   }
 
   .heroForegroundScene {
     left: 0;
     width: 3.75em;
-    height: 6.3em;
+    height: 6.42em;
     transform: none;
+    z-index: 3;
   }
 
   .logo {
-    top: 30px;
-    left: 0;
-    width: 88px;
+    top: 0.3em;
+    left: 0.33em;
+    width: 0.88em;
   }
 
   .cube {
@@ -190,9 +197,10 @@
   }
 
   .word1 {
-    left: 0.59em;
+    left: 0.73em;
     top: 5.61em;
     width: 2.29em;
+    z-index: 8;
   }
 }
 

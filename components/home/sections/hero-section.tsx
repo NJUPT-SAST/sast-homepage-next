@@ -1,6 +1,6 @@
 import Image from "next/image";
-import HomeCarousel from "@/components/home-carousel";
-import { slides } from "@/components/home/homepage-data";
+import HomeCarousel from "@/components/home/carousel";
+import { slides } from "@/components/home/data/homepage-data";
 import styles from "./hero-section.module.css";
 
 export default function HeroSection() {

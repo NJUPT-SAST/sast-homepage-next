@@ -2,6 +2,7 @@
   position: relative;
   overflow: hidden;
   z-index: 1;
+  isolation: isolate;
   padding: calc(0.24 * var(--introduce-unit)) 0 calc(0.6 * var(--introduce-unit));
   --introduce-unit: 100px;
 }
@@ -15,6 +16,7 @@
   overflow: hidden;
   transform: translateX(-50%);
   pointer-events: none;
+  z-index: 0;
   font-size: var(--introduce-unit);
 }
 
@@ -58,6 +60,7 @@
   min-height: calc(6.2 * var(--introduce-unit));
   margin: 0 auto;
   padding-top: calc(1.95 * var(--introduce-unit));
+  z-index: 1;
   font-size: var(--introduce-unit);
 }
 
@@ -126,7 +129,7 @@
 .tree {
   position: absolute;
   top: -1.02em;
-  right: 0;
+  right: -2.08em;
   width: 5.35em;
   height: auto;
   z-index: 1;
@@ -168,12 +171,12 @@
 
 @media (max-width: 767px) {
   .introduce {
-    padding: 0 0 calc(0.4 * var(--introduce-unit));
+    padding: calc(0.52 * var(--introduce-unit)) 0 calc(0.42 * var(--introduce-unit));
     --introduce-unit: calc(100vw / 3.75);
   }
 
   .waveLayer {
-    top: 5.8em;
+    top: -0.3em;
     left: 0;
     width: 3.75em;
     height: 12em;
@@ -200,41 +203,57 @@
 
   .introduceInner {
     grid-template-columns: 1fr;
-    justify-content: initial;
     width: min(3.13em, calc(100% - 28px));
     min-height: auto;
-    padding-top: 7.66em;
-    gap: 0.36em;
+    padding-top: 0.96em;
+    gap: 0.42em;
   }
 
   .aboutColumn {
+    position: relative;
     width: 100%;
     min-height: auto;
+    margin-top: 0.34em;
+    padding: 0 0 0.16em;
+    display: flow-root;
   }
 
   .question {
-    width: calc(1.79 * var(--introduce-unit));
-    margin: 0 auto;
-    font-size: 0.3em;
+    width: 100%;
+    margin: 0 0 0.16em;
+    font-size: 0.22em;
+    line-height: 1.25;
     text-align: center;
   }
 
-  .answer,
+  .answer {
+    width: 100%;
+    font-size: 0.12em;
+    line-height: 1.7;
+  }
+
   .tree {
-    display: none;
+    position: relative;
+    float: right;
+    top: auto;
+    right: auto;
+    bottom: auto;
+    width: 1.08em;
+    margin: 0.08em -0.02em 0.06em 0.18em;
+    z-index: 1;
   }
 
   .summaryColumn {
     width: 2.5em;
     margin: 0 auto;
-    gap: 0.28em;
+    gap: 0.3em;
   }
 
   .summaryItem {
     grid-template-columns: 1fr;
     justify-items: center;
     width: 2.5em;
-    row-gap: 0.1em;
+    row-gap: 0.12em;
   }
 
   .summaryIcon {
