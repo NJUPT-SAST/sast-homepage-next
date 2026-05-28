@@ -18,10 +18,13 @@ export default function HeroSection() {
             </div>
 
             <div className={styles.heroInner}>
+                <a href="./" className={styles.logoLink} aria-label="返回首页顶部">
+                    <Image src="/home/branding/logo.png" alt="SAST" width={135} height={55} className={styles.logo} priority />
+                </a>
+
                 <HomeCarousel slides={slides} />
 
                 <div className={styles.heroForegroundScene} aria-hidden>
-                    <Image src="/home/branding/logo.png" alt="SAST" width={135} height={55} className={styles.logo} priority />
                     <Image src="/home/branding/cube.png" alt="" width={131} height={131} className={styles.cube} />
                     <Image src="/home/branding/word-1.png" alt="" width={423} height={120} className={styles.word1} />
                 </div>

@@ -4,6 +4,7 @@
   overflow: visible;
   z-index: 2;
   --hero-unit: 100px;
+  font-size: var(--hero-unit);
 }
 
 .heroInner {
@@ -30,7 +31,6 @@
   width: 19.2em;
   height: 9.25em;
   transform: translateX(-50%);
-  font-size: var(--hero-unit);
 }
 
 .heroForegroundScene {
@@ -93,13 +93,16 @@
   z-index: 0;
 }
 
-.logo {
+.logoLink {
   position: absolute;
-  top: 0.45em;
-  left: 4.2em;
-  width: 1.53em;
-  height: auto;
+  top: 0.3em;
+  left: 0.6em;
   z-index: 3;
+}
+
+.logo {
+  width: 1.5em;
+  height: auto;
 }
 
 .cube {
@@ -150,10 +153,8 @@
     z-index: 3;
   }
 
-  .logo {
-    top: 0.3em;
-    left: 0.33em;
-    width: 0.88em;
+  .logoLink {
+    display: none;
   }
 
   .cube {

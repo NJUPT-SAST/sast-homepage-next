@@ -1,0 +1,107 @@
+.dock {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  font-size: var(--dock-unit);
+  pointer-events: none;
+  padding-top: 0.20em;
+  padding-inline: 0.18em;
+  --dock-unit: 100px;
+}
+
+.logoLink {
+  display: none;
+}
+
+.logo {
+  width: calc(1.53 * var(--dock-unit));
+  height: auto;
+}
+
+.nav {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.1em;
+  max-width: 100%;
+  padding: 0.06em 0.1em;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: 0 0.08em 0.35em rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(0.15em);
+  pointer-events: auto;
+}
+
+.link { 
+  position: relative;
+  padding: 0.4em 0.6em;
+  border-radius: 999px;
+  color: #5d6778;
+  font-size: 0.18em;
+  line-height: 1;
+  text-decoration: none;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.link:hover {
+  background: #03e5bf;
+  color: #fff;
+  transform: translateY(-0.08em);
+  box-shadow: 0 0.08em 0.18em rgba(3, 229, 191, 0.32);
+}
+
+@media (max-width: 767px) {
+  .dock {
+    z-index: 50;
+    padding: 0.15em 0em;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(0.1em);
+    --dock-unit: calc(100vw / 3.75);
+  }
+
+  .nav {
+    gap: 0.03em;
+    padding: 0 0 0 0.3em;
+    overflow-x: auto;
+    border: none;
+    border-radius: 0;
+    background: none;
+    backdrop-filter: none;
+    box-shadow: none;
+  }
+
+  .logoLink {
+    display: block;
+    position: fixed;
+    top: 0.08em;
+    left: 0.17em;
+    z-index: 120;
+    pointer-events: auto;
+  }
+
+  .logo {
+    width: 0.7em;
+  }
+
+  .link {
+    padding: 0.25em 0.4em;
+    font-size: 0.16em;
+    white-space: nowrap;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1279px) {
+  .dock {
+    --dock-unit: calc(100vw / 12.8);
+  }
+}
+
+@media (min-width: 1921px) {
+  .dock {
+    --dock-unit: calc(100vw / 19.2);
+  }
+}
