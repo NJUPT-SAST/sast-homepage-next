@@ -19,7 +19,7 @@ export default function HeroSection() {
 
             <div className={styles.heroInner}>
                 <a href="./" className={styles.logoLink} aria-label="返回首页顶部">
-                    <Image src="/home/branding/logo.png" alt="SAST" width={135} height={55} className={styles.logo} priority />
+                    <Image src="/share/logos/logo-color.png" alt="SAST" width={135} height={55} className={styles.logo} priority />
                 </a>
 
                 <HomeCarousel slides={slides} />

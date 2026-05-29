@@ -12,7 +12,7 @@ export default function Dock() {
   return (
     <header className={styles.dock}>
       <a href="./" className={styles.logoLink} aria-label="返回首页顶部">
-        <Image src="/home/branding/logo.png" alt="SAST" width={135} height={55} className={styles.logo} priority />
+        <Image src="/share/logos/logo-color.png" alt="SAST" width={135} height={55} className={styles.logo} priority />
       </a>
 
       <nav className={styles.nav} aria-label="页面导航">
