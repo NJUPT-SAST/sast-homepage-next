@@ -15,24 +15,6 @@
   z-index: 2;
 }
 
-.heroBackground {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  overflow: visible;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.heroBackgroundScene {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 19.2em;
-  height: 9.25em;
-  transform: translateX(-50%);
-}
-
 .heroForegroundScene {
   position: absolute;
   top: 0;
@@ -42,55 +24,6 @@
   transform: translateX(-50%);
   font-size: var(--hero-unit);
   pointer-events: none;
-}
-
-.shape {
-  position: absolute;
-  pointer-events: none;
-  user-select: none;
-  height: auto;
-}
-
-.rectangle1 {
-  left: 0;
-  top: 2.87em;
-  width: 5.1em;
-  z-index: 5;
-}
-
-.rectangle2 {
-  left: 3.72em;
-  top: 5.07em;
-  width: 2.75em;
-  z-index: 4;
-}
-
-.rectangle3 {
-  left: 10.52em;
-  top: 0;
-  width: 4.85em;
-  z-index: 1;
-}
-
-.rectangle4 {
-  left: 12.3em;
-  top: 0;
-  width: 1.8em;
-  z-index: 3;
-}
-
-.rectangle5 {
-  left: 12.9em;
-  top: 0;
-  width: 2.64em;
-  z-index: 2;
-}
-
-.rectangle6 {
-  left: 13.78em;
-  top: 0;
-  width: 5.42em;
-  z-index: 0;
 }
 
 .logoLink {
@@ -138,13 +71,6 @@
     font-size: var(--hero-unit);
   }
 
-  .heroBackgroundScene {
-    left: 0;
-    width: 3.75em;
-    height: 6.42em;
-    transform: none;
-  }
-
   .heroForegroundScene {
     left: 0;
     width: 3.75em;
@@ -159,42 +85,6 @@
 
   .cube {
     display: none;
-  }
-
-  .rectangle1 {
-    left: -0.92em;
-    top: 3.09em;
-    width: 2.4em;
-  }
-
-  .rectangle2 {
-    left: 0.84em;
-    top: 4.12em;
-    width: 1.29em;
-  }
-
-  .rectangle3 {
-    left: 1.32em;
-    top: -0.51em;
-    width: 2.29em;
-  }
-
-  .rectangle4 {
-    left: 2.07em;
-    top: 0;
-    width: 0.56em;
-  }
-
-  .rectangle5 {
-    left: 2.44em;
-    top: 0;
-    width: 0.97em;
-  }
-
-  .rectangle6 {
-    left: 2.74em;
-    top: -0.1em;
-    width: 2.4em;
   }
 
   .word1 {

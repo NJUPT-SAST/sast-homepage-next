@@ -16,154 +16,24 @@ export type CarouselSlide = {
   moreColor: string;
 };
 
-const AUTO_PLAY_MS = 5000;
-const CENTER_POSITION = 1;
-
 export default function HomeCarousel({ slides }: { slides: CarouselSlide[] }) {
-  const slideCount = slides.length;
-  const hasMultipleSlides = slideCount > 1;
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [trackPosition, setTrackPosition] = useState(CENTER_POSITION);
-  const [dragOffset, setDragOffset] = useState(0);
+  const loopSlides = slides.length > 1 ? [slides[slides.length - 1], ...slides, slides[0]] : slides;
+  const [currentIndex, setCurrentIndex] = useState(slides.length > 1 ? 1 : 0);
   const [transitionEnabled, setTransitionEnabled] = useState(true);
+  const [dragOffset, setDragOffset] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
-
   const viewportRef = useRef<HTMLDivElement | null>(null);
-  const trackRef = useRef<HTMLDivElement | null>(null);
   const startXRef = useRef(0);
   const startYRef = useRef(0);
-  const dragBaseOffsetRef = useRef(0);
   const dragOffsetRef = useRef(0);
   const isDraggingRef = useRef(false);
   const isAnimatingRef = useRef(false);
   const isHorizontalDragRef = useRef<boolean | null>(null);
-  const animationStepRef = useRef<1 | -1 | 0>(0);
 
-  const wrapIndex = (index: number) => (index + slideCount) % slideCount;
-
-  const windowSlides = hasMultipleSlides
-    ? [wrapIndex(activeIndex - 1), activeIndex, wrapIndex(activeIndex + 1)].map((index) => ({
-        ...slides[index],
-        slideIndex: index,
-      }))
-    : slides.map((slide, index) => ({
-        ...slide,
-        slideIndex: index,
-      }));
-
-  const resetTrackToCenter = (nextIndex: number) => {
-    setTransitionEnabled(false);
-    setTrackPosition(CENTER_POSITION);
-    setDragOffset(0);
-    dragOffsetRef.current = 0;
-    setActiveIndex(nextIndex);
-  };
-
-  const pauseCurrentAnimation = () => {
-    const viewportWidth = viewportRef.current?.offsetWidth ?? 0;
-    const track = trackRef.current;
-
-    if (!track || viewportWidth === 0) {
-      isAnimatingRef.current = false;
-      animationStepRef.current = 0;
-      return 0;
-    }
-
-    let currentTranslateX = -trackPosition * viewportWidth + dragOffsetRef.current;
-
-    try {
-      const transform = window.getComputedStyle(track).transform;
-
-      if (transform && transform !== "none") {
-        currentTranslateX = new DOMMatrixReadOnly(transform).m41;
-      }
-    } catch {
-      // Fall back to the calculated value above when DOMMatrix is unavailable.
-    }
-
-    const frozenOffset = currentTranslateX + viewportWidth * CENTER_POSITION;
-
-    setTransitionEnabled(false);
-    setTrackPosition(CENTER_POSITION);
-    setDragOffset(frozenOffset);
-    dragOffsetRef.current = frozenOffset;
-    isAnimatingRef.current = false;
-    animationStepRef.current = 0;
-
-    return frozenOffset;
-  };
-
-  const startStepTransition = (step: 1 | -1) => {
-    if (!hasMultipleSlides) {
-      return;
-    }
-
-    const begin = () => {
-      animationStepRef.current = step;
-      isAnimatingRef.current = true;
-      dragBaseOffsetRef.current = 0;
-      dragOffsetRef.current = 0;
-      setTransitionEnabled(true);
-      setDragOffset(0);
-      setTrackPosition(step === 1 ? 2 : 0);
-    };
-
-    if (isAnimatingRef.current) {
-      pauseCurrentAnimation();
-
-      requestAnimationFrame(() => {
-        requestAnimationFrame(begin);
-      });
-      return;
-    }
-
-    begin();
-  };
-
-  const reboundToCenter = () => {
-    animationStepRef.current = 0;
-    isAnimatingRef.current = true;
-    dragOffsetRef.current = 0;
-    setTransitionEnabled(true);
-    setDragOffset(0);
-    setTrackPosition(CENTER_POSITION);
-  };
-
-  const selectSlide = (index: number) => {
-    if (!hasMultipleSlides || index === activeIndex) {
-      return;
-    }
-
-    if (index === wrapIndex(activeIndex + 1)) {
-      startStepTransition(1);
-      return;
-    }
-
-    if (index === wrapIndex(activeIndex - 1)) {
-      startStepTransition(-1);
-      return;
-    }
-
-    if (isAnimatingRef.current) {
-      pauseCurrentAnimation();
-    }
-
-    animationStepRef.current = 0;
-    isAnimatingRef.current = false;
-    resetTrackToCenter(index);
-  };
+  const activeIndex = slides.length > 1 ? (currentIndex - 1 + slides.length) % slides.length : 0;
 
   useEffect(() => {
-    setActiveIndex(0);
-    setTrackPosition(CENTER_POSITION);
-    setDragOffset(0);
-    dragOffsetRef.current = 0;
-    isAnimatingRef.current = false;
-    animationStepRef.current = 0;
-  }, [slideCount]);
-
-  useEffect(() => {
-    if (!hasMultipleSlides) {
+    if (slides.length <= 1) {
       return undefined;
     }
 
@@ -172,11 +42,12 @@ export default function HomeCarousel({ slides }: { slides: CarouselSlide[] }) {
         return;
       }
 
-      startStepTransition(1);
-    }, AUTO_PLAY_MS);
+      isAnimatingRef.current = true;
+      setCurrentIndex((current) => current + 1);
+    }, 5000);
 
     return () => window.clearInterval(intervalId);
-  }, [activeIndex, hasMultipleSlides]);
+  }, [slides.length]);
 
   useEffect(() => {
     if (transitionEnabled) {
@@ -193,40 +64,36 @@ export default function HomeCarousel({ slides }: { slides: CarouselSlide[] }) {
   }, [transitionEnabled]);
 
   const handleTransitionEnd = () => {
-    if (!hasMultipleSlides) {
+    if (slides.length <= 1) {
       return;
     }
 
-    if (animationStepRef.current === 1) {
+    if (currentIndex === loopSlides.length - 1) {
+      setTransitionEnabled(false);
+      setCurrentIndex(1);
       isAnimatingRef.current = false;
-      animationStepRef.current = 0;
-      resetTrackToCenter(wrapIndex(activeIndex + 1));
-      return;
-    }
-
-    if (animationStepRef.current === -1) {
+    } else if (currentIndex === 0) {
+      setTransitionEnabled(false);
+      setCurrentIndex(loopSlides.length - 2);
       isAnimatingRef.current = false;
-      animationStepRef.current = 0;
-      resetTrackToCenter(wrapIndex(activeIndex - 1));
-      return;
+    } else {
+      isAnimatingRef.current = false;
     }
-
-    isAnimatingRef.current = false;
   };
 
-  const clearDragState = () => {
+  const resetDrag = () => {
     isDraggingRef.current = false;
     isHorizontalDragRef.current = null;
-    dragBaseOffsetRef.current = 0;
+    dragOffsetRef.current = 0;
     setIsDragging(false);
+    setDragOffset(0);
   };
 
   const startDrag = (clientX: number, clientY: number) => {
-    if (!hasMultipleSlides) {
+    if (slides.length <= 1 || isAnimatingRef.current) {
       return;
     }
 
-    dragBaseOffsetRef.current = isAnimatingRef.current ? pauseCurrentAnimation() : 0;
     startXRef.current = clientX;
     startYRef.current = clientY;
     isDraggingRef.current = true;
@@ -251,10 +118,8 @@ export default function HomeCarousel({ slides }: { slides: CarouselSlide[] }) {
       return false;
     }
 
-    const nextOffset = dragBaseOffsetRef.current + deltaX;
-
-    dragOffsetRef.current = nextOffset;
-    setDragOffset(nextOffset);
+    dragOffsetRef.current = deltaX;
+    setDragOffset(deltaX);
     return true;
   };
 
@@ -263,27 +128,23 @@ export default function HomeCarousel({ slides }: { slides: CarouselSlide[] }) {
       return;
     }
 
-    const wasHorizontal = isHorizontalDragRef.current;
-    const dragDistance = dragOffsetRef.current - dragBaseOffsetRef.current;
-    const viewportWidth = viewportRef.current?.offsetWidth ?? 0;
-    const threshold = Math.max(48, viewportWidth * 0.12);
-
-    clearDragState();
-
-    if (!wasHorizontal) {
-      if (dragOffsetRef.current !== 0) {
-        reboundToCenter();
-      }
+    if (!isHorizontalDragRef.current) {
+      resetDrag();
       return;
     }
 
-    if (dragDistance <= -threshold) {
-      startStepTransition(1);
-    } else if (dragDistance >= threshold) {
-      startStepTransition(-1);
-    } else {
-      reboundToCenter();
+    const viewportWidth = viewportRef.current?.offsetWidth ?? 0;
+    const threshold = Math.max(48, viewportWidth * 0.12);
+
+    if (dragOffsetRef.current <= -threshold) {
+      isAnimatingRef.current = true;
+      setCurrentIndex((current) => current + 1);
+    } else if (dragOffsetRef.current >= threshold) {
+      isAnimatingRef.current = true;
+      setCurrentIndex((current) => current - 1);
     }
+
+    resetDrag();
   };
 
   const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
@@ -324,7 +185,7 @@ export default function HomeCarousel({ slides }: { slides: CarouselSlide[] }) {
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={endDrag}
-        onTouchCancel={endDrag}
+        onTouchCancel={resetDrag}
         onMouseDown={handleMouseDown}
         onMouseMove={(event) => {
           moveDrag(event.clientX, event.clientY);
@@ -332,30 +193,34 @@ export default function HomeCarousel({ slides }: { slides: CarouselSlide[] }) {
         onMouseUp={endDrag}
         onMouseLeave={endDrag}>
         <div
-          ref={trackRef}
           className={styles.track}
           style={{
-            transform: `translateX(calc(-${trackPosition * 100}% + ${dragOffset}px))`,
+            transform: `translateX(calc(-${currentIndex * 100}% + ${dragOffset}px))`,
             transition: isDragging ? "none" : transitionEnabled ? "transform 560ms ease" : "none",
           }}
           onTransitionEnd={handleTransitionEnd}>
-          {windowSlides.map((slide, index) => (
-            <div key={`${slide.title}-${slide.slideIndex}-${index}`} className={styles.slide} data-slide={slide.slideIndex}>
-              <div className={styles.card}>
-                <Image src={slide.image} alt={slide.imageAlt} width={slide.imageWidth} height={slide.imageHeight} className={styles.slideImage} priority={slide.slideIndex === 0} />
-                <div className={styles.textPanel}>
-                  <h2 className={styles.title} style={{ color: slide.titleColor }}>
-                    {slide.title}
-                  </h2>
-                  <div className={styles.line} />
-                  <p className={styles.text}>{slide.text}</p>
-                  <p className={styles.more} style={{ color: slide.moreColor }}>
-                    {slide.more}
-                  </p>
+          {loopSlides.map((slide, index) => {
+            const slideIndex = slides.length > 1 ? (index === 0 ? slides.length - 1 : index === loopSlides.length - 1 ? 0 : index - 1) : index;
+            const isPrioritySlide = slides.length > 1 ? index === 1 : index === 0;
+
+            return (
+              <div key={`${slide.title}-${index}`} className={styles.slide} data-slide={slideIndex}>
+                <div className={styles.card}>
+                  <Image src={slide.image} alt={slide.imageAlt} width={slide.imageWidth} height={slide.imageHeight} className={styles.slideImage} priority={isPrioritySlide} />
+                  <div className={styles.textPanel}>
+                    <h2 className={styles.title} style={{ color: slide.titleColor }}>
+                      {slide.title}
+                    </h2>
+                    <div className={styles.line} />
+                    <p className={styles.text}>{slide.text}</p>
+                    <p className={styles.more} style={{ color: slide.moreColor }}>
+                      {slide.more}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 
@@ -365,7 +230,21 @@ export default function HomeCarousel({ slides }: { slides: CarouselSlide[] }) {
             key={slide.title}
             type="button"
             className={`${styles.indicator} ${index === activeIndex ? styles.active : ""}`}
-            onClick={() => selectSlide(index)}
+            onClick={() => {
+              const targetIndex = slides.length > 1 ? index + 1 : index;
+
+              if (isAnimatingRef.current) {
+                return;
+              }
+
+              if (targetIndex === currentIndex) {
+                return;
+              }
+
+              setTransitionEnabled(true);
+              isAnimatingRef.current = true;
+              setCurrentIndex(targetIndex);
+            }}
             aria-label={`切换到第 ${index + 1} 张`}
             aria-pressed={index === activeIndex}
           />
