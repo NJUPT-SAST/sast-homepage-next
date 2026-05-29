@@ -1,0 +1,164 @@
+.storySection {
+  position: relative;
+  z-index: 2;
+  margin-top: -2.5rem;
+  padding: 3.25rem 0 3rem;
+  background: transparent;
+}
+
+.storyInner {
+  position: relative;
+  z-index: 2;
+  width: min(72rem, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+.storyHeader {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(18rem, 28rem);
+  gap: 2rem;
+  align-items: end;
+}
+
+.titleBlock {
+  max-width: 34rem;
+}
+
+.sectionLabel {
+  margin: 0 0 0.875rem;
+  color: #27a29c;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+}
+
+.sectionTitle {
+  margin: 0;
+  color: #303133;
+  font-size: clamp(2rem, 3vw, 2.8rem);
+  font-weight: 700;
+  line-height: 1.14;
+}
+
+.sectionLead {
+  margin: 0;
+  color: #606266;
+  font-size: 1rem;
+  line-height: 1.9;
+}
+
+.storyBody {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.featurePanel,
+.principleCard {
+  background: #fff;
+  box-shadow: 0 0.9rem 2rem rgba(220, 223, 230, 0.36);
+  border-radius: 1.5rem;
+}
+
+.featurePanel {
+  min-height: 100%;
+  padding: 1.75rem 1.75rem 1.9rem;
+}
+
+.featureIntro {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.featureLogo {
+  width: 8rem;
+  height: auto;
+}
+
+.featureText,
+.principleText {
+  margin: 0;
+  color: #606266;
+  font-size: 1rem;
+  line-height: 1.9;
+}
+
+.principlesGrid {
+  display: grid;
+  gap: 1rem;
+}
+
+.principleCard {
+  padding: 1.5rem;
+}
+
+.principleTitle {
+  margin: 0;
+  color: #303133;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.principleText {
+  margin-top: 0.75rem;
+  font-size: 0.98rem;
+}
+
+@media (max-width: 767px) {
+  .storySection {
+    margin-top: -0.75rem;
+    padding: 2.4rem 0 2.2rem;
+  }
+
+  .storyInner {
+    width: min(100% - 28px, 36rem);
+  }
+
+  .storyHeader,
+  .storyBody {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .sectionLabel {
+    margin-bottom: 0.7rem;
+    font-size: 0.72rem;
+  }
+
+  .sectionTitle {
+    font-size: 1.7rem;
+  }
+
+  .sectionLead,
+  .featureText,
+  .principleText {
+    font-size: 0.92rem;
+    line-height: 1.8;
+  }
+
+  .storyBody {
+    margin-top: 1.35rem;
+  }
+
+  .featurePanel,
+  .principleCard {
+    padding: 1.2rem;
+    border-radius: 1.1rem;
+  }
+
+  .principlesGrid {
+    gap: 0.8rem;
+  }
+
+  .featureLogo {
+    width: 6.5rem;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1279px) {
+  .storyInner {
+    width: min(72rem, calc(100% - 40px));
+  }
+}

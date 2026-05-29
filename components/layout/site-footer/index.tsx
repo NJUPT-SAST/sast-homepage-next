@@ -21,7 +21,7 @@ export default function SiteFooter() {
           <Image src="/share/qr/qq-qrcode.png" alt="QQ公众号" width={104} height={104} className={styles.qrImage} />
           <p className={styles.qrRemark}>QQ公众号</p>
         </div>
-        <p className={styles.copyright}>Copyright © NJUPT.SAST 1992-2020</p>
+        <p className={styles.copyright}>Copyright © NJUPT.SAST 1992-2026</p>
       </div>
     </footer>
   );

@@ -1,5 +1,135 @@
-<!-- BEGIN:nextjs-agent-rules -->
-# This is NOT the Next.js you know
+# AGENTS.md
 
-This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
-<!-- END:nextjs-agent-rules -->
+## 目的
+
+这个仓库是一个基于 Next.js App Router 的站点，目标是复刻并延展原始 SAST 首页的视觉风格。
+
+在这个仓库里工作时，应优先关注：
+- 最小化、定向修改
+- 保留现有视觉风格
+- 保持 CSS 和组件结构简洁
+- 在编辑前先回答用户的直接问题
+- 用最轻量、最有价值的命令验证改动
+
+## 项目技术栈
+
+- Next.js 16 App Router
+- React 19
+- TypeScript
+- 组件样式使用 CSS Modules
+- 仅在真正全局生效的规则里使用 `app/globals.css`
+
+## 常用命令
+
+- 安装依赖：`npm install`
+- 开发模式：`npm run dev`
+- 代码检查：`npm run lint`
+- 构建：`npm run build`
+- 生产运行：`npm run start`
+
+推荐的验证顺序：
+1. `npm run lint`
+2. 当涉及较大结构调整时，再运行 `npm run build`
+
+当前仓库没有单独的自动化测试。除非你实际运行过命令，或者明确说明只是根据代码推断，否则不要声称行为已经被验证。
+
+## 架构
+
+### App 层
+
+- `app/layout.tsx`
+  根布局和全局元数据。
+- `app/page.tsx`
+  首页路由组合。
+- `app/<route>/page.tsx`
+  其他路由入口文件。
+
+### 组件层
+
+- `components/home`
+  仅首页使用的组件。
+- `components/layout`
+  共享的页面骨架组件，例如 dock 和 footer。
+- `components/shared`
+  跨页面复用、但不属于页面骨架的展示型组件。
+
+### 当前首页结构
+
+- `components/home/sections`
+  首页主要分区，例如 hero、introduce 和 data。
+- `components/home/carousel`
+  Hero 轮播的逻辑和样式。
+- `components/home/data`
+  首页渲染所需的静态内容。
+
+### 共享背景组件
+
+可复用的首页背景板组件位于：
+
+- `components/shared/backgroud`
+
+注意：
+- 当前代码库里这个文件夹名就是故意写成 `backgroud`
+- 除非用户明确要求全仓库重命名，否则不要私自改成 `background`
+
+## 样式规则
+
+- 优先使用 CSS Modules 编写组件样式。
+- 样式尽量贴近使用它的组件。
+- 只有真正属于全站通用的规则，才放到全局 CSS 中。
+- 除非用户要求重新设计，否则保留当前的视觉语言和间距表现。
+- 优先使用简单、易读的 CSS，不要为了“统一”而改成更复杂的写法。
+- 修改已有样式文件时，尽量保持精简。不要靠不断叠加补丁式样式把文件越改越臃肿；如果能在同一个文件里做一次小整理，就尽量一次整理好。
+- 尊重当前的响应式方案。这个仓库已经在使用 `em`、`rem`、CSS 自定义属性和媒体查询做缩放；编辑某个文件时，优先沿用该文件原有的局部风格，不要随意混用不同单位体系。
+
+## 组件约定
+
+- 保持分区组件化。
+- 一个组件尽量只负责一个概念块。
+- 当文件夹已经采用 `index.ts` 导出模式时，优先复用这种导出方式。
+- 不要引入没有明显收益的新抽象层。
+- 如果某个组件只给首页用，就放在 `components/home`。
+- 如果某个组件可跨路由复用，但又不属于页面骨架，就放在 `components/shared`。
+- 如果某个组件属于全站页面框架，就放在 `components/layout`。
+
+## 编辑规范
+
+- 编辑前先读相关文件。
+- 除非用户要求重构，否则尽量保持现有命名和结构。
+- 手动修改文件时使用 `apply_patch`。
+- 避免无关的重命名或文件夹移动。
+- 不要在未明确要求时回滚用户改动。
+- 如果用户是在提问，先回答，再决定是否需要修改。
+- TypeScript 逻辑尽量直接，优先清晰，不要为了“巧”而复杂。
+
+## Next.js 注意事项
+
+- 这个项目使用 App Router 约定。
+- 文件式元数据很重要。例如，`app/favicon.ico` 会被 Next.js 自动识别。
+- 在修改 metadata、icons、layout 或路由约定前，请先查看 `node_modules/next/dist/docs/` 里的相关文档，因为这个仓库使用的 Next.js 版本比很多网上示例要新。
+
+## 验证要求
+
+- 纯 CSS 或小型组件改动，尽量运行 `npm run lint`。
+- 涉及路由、metadata 或构建敏感的修改，优先同时运行 `npm run lint` 和 `npm run build`。
+- 如果你无法完成验证，要在最终回复里明确说明。
+
+## 沟通要求
+
+最终回复里要包含：
+- 改了什么
+- 影响了哪些文件
+- 验证了什么
+- 还有哪些风险或限制
+
+当用户只是要求解释时：
+- 直接回答
+- 不要修改文件
+- 解释要紧扣这个仓库的实际结构
+
+## 仓库偏好
+
+- 用户非常偏好简洁、整洁的 CSS。
+- 用户更希望保留当前已经恢复出的 SAST 风格视觉效果，而不是做成通用模板风。
+- 用户对不必要的行为变更非常敏感，尤其是轮播和响应式布局相关代码。
+- 简化代码时，除非用户明确批准，否则要尽量保留已有行为。

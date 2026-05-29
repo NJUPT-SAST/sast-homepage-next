@@ -1,0 +1,142 @@
+.snapshotSection {
+  position: relative;
+  z-index: 1;
+  padding: 4.25rem 0 5rem;
+  overflow: hidden;
+  --data-unit: 100px;
+}
+
+.snapshotInner {
+  position: relative;
+  z-index: 2;
+  width: min(72rem, calc(100% - 48px));
+  margin: 0 auto;
+  padding-top: 1rem;
+}
+
+.snapshotHeader {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(18rem, 28rem);
+  gap: 2rem;
+  align-items: end;
+}
+
+.sectionLabel {
+  margin: 0 0 0.875rem;
+  color: #27a29c;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+}
+
+.sectionTitle {
+  margin: 0;
+  color: #303133;
+  font-size: clamp(2rem, 3vw, 2.8rem);
+  font-weight: 700;
+  line-height: 1.14;
+}
+
+.sectionLead,
+.momentText {
+  margin: 0;
+  color: #606266;
+  line-height: 1.9;
+}
+
+.sectionLead {
+  font-size: 1rem;
+}
+
+.momentGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.momentCard {
+  position: relative;
+  padding: 1.5rem 1.5rem 1.7rem;
+  background: #fff;
+  box-shadow: 0 0.9rem 2rem rgba(220, 223, 230, 0.36);
+  border-radius: 1.5rem;
+}
+
+.momentIndex {
+  margin: 0 0 0.8rem;
+  color: #53a0fd;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+.momentTitle {
+  margin: 0;
+  color: #303133;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.momentText {
+  margin-top: 0.85rem;
+  font-size: 0.98rem;
+}
+
+@media (max-width: 767px) {
+  .snapshotSection {
+    padding: 2.8rem 0 3.2rem;
+    --data-unit: calc(100vw / 3.75);
+  }
+
+  .snapshotInner {
+    width: min(100% - 28px, 36rem);
+  }
+
+  .snapshotHeader,
+  .momentGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .sectionLabel {
+    margin-bottom: 0.7rem;
+    font-size: 0.72rem;
+  }
+
+  .sectionTitle {
+    font-size: 1.7rem;
+  }
+
+  .sectionLead,
+  .momentText {
+    font-size: 0.92rem;
+    line-height: 1.8;
+  }
+
+  .momentGrid {
+    gap: 0.8rem;
+    margin-top: 1.35rem;
+  }
+
+  .momentCard {
+    padding: 1.2rem;
+    border-radius: 1.1rem;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1279px) {
+  .snapshotSection {
+    --data-unit: calc(100vw / 12.8);
+  }
+
+  .snapshotInner {
+    width: min(72rem, calc(100% - 40px));
+  }
+}
+
+@media (min-width: 1921px) {
+  .snapshotSection {
+    --data-unit: calc(100vw / 19.2);
+  }
+}

@@ -1,0 +1,6 @@
+.page {
+  color: #606266;
+  background: #fff;
+  overflow-x: hidden;
+  isolation: isolate;
+}

@@ -1,0 +1,138 @@
+.heroSection {
+  position: relative;
+  min-height: clamp(38rem, 55vw, 54rem);
+  overflow: visible;
+  z-index: 1;
+  --about-hero-unit: 100px;
+  font-size: var(--about-hero-unit);
+}
+
+.heroInner {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(17rem, 20rem);
+  align-items: end;
+  gap: 2rem;
+  width: min(72rem, calc(100% - 48px));
+  margin: 0 auto;
+  padding: 8.5rem 0 5rem;
+  font-size: 1rem;
+}
+
+.heroCopy {
+  max-width: 40rem;
+}
+
+.eyebrow {
+  margin: 0 0 0.875rem;
+  color: #27a29c;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+}
+
+.heroTitle {
+  max-width: 34rem;
+  margin: 0;
+  color: #303133;
+  font-size: clamp(2.4rem, 4vw, 4rem);
+  font-weight: 700;
+  line-height: 1.14;
+}
+
+.heroText {
+  max-width: 36rem;
+  margin: 1.125rem 0 0;
+  color: #606266;
+  font-size: 1rem;
+  line-height: 1.9;
+}
+
+.highlightColumn {
+  display: grid;
+  gap: 1rem;
+}
+
+.highlightCard {
+  padding: 1.4rem 1.5rem;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 1rem 2rem rgba(220, 223, 230, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 1.25rem;
+  backdrop-filter: blur(0.25rem);
+}
+
+.highlightValue {
+  margin: 0;
+  color: #303133;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.highlightNote {
+  margin: 0.7rem 0 0;
+  color: #606266;
+  font-size: 0.95rem;
+  line-height: 1.9;
+}
+
+@media (max-width: 767px) {
+  .heroSection {
+    min-height: auto;
+    --about-hero-unit: calc(100vw / 3.75);
+  }
+
+  .heroInner {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    width: min(100% - 28px, 36rem);
+    padding: 5.4rem 0 2.7rem;
+  }
+
+  .eyebrow {
+    margin-bottom: 0.7rem;
+    font-size: 0.72rem;
+  }
+
+  .heroTitle {
+    max-width: none;
+    font-size: 2rem;
+  }
+
+  .heroText,
+  .highlightNote {
+    font-size: 0.92rem;
+    line-height: 1.8;
+  }
+
+  .highlightColumn {
+    gap: 0.8rem;
+  }
+
+  .highlightCard {
+    padding: 1.2rem;
+    border-radius: 1.1rem;
+  }
+
+  .highlightValue {
+    font-size: 1.7rem;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1279px) {
+  .heroSection {
+    --about-hero-unit: calc(100vw / 12.8);
+  }
+
+  .heroInner {
+    width: min(72rem, calc(100% - 40px));
+  }
+}
+
+@media (min-width: 1921px) {
+  .heroSection {
+    --about-hero-unit: calc(100vw / 19.2);
+  }
+}

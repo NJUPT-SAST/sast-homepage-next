@@ -1,6 +1,6 @@
 import { DataSection, HeroSection, IntroduceSection } from "@/components/home";
 import { Dock, SiteFooter } from "@/components/layout";
-import styles from "./page.module.css";
+import styles from "@/app/page.module.css";
 
 export default function Home() {
   return (
