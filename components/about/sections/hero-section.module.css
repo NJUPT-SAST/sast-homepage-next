@@ -4,24 +4,45 @@
   overflow: visible;
   z-index: 1;
   --about-hero-unit: 100px;
+  --hero-content-width: 72rem;
+  --hero-content-side: 48px;
+  --hero-card-width: 23rem;
+  --hero-row-gap: 2rem;
+  --hero-row-gap-mobile: 1rem;
   font-size: var(--about-hero-unit);
 }
 
 .heroInner {
   position: relative;
   z-index: 2;
-  display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(17rem, 20rem);
-  align-items: end;
-  gap: 2rem;
-  width: min(72rem, calc(100% - 48px));
+  width: min(var(--hero-content-width), calc(100% - var(--hero-content-side)));
   margin: 0 auto;
   padding: 8.5rem 0 5rem;
   font-size: 1rem;
 }
 
+.heroRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--hero-card-width);
+  align-items: end;
+  gap: var(--hero-row-gap);
+}
+
+.heroRow + .heroRow {
+  margin-top: 2.5rem;
+}
+
+.heroRowReverse {
+  grid-template-columns: var(--hero-card-width) minmax(0, 1fr);
+}
+
 .heroCopy {
-  max-width: 40rem;
+  max-width: 44rem;
+}
+
+.heroRowReverse .heroCopy {
+  width: 100%;
+  margin-left: auto;
 }
 
 .eyebrow {
@@ -33,29 +54,44 @@
 }
 
 .heroTitle {
-  max-width: 34rem;
+  max-width: 36rem;
   margin: 0;
   color: #303133;
-  font-size: clamp(2.4rem, 4vw, 4rem);
+  font-size: clamp(2.4rem, 3.2vw, 4rem);
   font-weight: 700;
   line-height: 1.14;
 }
 
 .heroText {
-  max-width: 36rem;
   margin: 1.125rem 0 0;
   color: #606266;
   font-size: 1rem;
   line-height: 1.9;
 }
 
+.heroRowReverse .eyebrow,
+.heroRowReverse .heroTitle {
+  width: 100%;
+  max-width: none;
+  margin-left: 0;
+  text-align: right;
+}
+
+.heroRowReverse .heroTitle {
+  font-size: clamp(2.2rem, 2.8vw, 3.4rem);
+}
+
 .highlightColumn {
   display: grid;
-  gap: 1rem;
+  gap: 0.75rem;
+}
+
+.heroRowReverse .highlightColumn {
+  width: 100%;
 }
 
 .highlightCard {
-  padding: 1.4rem 1.5rem;
+  padding: 1rem 1.25rem;
   background: rgba(255, 255, 255, 0.92);
   box-shadow: 0 1rem 2rem rgba(220, 223, 230, 0.45);
   border: 1px solid rgba(255, 255, 255, 0.9);
@@ -66,29 +102,47 @@
 .highlightValue {
   margin: 0;
   color: #303133;
-  font-size: 2rem;
+  font-size: 1.75rem;
   font-weight: 700;
   line-height: 1;
 }
 
 .highlightNote {
-  margin: 0.7rem 0 0;
+  margin: 0.45rem 0 0;
   color: #606266;
-  font-size: 0.95rem;
-  line-height: 1.9;
+  font-size: 0.9rem;
+  line-height: 1.65;
 }
 
 @media (max-width: 767px) {
   .heroSection {
     min-height: auto;
     --about-hero-unit: calc(100vw / 3.75);
+    --hero-content-side: 28px;
   }
 
   .heroInner {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    width: min(100% - 28px, 36rem);
+    width: min(calc(100% - var(--hero-content-side)), 36rem);
     padding: 5.4rem 0 2.7rem;
+  }
+
+  .heroRow,
+  .heroRowReverse {
+    grid-template-columns: 1fr;
+    gap: var(--hero-row-gap-mobile);
+  }
+
+  .heroRow + .heroRow {
+    margin-top: 1.25rem;
+  }
+
+  .heroRowReverse .heroCopy {
+    margin-left: 0;
+  }
+
+  .heroRowReverse .eyebrow,
+  .heroRowReverse .heroTitle {
+    text-align: left;
   }
 
   .eyebrow {
@@ -108,26 +162,25 @@
   }
 
   .highlightColumn {
-    gap: 0.8rem;
+    gap: 0.7rem;
   }
 
   .highlightCard {
-    padding: 1.2rem;
+    padding: 1rem 1.05rem;
     border-radius: 1.1rem;
   }
 
   .highlightValue {
-    font-size: 1.7rem;
+    font-size: 1.55rem;
   }
 }
 
 @media (min-width: 768px) and (max-width: 1279px) {
   .heroSection {
     --about-hero-unit: calc(100vw / 12.8);
-  }
-
-  .heroInner {
-    width: min(72rem, calc(100% - 40px));
+    --hero-content-width: 76rem;
+    --hero-content-side: 40px;
+    --hero-card-width: 18rem;
   }
 }
 

@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "SAST Homepage",
-  description: "A modern SAST homepage inspired by the original SAST-HomePage project.",
+  title: "SAST",
+  description: "南京邮电大学大学生科学技术协会",
 };
 
 export default function RootLayout({

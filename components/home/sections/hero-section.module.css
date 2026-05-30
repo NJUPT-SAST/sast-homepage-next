@@ -26,18 +26,6 @@
   pointer-events: none;
 }
 
-.logoLink {
-  position: absolute;
-  top: 0.3em;
-  left: 0.6em;
-  z-index: 3;
-}
-
-.logo {
-  width: 1.5em;
-  height: auto;
-}
-
 .cube {
   position: absolute;
   left: 14.25em;
@@ -77,10 +65,6 @@
     height: 6.42em;
     transform: none;
     z-index: 3;
-  }
-
-  .logoLink {
-    display: none;
   }
 
   .cube {

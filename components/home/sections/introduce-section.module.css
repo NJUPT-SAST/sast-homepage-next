@@ -110,7 +110,7 @@
 .question {
   width: calc(3.56 * var(--introduce-unit));
   margin: 0 0 calc(0.42 * var(--introduce-unit));
-  font-size: 0.36em;
+  font-size: 0.33em;
   line-height: 1.15;
   font-weight: 700;
   color: #27a29c;

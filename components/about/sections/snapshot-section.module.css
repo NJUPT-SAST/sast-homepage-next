@@ -15,8 +15,6 @@
 }
 
 .snapshotHeader {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(18rem, 28rem);
   gap: 2rem;
   align-items: end;
 }
@@ -42,6 +40,11 @@
   margin: 0;
   color: #606266;
   line-height: 1.9;
+  margin-top: 0.85rem;
+}
+
+.momentText {
+  font-size: 0.98rem;
 }
 
 .sectionLead {
@@ -76,11 +79,6 @@
   color: #303133;
   font-size: 1.2rem;
   font-weight: 700;
-}
-
-.momentText {
-  margin-top: 0.85rem;
-  font-size: 0.98rem;
 }
 
 @media (max-width: 767px) {

@@ -1,5 +1,5 @@
 import { Backgroud1 } from "@/components/shared";
-import { aboutHighlights } from "@/components/about/data/aboutpage-data";
+import aboutContent from "@/content/about.json";
 import styles from "./hero-section.module.css";
 
 export default function AboutHeroSection() {
@@ -8,22 +8,46 @@ export default function AboutHeroSection() {
       <Backgroud1 />
 
       <div className={styles.heroInner}>
-        <div className={styles.heroCopy}>
-          <p className={styles.eyebrow}>ABOUT SAST</p>
-          <h1 className={styles.heroTitle}>在技术、协作与表达之间，持续生长。</h1>
-          <p className={styles.heroText}>
-            SAST 对我们来说不只是一个技术社团，也是一种一起做事的方式。有人从这里开始接触项目，有人把兴趣慢慢做成作品，也有人在一次次合作里找到更适合自己的方向。
-          </p>
-          <p className={styles.heroText}>这页没有试图把一切说满，而是想保留一种更接近真实的感觉：好奇、认真、愿意反复修改，也愿意把好的东西继续传下去。</p>
+        <div className={styles.heroRow}>
+          <div className={styles.heroCopy}>
+            <p className={styles.eyebrow}>{aboutContent.hero.top.eyebrow}</p>
+            <h1 className={styles.heroTitle}>{aboutContent.hero.top.title}</h1>
+            {aboutContent.hero.top.text.filter(Boolean).map((paragraph) => (
+              <p key={paragraph} className={styles.heroText}>
+                {paragraph}
+              </p>
+            ))}
+          </div>
+
+          <div className={styles.highlightColumn}>
+            {aboutContent.hero.highlights.top.map((item) => (
+              <article key={item.value} className={styles.highlightCard}>
+                <p className={styles.highlightValue}>{item.value}</p>
+                <p className={styles.highlightNote}>{item.note}</p>
+              </article>
+            ))}
+          </div>
         </div>
 
-        <div className={styles.highlightColumn}>
-          {aboutHighlights.map((item) => (
-            <article key={item.value} className={styles.highlightCard}>
-              <p className={styles.highlightValue}>{item.value}</p>
-              <p className={styles.highlightNote}>{item.note}</p>
-            </article>
-          ))}
+        <div className={`${styles.heroRow} ${styles.heroRowReverse}`}>
+          <div className={styles.highlightColumn}>
+            {aboutContent.hero.highlights.bottom.map((item) => (
+              <article key={item.value} className={styles.highlightCard}>
+                <p className={styles.highlightValue}>{item.value}</p>
+                <p className={styles.highlightNote}>{item.note}</p>
+              </article>
+            ))}
+          </div>
+
+          <div className={`${styles.heroCopy}`}>
+            <p className={styles.eyebrow}>{aboutContent.hero.bottom.eyebrow}</p>
+            <h2 className={styles.heroTitle}>{aboutContent.hero.bottom.title}</h2>
+            {aboutContent.hero.bottom.text.filter(Boolean).map((paragraph) => (
+              <p key={paragraph} className={styles.heroText}>
+                {paragraph}
+              </p>
+            ))}
+          </div>
         </div>
       </div>
     </section>

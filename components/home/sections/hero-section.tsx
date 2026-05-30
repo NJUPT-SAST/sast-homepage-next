@@ -10,10 +10,6 @@ export default function HeroSection() {
             <Backgroud1 />
 
             <div className={styles.heroInner}>
-                <a href="./" className={styles.logoLink} aria-label="返回首页顶部">
-                    <Image src="/share/logos/logo-color.png" alt="SAST" width={135} height={55} className={styles.logo} priority />
-                </a>
-
                 <HomeCarousel slides={slides} />
 
                 <div className={styles.heroForegroundScene} aria-hidden>

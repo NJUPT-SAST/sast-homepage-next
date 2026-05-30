@@ -224,7 +224,7 @@ export default function HomeCarousel({ slides }: { slides: CarouselSlide[] }) {
         </div>
       </div>
 
-      <div className={styles.indicators} aria-label="首页轮播图切换">
+      <div className={styles.indicators} aria-label="轮播切换">
         {slides.map((slide, index) => (
           <button
             key={slide.title}

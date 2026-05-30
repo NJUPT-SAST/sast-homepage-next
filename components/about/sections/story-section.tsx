@@ -1,35 +1,119 @@
+"use client";
+
+import { useEffect, useRef } from "react";
 import Image from "next/image";
-import { aboutPrinciples } from "@/components/about/data/aboutpage-data";
+import aboutContent from "@/content/about.json";
 import styles from "./story-section.module.css";
 
 export default function AboutStorySection() {
+  const gridRef = useRef<HTMLDivElement | null>(null);
+
+  const storyCards = [
+    {
+      key: "story-text",
+      index: "01",
+      type: "text" as const,
+      texts: aboutContent.story.texts.filter(Boolean),
+    },
+    ...aboutContent.story.principles.map((item, index) => ({
+      key: item.title,
+      index: `0${index + 2}`,
+      type: "principle" as const,
+      ...item,
+    })),
+  ];
+
+  useEffect(() => {
+    const grid = gridRef.current;
+
+    if (!grid || window.innerWidth <= 767) {
+      return;
+    }
+
+    const layoutCards = () => {
+      const rowSize = parseFloat(getComputedStyle(grid).getPropertyValue("grid-auto-rows"));
+      const gapSize = parseFloat(getComputedStyle(grid).getPropertyValue("gap"));
+
+      if (!rowSize) {
+        return;
+      }
+
+      grid.querySelectorAll<HTMLElement>(`[data-story-card="true"]`).forEach((card) => {
+        const content = card.firstElementChild as HTMLElement | null;
+
+        if (!content) {
+          return;
+        }
+
+        const span = Math.ceil((content.getBoundingClientRect().height + gapSize) / (rowSize + gapSize));
+        card.style.gridRowEnd = `span ${span}`;
+      });
+    };
+
+    const resizeObserver = new ResizeObserver(() => {
+      layoutCards();
+    });
+
+    grid.querySelectorAll<HTMLElement>(`[data-story-card="true"]`).forEach((card) => {
+      const content = card.firstElementChild as HTMLElement | null;
+
+      if (content) {
+        resizeObserver.observe(content);
+      }
+    });
+
+    layoutCards();
+    window.addEventListener("resize", layoutCards);
+
+    return () => {
+      resizeObserver.disconnect();
+      window.removeEventListener("resize", layoutCards);
+    };
+  }, []);
+
   return (
     <section className={styles.storySection}>
       <div className={styles.storyInner}>
         <div className={styles.storyHeader}>
           <div className={styles.titleBlock}>
-            <p className={styles.sectionLabel}>WHO WE ARE</p>
-            <h2 className={styles.sectionTitle}>关于我们，更像是一组持续发生的状态</h2>
+            <p className={styles.sectionLabel}>{aboutContent.story.label}</p>
+            <h2 className={styles.sectionTitle}>{aboutContent.story.title}</h2>
           </div>
-          <p className={styles.sectionLead}>我们希望技术不只是技能表上的一项，而是能连接人、项目、表达和长期兴趣的媒介。于是，关于页也不做成传统介绍栏，而是用更接近现在气质的方式去呈现。</p>
+          <p className={styles.sectionLead}>{aboutContent.story.lead}</p>
         </div>
 
-        <div className={styles.storyBody}>
-          <article className={styles.featurePanel}>
-            <div className={styles.featureIntro}>
-              <Image src="/share/logos/logo-color.png" alt="SAST" width={135} height={55} className={styles.featureLogo} />
-              <p className={styles.featureText}>我们关心的不只是“会不会”，也包括“为什么这样做”和“怎样一起把它做得更好”。这种节奏，决定了 SAST 看起来既有技术感，也总带着一点温度。</p>
-            </div>
-          </article>
+        <div ref={gridRef} className={styles.storyMasonry}>
+          {storyCards.map((item) => (
+            <article
+              key={item.key}
+              data-story-card="true"
+              className={`${styles.storyCard} ${item.type === "text" ? styles.textCard : styles.principleCard}`}>
+              <div className={styles.storyCardInner}>
+                <p className={styles.cardIndex}>{item.index}</p>
 
-          <div className={styles.principlesGrid}>
-            {aboutPrinciples.map((item) => (
-              <article key={item.title} className={styles.principleCard}>
-                <h3 className={styles.principleTitle}>{item.title}</h3>
-                <p className={styles.principleText}>{item.text}</p>
-              </article>
-            ))}
-          </div>
+                {item.type === "text" ? (
+                  <>
+                    {item.texts.map((paragraph) => (
+                      <p key={paragraph} className={styles.featureText}>
+                        {paragraph}
+                      </p>
+                    ))}
+                    <p className={styles.featureText}>
+                      <a href="https://www.feishu.cn/calendar/share/calendar?token=PDr9ALcjL-ljBbZBRNjit8keiLGQQR_exfxEAhng0wxQ2UmtlnwI62w4vFurID1OytdHJfDT1g==" className={styles.moreLink}>
+                        订阅 SAST 公开活动日历
+                      </a>
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    {item.image ? <Image src={item.image} alt="" width={640} height={360} className={styles.principleImage} /> : null}
+                    <h3 className={styles.principleTitle}>{item.title}</h3>
+                    <p className={styles.principleText}>{item.text}</p>
+                  </>
+                )}
+              </div>
+            </article>
+          ))}
         </div>
       </div>
     </section>

@@ -11,7 +11,7 @@ export default function DataSection() {
       <div className={styles.dataInner}>
         <Image
           src="/home/titles/data-title.png"
-          alt="数据"
+          alt="数据概览"
           width={201}
           height={60}
           className={styles.dataTitle}

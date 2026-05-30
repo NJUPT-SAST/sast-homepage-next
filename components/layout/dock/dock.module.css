@@ -1,3 +1,18 @@
+.dockShell {
+  position: relative;
+  z-index: 100;
+  font-size: var(--dock-unit);
+  --dock-unit: 100px;
+}
+
+.desktopLogoLink {
+  position: absolute;
+  top: 0.3em;
+  left: 50%;
+  z-index: 20;
+  transform: translateX(-5.4em);
+}
+
 .dock {
   position: fixed;
   top: 0;
@@ -8,9 +23,8 @@
   justify-content: center;
   font-size: var(--dock-unit);
   pointer-events: none;
-  padding-top: 0.20em;
+  padding-top: 0.2em;
   padding-inline: 0.18em;
-  --dock-unit: 100px;
 }
 
 .logoLink {
@@ -18,7 +32,7 @@
 }
 
 .logo {
-  width: calc(1.53 * var(--dock-unit));
+  width: 1.5em;
   height: auto;
 }
 
@@ -30,7 +44,7 @@
   padding: 0.06em 0.1em;
   border: 1px solid rgba(255, 255, 255, 0.7);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.78);
+  background: rgba(255, 255, 255, 0.6);
   box-shadow: 0 0.08em 0.35em rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(0.15em);
   pointer-events: auto;
@@ -55,12 +69,19 @@
 }
 
 @media (max-width: 767px) {
+  .dockShell {
+    --dock-unit: calc(100vw / 3.75);
+  }
+
+  .desktopLogoLink {
+    display: none;
+  }
+
   .dock {
     z-index: 50;
-    padding: 0.15em 0em;
+    padding: 0.15em 0;
     background: rgba(255, 255, 255, 0.6);
     backdrop-filter: blur(0.1em);
-    --dock-unit: calc(100vw / 3.75);
   }
 
   .nav {
@@ -102,12 +123,14 @@
 }
 
 @media (min-width: 768px) and (max-width: 1279px) {
+  .dockShell,
   .dock {
     --dock-unit: calc(100vw / 12.8);
   }
 }
 
 @media (min-width: 1921px) {
+  .dockShell,
   .dock {
     --dock-unit: calc(100vw / 19.2);
   }
