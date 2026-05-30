@@ -1,5 +1,6 @@
 import { Backgroud2 } from "@/components/shared";
 import aboutContent from "@/content/about.json";
+import { renderRichText } from "@/components/about/utils/render-rich-text";
 import styles from "./snapshot-section.module.css";
 
 export default function AboutSnapshotSection() {
@@ -13,7 +14,7 @@ export default function AboutSnapshotSection() {
           <h2 className={styles.sectionTitle}>{aboutContent.snapshot.title}</h2>
           {aboutContent.snapshot.lead.filter(Boolean).map((paragraph) => (
             <p key={paragraph} className={styles.sectionLead}>
-              {paragraph}
+              {renderRichText(paragraph)}
             </p>
           ))}
         </div>
@@ -22,8 +23,8 @@ export default function AboutSnapshotSection() {
           {aboutContent.snapshot.moments.map((item, index) => (
             <article key={item.title} className={styles.momentCard}>
               <p className={styles.momentIndex}>0{index + 1}</p>
-              <h3 className={styles.momentTitle}>{item.title}</h3>
-              <p className={styles.momentText}>{item.text}</p>
+              <h3 className={styles.momentTitle}>{renderRichText(item.title)}</h3>
+              <p className={styles.momentText}>{renderRichText(item.text)}</p>
             </article>
           ))}
         </div>

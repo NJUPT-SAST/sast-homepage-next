@@ -1,5 +1,6 @@
 import { Backgroud1 } from "@/components/shared";
 import aboutContent from "@/content/about.json";
+import { renderRichText } from "@/components/about/utils/render-rich-text";
 import styles from "./hero-section.module.css";
 
 export default function AboutHeroSection() {
@@ -14,7 +15,7 @@ export default function AboutHeroSection() {
             <h1 className={styles.heroTitle}>{aboutContent.hero.top.title}</h1>
             {aboutContent.hero.top.text.filter(Boolean).map((paragraph) => (
               <p key={paragraph} className={styles.heroText}>
-                {paragraph}
+                {renderRichText(paragraph)}
               </p>
             ))}
           </div>
@@ -44,7 +45,7 @@ export default function AboutHeroSection() {
             <h2 className={styles.heroTitle}>{aboutContent.hero.bottom.title}</h2>
             {aboutContent.hero.bottom.text.filter(Boolean).map((paragraph) => (
               <p key={paragraph} className={styles.heroText}>
-                {paragraph}
+                {renderRichText(paragraph)}
               </p>
             ))}
           </div>

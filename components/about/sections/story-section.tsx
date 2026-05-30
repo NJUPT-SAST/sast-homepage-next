@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 import aboutContent from "@/content/about.json";
+import { renderRichText } from "@/components/about/utils/render-rich-text";
 import styles from "./story-section.module.css";
 
 export default function AboutStorySection() {
@@ -95,7 +96,7 @@ export default function AboutStorySection() {
                   <>
                     {item.texts.map((paragraph) => (
                       <p key={paragraph} className={styles.featureText}>
-                        {paragraph}
+                        {renderRichText(paragraph)}
                       </p>
                     ))}
                     <p className={styles.featureText}>
@@ -107,8 +108,8 @@ export default function AboutStorySection() {
                 ) : (
                   <>
                     {item.image ? <Image src={item.image} alt="" width={640} height={360} className={styles.principleImage} /> : null}
-                    <h3 className={styles.principleTitle}>{item.title}</h3>
-                    <p className={styles.principleText}>{item.text}</p>
+                    <h3 className={styles.principleTitle}>{renderRichText(item.title)}</h3>
+                    <p className={styles.principleText}>{renderRichText(item.text)}</p>
                   </>
                 )}
               </div>
