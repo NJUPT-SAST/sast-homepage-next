@@ -5,7 +5,7 @@ import styles from "./gallery-section.module.css";
 
 export default function ActivitiesGallerySection() {
   return (
-    <section className={styles.gallerySection}>
+    <section className={styles.gallerySection} id="gallery">
       <Backgroud2 />
 
       <div className={styles.galleryInner}>

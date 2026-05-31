@@ -35,11 +35,11 @@
       "bottom": []
     }
   },
-  "story": {
+  "activities": {
     "eyebrow": "DAILY ACTIVITIES",
     "title": "SAST 活动",
     "moreLink": {
-      "href": "/activities",
+      "href": "/activities#gallery",
       "text": "> 更多活动瞬间"
     },
     "calendarCta": {
@@ -79,7 +79,7 @@
       }
     ]
   },
-  "snapshot": {
+  "structure": {
     "eyebrow": "HOW TO JOIN",
     "title": "加入我们",
     "moreLink": {

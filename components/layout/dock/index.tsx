@@ -3,9 +3,9 @@ import styles from "./dock.module.css";
 
 const links = [
   { href: "/", label: "首页" },
+  { href: "/activities", label: "活动" },
   { href: "/about", label: "关于" },
   { href: "/members", label: "成员" },
-  { href: "/activities", label: "活动" },
 ];
 
 export default function Dock() {

@@ -52,7 +52,7 @@
   "gallerySection": {
     "eyebrow": "PHOTO WALL",
     "title": "SAST 照片墙",
-    "intro": "这些照片来自 SAST 过去一段时间的公开活动、授课、赛事与交流现场。它们不是严格按年份排列，而是更像一面持续更新的活动记忆墙。",
+    "intro": "每一次分享、每一场承办，都是 SAST 部员们的努力付出和热情投入。我们期待每一个怀揣好奇与梦想的你，在这里释放自己的能量，与我们一同成长，共同探索世界的无限可能。",
     "shots": [
       {
         "image": "/pictures/251106软研授课.jpg",
@@ -78,6 +78,36 @@
         "image": "/pictures/250924电子部.jpg",
         "title": "电子部助力科技节开幕式",
         "caption": "科技节开幕式背后来自 SAST 同学们的技术支持"
+      },
+      {
+        "image": "/pictures/251012百团大战.png",
+        "title": "百团大战",
+        "caption": "SAST 在百团大战中展示社团风采"
+      },
+      {
+        "image": "/pictures/251102电子部授课.jpg",
+        "title": "电子部授课",
+        "caption": "从零出发的电子技术入门课"
+      },
+      {
+        "image": "/pictures/251206南中医科技节.jpg",
+        "title": "南中医科技节",
+        "caption": "应南中医邀请参加科技节交流活动"
+      },
+      {
+        "image": "/pictures/251120创新杯.jpeg",
+        "title": "创新杯成果展示",
+        "caption": "在创新杯终审现场接受教授们的提问与点评"
+      },
+      {
+        "image": "/pictures/251121南财科技节.jpg",
+        "title": "南财科技节",
+        "caption": "应南财邀请参加科技节交流活动"
+      },
+      {
+        "image": "/pictures/251207科技节“柚子能量杯”游戏创作大赛.jpg",
+        "title": "“柚子能量杯”游戏创作大赛",
+        "caption": "SAST 承办的科技节专项赛事之一，线下决赛现场"
       }
     ]
   }
