@@ -13,7 +13,7 @@ export default function AboutHeroSection() {
           <div className={styles.heroCopy}>
             <p className={styles.eyebrow}>{aboutContent.hero.top.eyebrow}</p>
             <h1 className={styles.heroTitle}>{aboutContent.hero.top.title}</h1>
-            {aboutContent.hero.top.text.filter(Boolean).map((paragraph) => (
+            {aboutContent.hero.top.paragraphs.filter(Boolean).map((paragraph) => (
               <p key={paragraph} className={styles.heroText}>
                 {renderRichText(paragraph)}
               </p>
@@ -21,7 +21,7 @@ export default function AboutHeroSection() {
           </div>
 
           <div className={styles.highlightColumn}>
-            {aboutContent.hero.highlights.top.map((item) => (
+            {aboutContent.hero.highlightCards.top.map((item) => (
               <article key={item.value} className={styles.highlightCard}>
                 <p className={styles.highlightValue}>{item.value}</p>
                 <p className={styles.highlightNote}>{item.note}</p>
@@ -32,7 +32,7 @@ export default function AboutHeroSection() {
 
         <div className={`${styles.heroRow} ${styles.heroRowReverse}`}>
           <div className={styles.highlightColumn}>
-            {aboutContent.hero.highlights.bottom.map((item) => (
+            {aboutContent.hero.highlightCards.bottom.map((item: { value: string; note: string }) => (
               <article key={item.value} className={styles.highlightCard}>
                 <p className={styles.highlightValue}>{item.value}</p>
                 <p className={styles.highlightNote}>{item.note}</p>
@@ -43,7 +43,7 @@ export default function AboutHeroSection() {
           <div className={`${styles.heroCopy}`}>
             <p className={styles.eyebrow}>{aboutContent.hero.bottom.eyebrow}</p>
             <h2 className={styles.heroTitle}>{aboutContent.hero.bottom.title}</h2>
-            {aboutContent.hero.bottom.text.filter(Boolean).map((paragraph) => (
+            {aboutContent.hero.bottom.paragraphs.filter(Boolean).map((paragraph) => (
               <p key={paragraph} className={styles.heroText}>
                 {renderRichText(paragraph)}
               </p>

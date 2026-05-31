@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { summaries } from "@/components/home/data/homepage-data";
+import { introduceCards } from "@/components/home/data/homepage-data";
 import homeContent from "@/content/home.json";
 import styles from "./introduce-section.module.css";
 
@@ -14,7 +14,7 @@ export default function IntroduceSection() {
 
       <div className={styles.introduceInner}>
         <div className={styles.summaryColumn}>
-          {summaries.map((item) => (
+          {introduceCards.map((item) => (
             <article key={item.title} className={styles.summaryItem}>
               <Image src={item.icon} alt="" width={50} height={50} className={styles.summaryIcon} />
               <div>
@@ -28,13 +28,13 @@ export default function IntroduceSection() {
         </div>
 
         <div className={styles.aboutColumn}>
-          <h2 className={styles.question}>{homeContent.introduce.question}</h2>
+          <h2 className={styles.question}>{homeContent.introduce.title}</h2>
           <Image src="/home/illustrations/tree.png" alt="" width={535} height={463} className={styles.tree} aria-hidden />
           <p className={styles.answer}>
-            {homeContent.introduce.aboutText.map((paragraph, index) => (
+            {homeContent.introduce.paragraphs.map((paragraph, index) => (
               <span key={paragraph}>
                 {paragraph}
-                {index < homeContent.introduce.aboutText.length - 1 ? (
+                {index < homeContent.introduce.paragraphs.length - 1 ? (
                   <>
                     <br />
                     <br />

@@ -23,7 +23,7 @@ export default function DataSection() {
                 <span className={styles.dataValue}>{item.value}</span>
                 <span className={styles.dataUnit}>{item.unit}</span>
               </div>
-              <p className={styles.dataText}>{item.text}</p>
+              <p className={styles.dataText}>{item.description}</p>
             </article>
           ))}
         </div>

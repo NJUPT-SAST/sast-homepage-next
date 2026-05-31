@@ -1,0 +1,94 @@
+{
+  "recentSection": {
+    "eyebrow": "RECENT EVENTS",
+    "title": "SAST 近期活动",
+    "moreLink": {
+      "href": "https://www.feishu.cn/calendar/share/calendar?token=4Y5qsIbc1qfP406WVoyscnAg7qIZolfwOSfGjrdahnRJE4rxAWV2Pu717I06umP7o-kyUQH4lQ==",
+      "text": "订阅活动日历"
+    },
+    "intro": [
+      "SAST 每年会举办多场面向全校同学的活动，从面向新生的招新宣讲、方草地公开课、科技节专项赛事等等，到日常的技术分享、期末急救车等等，内容丰富且持续更新。订阅活动日历及时获取最新活动信息。",
+      "不论你是对技术分享感兴趣，还是想参与赛事，或者只是想了解 SAST 的活动氛围，我们欢迎所有同学的参与。"
+    ],
+    "activities": [
+      {
+        "organizer": "软件研发部",
+        "date": "2025/9/6",
+        "time": "19:00-21:00",
+        "location": "大学生活动中心",
+        "title": "软研日常授课",
+        "details": "围绕编程基础、项目实践和协作开发展开的部门授课，帮助成员在稳定输出中逐步建立自己的技术节奏。",
+        "link": "#"
+      },
+      {
+        "organizer": "校科协",
+        "date": "2025/10/12",
+        "time": "19:00-21:00",
+        "location": "仙林校区报告厅",
+        "title": "秋季招新宣讲会",
+        "details": "面向新生介绍 SAST 的组织架构、部门方向与活动生态，也是很多同学第一次与 SAST 正式见面的时刻。",
+        "link": "#"
+      },
+      {
+        "organizer": "校科协公开课程组",
+        "date": "2026/3/15",
+        "time": "19:00-21:00",
+        "location": "方草地开放区域",
+        "title": "方草地公开课",
+        "details": "面向新生开放的技术分享活动，用更轻松的方式把技术兴趣、社团氛围和学习路径提前带到大家面前。",
+        "link": "#"
+      },
+      {
+        "organizer": "校科协",
+        "date": "\u00A0",
+        "time": "\u00A0",
+        "location": "\u00A0",
+        "title": "科技节专项赛事",
+        "details": "每年科技节期间举办的专项赛事，涵盖软件开发、算法设计、数据分析等多个技术领域，鼓励同学们将创意和技术真正落到作品里。",
+        "link": "#"
+      }
+    ]
+  },
+  "gallerySection": {
+    "eyebrow": "PHOTO WALL",
+    "title": "SAST 照片墙",
+    "intro": "这些照片来自 SAST 过去一段时间的公开活动、授课、赛事与交流现场。它们不是严格按年份排列，而是更像一面持续更新的活动记忆墙。",
+    "shots": [
+      {
+        "image": "/pictures/251106软研授课.jpg",
+        "alt": "软件研发部授课现场",
+        "title": "日常授课",
+        "caption": "持续、稳定、贴近实战的技术分享",
+        "layout": "wide"
+      },
+      {
+        "image": "/pictures/250708方草地授课.png",
+        "alt": "方草地公开课现场",
+        "title": "公开课堂",
+        "caption": "轻松但有内容的技术入门场景",
+        "layout": "tall"
+      },
+      {
+        "image": "/pictures/251012宣讲会合照.jpg",
+        "alt": "招新宣讲会合照",
+        "title": "招新宣讲",
+        "caption": "每年与新同学相遇的起点",
+        "layout": "square"
+      },
+      {
+        "image": "/pictures/241107创新杯.jpg",
+        "alt": "创新杯比赛现场",
+        "title": "赛事现场",
+        "caption": "把创意和执行真正落到作品里",
+        "layout": "wide"
+      },
+      {
+        "image": "/pictures/251106软研授课.jpg",
+        "alt": "授课中的交流场景",
+        "title": "现场交流",
+        "caption": "问题讨论和经验传递同样重要",
+        "layout": "square"
+      }
+    ]
+  }
+}

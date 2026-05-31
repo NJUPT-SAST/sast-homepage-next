@@ -5,7 +5,7 @@ const links = [
   { href: "/", label: "首页" },
   { href: "/about", label: "关于" },
   { href: "/members", label: "成员" },
-  { href: "/pictures", label: "画廊" },
+  { href: "/activities", label: "活动" },
 ];
 
 export default function Dock() {

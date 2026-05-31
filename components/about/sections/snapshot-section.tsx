@@ -10,17 +10,17 @@ export default function AboutSnapshotSection() {
 
       <div className={styles.snapshotInner}>
         <div className={styles.snapshotHeader}>
-          <p className={styles.sectionLabel}>{aboutContent.snapshot.label}</p>
+          <p className={styles.sectionLabel}>{aboutContent.snapshot.eyebrow}</p>
 
           <div className={styles.titleRow}>
             <h2 className={styles.sectionTitle}>{aboutContent.snapshot.title}</h2>
-            <a href={aboutContent.snapshot.link.href} className={styles.sectionLink}>
-              {aboutContent.snapshot.link.text}
+            <a href={aboutContent.snapshot.moreLink.href} className={styles.sectionLink}>
+              {aboutContent.snapshot.moreLink.text}
             </a>
           </div>
 
           <div className={styles.headerBody}>
-            {aboutContent.snapshot.lead.filter(Boolean).map((paragraph) => (
+            {aboutContent.snapshot.paragraphs.filter(Boolean).map((paragraph) => (
               <p key={paragraph} className={styles.sectionLead}>
                 {renderRichText(paragraph)}
               </p>
@@ -29,7 +29,7 @@ export default function AboutSnapshotSection() {
         </div>
 
         <div className={styles.momentGrid}>
-          {aboutContent.snapshot.moments.map((item, index) => (
+          {aboutContent.snapshot.cards.map((item, index) => (
             <article key={item.title} className={styles.momentCard}>
               <p className={styles.momentIndex}>0{index + 1}</p>
               <h3 className={styles.momentTitle}>{renderRichText(item.title)}</h3>

@@ -11,9 +11,10 @@ export type CarouselSlide = {
   imageHeight: number;
   title: string;
   titleColor: string;
-  text: string;
-  more: string;
+  description: string;
+  ctaText: string;
   moreColor: string;
+  ctaHref: string;
 };
 
 export default function HomeCarousel({ slides }: { slides: CarouselSlide[] }) {
@@ -212,9 +213,9 @@ export default function HomeCarousel({ slides }: { slides: CarouselSlide[] }) {
                       {slide.title}
                     </h2>
                     <div className={styles.line} />
-                    <p className={styles.text}>{slide.text}</p>
+                    <p className={styles.text}>{slide.description}</p>
                     <p className={styles.more} style={{ color: slide.moreColor }}>
-                      {slide.more}
+                      {slide.ctaText}
                     </p>
                   </div>
                 </div>

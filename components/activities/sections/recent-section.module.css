@@ -1,0 +1,266 @@
+.recentSection {
+  position: relative;
+  z-index: 1;
+  min-height: clamp(38rem, 55vw, 48rem);
+  padding: 7rem 0 3.5rem;
+  overflow: visible;
+  --recent-unit: 100px;
+  font-size: var(--recent-unit);
+}
+
+.recentInner {
+  position: relative;
+  z-index: 2;
+  width: min(72rem, calc(100% - 48px));
+  margin: 3.6em auto 0;
+  font-size: 1rem;
+}
+
+.recentHeader {
+  display: grid;
+  gap: 0.9rem;
+  max-width: 42rem;
+}
+
+.sectionTitleRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1rem;
+}
+
+.sectionLabel {
+  margin: 0;
+  color: #27a29c;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+}
+
+.sectionTitle {
+  margin: 0;
+  color: #303133;
+  font-size: clamp(2rem, 3vw, 2.9rem);
+  font-weight: 700;
+  line-height: 1.12;
+}
+
+.sectionLead {
+  margin: 0;
+  color: #606266;
+  font-size: 1rem;
+  line-height: 1.9;
+}
+
+.sectionLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.58rem 0.92rem;
+  color: #27a29c;
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.1;
+  text-decoration: none;
+  white-space: nowrap;
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(39, 162, 156, 0.18);
+  border-radius: 999px;
+  box-shadow: 0 0.4rem 1rem rgba(220, 223, 230, 0.18);
+  transition: color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.sectionLink:hover {
+  color: #1d7f79;
+  transform: translateX(0.18rem);
+  box-shadow: 0 0.6rem 1.25rem rgba(39, 162, 156, 0.16);
+}
+
+.activityGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 2.2rem;
+}
+
+.activityCard {
+  display: grid;
+  align-content: start;
+  gap: 1rem;
+  min-height: 100%;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-radius: 1.7rem;
+  box-shadow: 0 1rem 2.5rem rgba(220, 223, 230, 0.38);
+  padding: 1.3rem 1.35rem 1.4rem;
+}
+
+.cardHeader {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 0.5rem;
+  align-items: start;
+}
+
+.cardMain {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.cardTag {
+  color: #27a29c;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+.cardTitle {
+  margin: 0;
+  color: #303133;
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.cardMeta {
+  display: grid;
+  gap: 0rem;
+  width: 100%;
+  text-align: right;
+}
+
+.metaValue {
+  margin: 0;
+  color: #606266;
+  font-size: 0.85rem;
+  line-height: 1.3;
+}
+
+.cardText {
+  margin: 0;
+  color: #606266;
+  font-size: 0.97rem;
+  line-height: 1.85;
+}
+
+.cardLink {
+  justify-self: start;
+  align-self: end;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.42rem;
+  margin-top: auto;
+  padding: 0.45rem 0.8rem;
+  color: #27a29c;
+  font-size: 0.85rem;
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  background: rgba(39, 162, 156, 0.08);
+  border: 1px solid rgba(39, 162, 156, 0.16);
+  border-radius: 999px;
+  transition: transform 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.cardLink::after {
+  content: ">";
+  letter-spacing: 0.06em;
+}
+
+.cardLink:hover {
+  color: #1d7f79;
+  background: rgba(39, 162, 156, 0.12);
+  box-shadow: 0 0.45rem 1rem rgba(39, 162, 156, 0.12);
+  transform: translateX(0.16rem);
+}
+
+@media (max-width: 767px) {
+  .recentSection {
+    min-height: auto;
+    padding: 5rem 0 2.6rem;
+    --recent-unit: calc(100vw / 3.75);
+  }
+
+  .recentInner {
+    width: min(100% - 28px, 36rem);
+    margin: 0 auto;
+  }
+
+  .recentHeader {
+    gap: 0.7rem;
+  }
+
+  .sectionLabel {
+    font-size: 0.72rem;
+  }
+
+  .sectionTitle {
+    font-size: 1.7rem;
+  }
+
+  .sectionTitleRow {
+    gap: 0.55rem 0.75rem;
+    align-items: flex-start;
+  }
+
+  .sectionLead,
+  .cardText {
+    font-size: 0.92rem;
+    line-height: 1.8;
+  }
+
+  .sectionLink {
+    font-size: 0.82rem;
+    padding: 0.52rem 0.78rem;
+  }
+
+  .activityGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .activityCard {
+    gap: 0.85rem;
+    padding: 1.1rem 1.1rem 1.2rem;
+  }
+
+  .cardMain {
+    gap: 0.55rem;
+  }
+
+  .cardTitle {
+    font-size: 1.4rem;
+  }
+
+  .cardMeta {
+    min-width: 0;
+    gap: 0rem;
+  }
+
+  .cardLink {
+    padding: 0.56rem 0.82rem;
+    font-size: 0.84rem;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1279px) {
+  .recentSection {
+    --recent-unit: calc(100vw / 12.8);
+  }
+
+  .recentInner {
+    width: min(72rem, calc(100% - 40px));
+  }
+
+  .activityGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1921px) {
+  .recentSection {
+    --recent-unit: calc(100vw / 19.2);
+  }
+}

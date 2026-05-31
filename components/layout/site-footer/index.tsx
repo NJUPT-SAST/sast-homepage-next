@@ -9,11 +9,13 @@ export default function SiteFooter() {
         <div className={styles.footerDetail}>
           <p>
             <Image src="/share/icons/contact/mail.png" alt="" width={15} height={15} className={styles.footerIcon} />
-            njuptsast@163.com
+            <a href="mailto:njuptsast@163.com" target="_blank" rel="noopener noreferrer">
+              njuptsast@163.com
+            </a>
           </p>
           <p>
             <Image src="/share/icons/contact/address.png" alt="" width={15} height={15} className={styles.footerIcon} />
-            南京邮电大学仙林校区大学生活动中心
+            南京邮电大学仙林校区大学生活动中心 青柚创新汇101
           </p>
         </div>
         <div className={styles.footerDivider} />

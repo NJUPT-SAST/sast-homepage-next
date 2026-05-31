@@ -1,0 +1,196 @@
+.gallerySection {
+  position: relative;
+  z-index: 1;
+  padding: 3rem 0 5rem;
+  --data-unit: 100px;
+}
+
+.galleryInner {
+  position: relative;
+  z-index: 2;
+  width: min(72rem, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+.galleryHeader {
+  display: grid;
+  gap: 0.85rem;
+  max-width: 44rem;
+}
+
+.sectionLabel {
+  margin: 0;
+  color: #27a29c;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+}
+
+.sectionTitle {
+  margin: 0;
+  color: #303133;
+  font-size: clamp(2rem, 3vw, 2.9rem);
+  font-weight: 700;
+  line-height: 1.12;
+}
+
+.sectionLead {
+  margin: 0;
+  color: #606266;
+  font-size: 1rem;
+  line-height: 1.9;
+}
+
+.galleryGrid {
+  column-count: 2;
+  column-gap: 1rem;
+  margin-top: 2rem;
+}
+
+.galleryTile {
+  display: block;
+  width: 100%;
+  margin: 0;
+  margin-bottom: 1rem;
+  border-radius: 1.5rem;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.imageFrame {
+  position: relative;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.76);
+  border-radius: 1.5rem;
+  box-shadow: 0 1rem 2.4rem rgba(220, 223, 230, 0.34);
+}
+
+.galleryImage {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: transform 0.35s ease;
+}
+
+.tileCaption {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: grid;
+  gap: 0.28rem;
+  padding: 1rem 1.05rem 1.1rem;
+  color: #fff;
+  background: linear-gradient(180deg, rgba(18, 18, 18, 0) 0%, rgba(18, 18, 18, 0.72) 72%, rgba(18, 18, 18, 0.84) 100%);
+  opacity: 0;
+  transform: translateY(0.8rem);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+
+.tileTitle {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.tileNote {
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.galleryTile:hover .galleryImage,
+.galleryTile:focus-within .galleryImage {
+  transform: scale(1.035);
+}
+
+.galleryTile:hover .tileCaption,
+.galleryTile:focus-within .tileCaption {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 767px) {
+  .gallerySection {
+    padding: 2.4rem 0 3.2rem;
+    --data-unit: calc(100vw / 3.75);
+  }
+
+  .galleryInner {
+    width: min(100% - 28px, 36rem);
+  }
+
+  .sectionLabel {
+    font-size: 0.72rem;
+  }
+
+  .sectionTitle {
+    font-size: 1.7rem;
+  }
+
+  .sectionLead,
+  .tileNote {
+    font-size: 0.92rem;
+    line-height: 1.8;
+  }
+
+  .galleryGrid {
+    column-count: 2;
+    column-gap: 0.85rem;
+    margin-top: 1.35rem;
+  }
+
+  .galleryTile {
+    margin-bottom: 0.85rem;
+  }
+
+  .tileCaption {
+    padding: 0.9rem 0.92rem 0.96rem;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .tileTitle {
+    font-size: 0.92rem;
+  }
+
+  .tileNote {
+    font-size: 0.82rem;
+    line-height: 1.6;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1279px) {
+  .gallerySection {
+    --data-unit: calc(100vw / 12.8);
+  }
+
+  .galleryInner {
+    width: min(72rem, calc(100% - 40px));
+  }
+}
+
+@media (min-width: 1280px) {
+  .galleryGrid {
+    column-count: 3;
+  }
+}
+
+@media (max-width: 559px) {
+  .galleryGrid {
+    column-count: 1;
+  }
+}
+
+@media (hover: none) {
+  .tileCaption {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (min-width: 1921px) {
+  .gallerySection {
+    --data-unit: calc(100vw / 19.2);
+  }
+}

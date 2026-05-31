@@ -14,9 +14,9 @@ export default function AboutStorySection() {
       key: "story-text",
       index: "01",
       type: "text" as const,
-      texts: aboutContent.story.texts.filter(Boolean),
+      paragraphs: aboutContent.story.paragraphs.filter(Boolean),
     },
-    ...aboutContent.story.principles.map((item, index) => ({
+    ...aboutContent.story.cards.map((item, index) => ({
       key: item.title,
       index: `0${index + 2}`,
       type: "principle" as const,
@@ -77,15 +77,15 @@ export default function AboutStorySection() {
       <div className={styles.storyInner}>
         <div className={styles.storyHeader}>
           <div className={styles.titleBlock}>
-            <p className={styles.sectionLabel}>{aboutContent.story.label}</p>
+            <p className={styles.sectionLabel}>{aboutContent.story.eyebrow}</p>
             <div className={styles.titleRow}>
               <h2 className={styles.sectionTitle}>{aboutContent.story.title}</h2>
-              <a href={aboutContent.story.link.href} className={styles.sectionLink}>
-                {aboutContent.story.link.text}
+              <a href={aboutContent.story.moreLink.href} className={styles.sectionLink}>
+                {aboutContent.story.moreLink.text}
               </a>
             </div>
           </div>
-          <p className={styles.sectionLead}>{aboutContent.story.lead}</p>
+          <p className={styles.sectionLead}>{aboutContent.story.intro}</p>
         </div>
 
         <div ref={gridRef} className={styles.storyMasonry}>
@@ -99,14 +99,14 @@ export default function AboutStorySection() {
 
                 {item.type === "text" ? (
                   <>
-                    {item.texts.map((paragraph) => (
+                    {item.paragraphs.map((paragraph) => (
                       <p key={paragraph} className={styles.featureText}>
                         {renderRichText(paragraph)}
                       </p>
                     ))}
                     <p className={styles.featureText}>
-                      <a href={aboutContent.story.calendarLink.href} className={styles.moreLink}>
-                        {aboutContent.story.calendarLink.text}
+                      <a href={aboutContent.story.calendarCta.href} className={styles.moreLink}>
+                        {aboutContent.story.calendarCta.text}
                       </a>
                     </p>
                   </>
