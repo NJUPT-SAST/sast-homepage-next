@@ -19,7 +19,7 @@ export default function ActivitiesGallerySection() {
           {activitiesContent.gallerySection.shots.map((shot) => (
             <figure key={`${shot.title}-${shot.caption}`} className={styles.galleryTile}>
               <div className={styles.imageFrame}>
-                <Image src={shot.image} alt={shot.alt} width={1200} height={900} className={styles.galleryImage} />
+                <Image src={shot.image} alt={shot.title} width={1200} height={900} className={styles.galleryImage} />
                 <figcaption className={styles.tileCaption}>
                   <span className={styles.tileTitle}>{shot.title}</span>
                   <span className={styles.tileNote}>{shot.caption}</span>

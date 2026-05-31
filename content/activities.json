@@ -56,38 +56,28 @@
     "shots": [
       {
         "image": "/pictures/251106软研授课.jpg",
-        "alt": "软件研发部授课现场",
-        "title": "日常授课",
-        "caption": "持续、稳定、贴近实战的技术分享",
-        "layout": "wide"
+        "title": "软研C#授课",
+        "caption": "持续、稳定、贴近实战的技术分享"
       },
       {
         "image": "/pictures/250708方草地授课.png",
-        "alt": "方草地公开课现场",
-        "title": "公开课堂",
-        "caption": "轻松但有内容的技术入门场景",
-        "layout": "tall"
+        "title": "方草地公开课",
+        "caption": "面向新同学的技术入门课"
       },
       {
         "image": "/pictures/251012宣讲会合照.jpg",
-        "alt": "招新宣讲会合照",
         "title": "招新宣讲",
-        "caption": "每年与新同学相遇的起点",
-        "layout": "square"
+        "caption": "欢迎所有对 SAST 感兴趣的同学加入我们"
       },
       {
         "image": "/pictures/241107创新杯.jpg",
-        "alt": "创新杯比赛现场",
-        "title": "赛事现场",
-        "caption": "把创意和执行真正落到作品里",
-        "layout": "wide"
+        "title": "创新杯",
+        "caption": "SAST 承办多年的创新创业赛事"
       },
       {
-        "image": "/pictures/251106软研授课.jpg",
-        "alt": "授课中的交流场景",
-        "title": "现场交流",
-        "caption": "问题讨论和经验传递同样重要",
-        "layout": "square"
+        "image": "/pictures/250924电子部.jpg",
+        "title": "电子部助力科技节开幕式",
+        "caption": "科技节开幕式背后来自 SAST 同学们的技术支持"
       }
     ]
   }
