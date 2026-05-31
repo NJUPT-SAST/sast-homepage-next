@@ -78,7 +78,12 @@ export default function AboutStorySection() {
         <div className={styles.storyHeader}>
           <div className={styles.titleBlock}>
             <p className={styles.sectionLabel}>{aboutContent.story.label}</p>
-            <h2 className={styles.sectionTitle}>{aboutContent.story.title}</h2>
+            <div className={styles.titleRow}>
+              <h2 className={styles.sectionTitle}>{aboutContent.story.title}</h2>
+              <a href={aboutContent.story.link.href} className={styles.sectionLink}>
+                {aboutContent.story.link.text}
+              </a>
+            </div>
           </div>
           <p className={styles.sectionLead}>{aboutContent.story.lead}</p>
         </div>
@@ -100,8 +105,8 @@ export default function AboutStorySection() {
                       </p>
                     ))}
                     <p className={styles.featureText}>
-                      <a href="https://www.feishu.cn/calendar/share/calendar?token=PDr9ALcjL-ljBbZBRNjit8keiLGQQR_exfxEAhng0wxQ2UmtlnwI62w4vFurID1OytdHJfDT1g==" className={styles.moreLink}>
-                        订阅 SAST 公开活动日历
+                      <a href={aboutContent.story.calendarLink.href} className={styles.moreLink}>
+                        {aboutContent.story.calendarLink.text}
                       </a>
                     </p>
                   </>

@@ -37,7 +37,15 @@
   },
   "story": {
     "label": "DAILY ACTIVITIES",
-    "title": "SAST 的日常开展活动",
+    "title": "SAST 活动",
+    "link": {
+      "href": "/pictures",
+      "text": "> 更多活动瞬间"
+    },
+    "calendarLink": {
+      "href": "https://www.feishu.cn/calendar/share/calendar?token=PDr9ALcjL-ljBbZBRNjit8keiLGQQR_exfxEAhng0wxQ2UmtlnwI62w4vFurID1OytdHJfDT1g==",
+      "text": "订阅 SAST 公开活动日历"
+    },
     "lead": "每年 SAST 都会举办、协办各种活动，其中包括创新杯、挑战杯、大学生科技节等竞赛项目，也包括方草地公开课、各部门日常授课、C 语言急救车等授课活动。",
     "texts": [
       "从方草地公开课、技术分享会，再到C语言急救车、科技节比赛承办，SAST 每年都会开展丰富多样的活动",
@@ -74,6 +82,10 @@
   "snapshot": {
     "label": "HOW TO JOIN",
     "title": "加入我们",
+    "link": {
+      "href": "/departments",
+      "text": "> 更多组织架构"
+    },
     "lead": [
       "校科协主要由技术类部门、办公类部门和管理类部门三大类部门组成。",
       "**技术部门**包含软件研发部、多媒体部、电子部，主要负责举办部分科技节竞赛、日常授课和科协内部的基础设施维护等。",

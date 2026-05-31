@@ -11,12 +11,21 @@ export default function AboutSnapshotSection() {
       <div className={styles.snapshotInner}>
         <div className={styles.snapshotHeader}>
           <p className={styles.sectionLabel}>{aboutContent.snapshot.label}</p>
-          <h2 className={styles.sectionTitle}>{aboutContent.snapshot.title}</h2>
-          {aboutContent.snapshot.lead.filter(Boolean).map((paragraph) => (
-            <p key={paragraph} className={styles.sectionLead}>
-              {renderRichText(paragraph)}
-            </p>
-          ))}
+
+          <div className={styles.titleRow}>
+            <h2 className={styles.sectionTitle}>{aboutContent.snapshot.title}</h2>
+            <a href={aboutContent.snapshot.link.href} className={styles.sectionLink}>
+              {aboutContent.snapshot.link.text}
+            </a>
+          </div>
+
+          <div className={styles.headerBody}>
+            {aboutContent.snapshot.lead.filter(Boolean).map((paragraph) => (
+              <p key={paragraph} className={styles.sectionLead}>
+                {renderRichText(paragraph)}
+              </p>
+            ))}
+          </div>
         </div>
 
         <div className={styles.momentGrid}>
