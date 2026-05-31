@@ -17,7 +17,7 @@
   z-index: 2;
   width: min(var(--hero-content-width), calc(100% - var(--hero-content-side)));
   margin: 0 auto;
-  padding: 8.5rem 0 5rem;
+  padding: 12rem 0 5rem;
   font-size: 1rem;
 }
 
@@ -91,7 +91,7 @@
 }
 
 .highlightCard {
-  padding: 1rem 1.25rem;
+  padding: 0.8rem 1.25rem;
   background: rgba(255, 255, 255, 0.92);
   box-shadow: 0 1rem 2rem rgba(220, 223, 230, 0.45);
   border: 1px solid rgba(255, 255, 255, 0.9);
