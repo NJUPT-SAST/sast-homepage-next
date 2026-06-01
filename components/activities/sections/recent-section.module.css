@@ -178,13 +178,13 @@
 @media (max-width: 767px) {
   .recentSection {
     min-height: auto;
-    padding: 5rem 0 2.6rem;
     --recent-unit: calc(100vw / 3.75);
   }
 
   .recentInner {
     width: min(100% - 28px, 36rem);
     margin: 0 auto;
+    padding: 5.4rem 0 2.7rem;
   }
 
   .recentHeader {
