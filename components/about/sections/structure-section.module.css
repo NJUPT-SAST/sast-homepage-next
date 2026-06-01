@@ -29,7 +29,7 @@
   display: grid;
   gap: 0.8rem;
   padding: 1.35rem 1.5rem;
-  background: rgba(255, 255, 255, 0.78);
+  background: rgba(255, 255, 255, 0.9);
   box-shadow: 0 0.9rem 2rem rgba(220, 223, 230, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.72);
   border-radius: 1.35rem;

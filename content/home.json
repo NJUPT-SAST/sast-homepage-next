@@ -5,19 +5,19 @@
         "title": "聚集源自于兴趣",
         "description": "社团始于兴趣相投，南邮校科协始终坚持初心，将兴趣作为一直以来的驱动力。在技术类部门，每一位同学都因为共同的兴趣爱好或相似的追求聚集在一起。在这里，互相帮助、共同进步是一个不变的主题。",
         "ctaText": "进一步了解校科协技术类部门 >",
-        "ctaHref": "/departments/technology"
+        "ctaHref": "/departments#technology"
       },
       {
         "title": "互联网管理思维",
         "description": "科协的建设和形象与管理类部门密不可分。自由、开放、交流，这是贯穿在科协人骨子里的特质。在科协，我们剔除掉形式主义，归繁杂琐事于至简至善，高质高效始终是追求。",
         "ctaText": "进一步了解校科协办公类部门 >",
-        "ctaHref": "/departments/offices"
+        "ctaHref": "/departments#office"
       },
       {
         "title": "创新创业最前沿",
         "description": "科协总是走在南邮最前列。依托校团委创新创业部的支持，科协敢于创新创先。在这里，你总是走在参与全国大学生创新创业计划的前沿，旧知被更新，新知不断生长。",
         "ctaText": "进一步了解校科协管理类部门 >",
-        "ctaHref": "/departments/innovation"
+        "ctaHref": "/departments#management"
       }
     ]
   },

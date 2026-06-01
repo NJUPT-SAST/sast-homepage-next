@@ -21,7 +21,7 @@ export default function SiteFooter() {
         <div className={styles.footerDivider} />
         <div className={styles.footerQr}>
           <Image src="/share/qr/qq-qrcode.png" alt="QQ 群二维码" width={104} height={104} className={styles.qrImage} />
-          <p className={styles.qrRemark}>欢迎扫码加入交流</p>
+          <p className={styles.qrRemark}>SAST 官方QQ</p>
         </div>
         <p className={styles.copyright}>Copyright © NJUPT.SAST 1992-2026</p>
       </div>

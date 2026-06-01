@@ -1,0 +1,154 @@
+.recruitmentSection {
+  position: relative;
+  min-height: clamp(30rem, 42vw, 38rem);
+  overflow: visible;
+  z-index: 1;
+  --departments-recruitment-unit: 100px;
+  --recruitment-content-width: 72rem;
+  --recruitment-content-side: 48px;
+  font-size: var(--departments-recruitment-unit);
+}
+
+.recruitmentInner {
+  position: relative;
+  z-index: 2;
+  width: min(var(--recruitment-content-width), calc(100% - var(--recruitment-content-side)));
+  margin: 0 auto;
+  padding: 5.8rem 0 4.5rem;
+  font-size: 1rem;
+}
+
+.recruitmentHeader {
+  max-width: 48rem;
+}
+
+.sectionLabel {
+  margin: 0 0 0.875rem;
+  color: #27a29c;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+}
+
+.sectionTitle {
+  margin: 0;
+  color: #303133;
+  font-size: clamp(2.2rem, 2.8vw, 3.35rem);
+  font-weight: 700;
+  line-height: 1.16;
+}
+
+.sectionLead {
+  margin: 1rem 0 0;
+  color: #606266;
+  font-size: 1rem;
+  line-height: 1.85;
+}
+
+.stepGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.85rem;
+  margin-top: 2rem;
+}
+
+.stepCard,
+.methodCard {
+  padding: 1.2rem 1.15rem;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 1.25rem;
+  box-shadow: 0 1rem 2rem rgba(220, 223, 230, 0.36);
+  backdrop-filter: blur(0.18rem);
+}
+
+.stepTitle,
+.methodTitle {
+  margin: 0;
+  color: #303133;
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.stepText,
+.methodText {
+  margin: 0.72rem 0 0;
+  color: #606266;
+  font-size: 0.95rem;
+  line-height: 1.78;
+}
+
+.methodGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.9rem;
+  margin-top: 1rem;
+}
+
+@media (max-width: 767px) {
+  .recruitmentSection {
+    min-height: auto;
+    --departments-recruitment-unit: calc(100vw / 3.75);
+    --recruitment-content-side: 28px;
+  }
+
+  .recruitmentInner {
+    width: min(calc(100% - var(--recruitment-content-side)), 36rem);
+    padding: 3.8rem 0 2.8rem;
+  }
+
+  .sectionLabel {
+    margin-bottom: 0.7rem;
+    font-size: 0.72rem;
+  }
+
+  .sectionTitle {
+    font-size: 2rem;
+  }
+
+  .sectionLead,
+  .stepText,
+  .methodText {
+    font-size: 0.92rem;
+    line-height: 1.8;
+  }
+
+  .stepGrid,
+  .methodGrid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .stepGrid {
+    margin-top: 1.45rem;
+  }
+
+  .stepCard,
+  .methodCard {
+    padding: 1rem 1rem 0.95rem;
+    border-radius: 1.1rem;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1279px) {
+  .recruitmentSection {
+    --departments-recruitment-unit: calc(100vw / 12.8);
+    --recruitment-content-width: 76rem;
+    --recruitment-content-side: 40px;
+  }
+
+  .stepGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .methodGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 1921px) {
+  .recruitmentSection {
+    --departments-recruitment-unit: calc(100vw / 19.2);
+  }
+}

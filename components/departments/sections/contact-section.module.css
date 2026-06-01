@@ -1,0 +1,134 @@
+.contactSection {
+  padding: 0 0 5rem;
+  z-index: 2;
+  isolation: isolate;
+}
+
+.contactInner {
+  width: min(72rem, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+.contactHeader {
+  max-width: 44rem;
+}
+
+.sectionLabel {
+  margin: 0 0 0.875rem;
+  color: #27a29c;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+}
+
+.sectionTitle {
+  margin: 0;
+  color: #303133;
+  font-size: clamp(2.2rem, 2.8vw, 3.35rem);
+  font-weight: 700;
+  line-height: 1.16;
+}
+
+.sectionLead {
+  margin: 1rem 0 0;
+  color: #606266;
+  font-size: 1rem;
+  line-height: 1.85;
+}
+
+.placeholderCard {
+  display: grid;
+  grid-template-columns: 14rem minmax(0, 1fr);
+  gap: 1.25rem;
+  align-items: center;
+  margin-top: 1.9rem;
+  padding: 1.4rem;
+  background: linear-gradient(135deg, rgba(39, 162, 156, 0.08), rgba(255, 255, 255, 0.94));
+  border: 1px dashed rgba(39, 162, 156, 0.28);
+  border-radius: 1.5rem;
+}
+
+.qrPlaceholder {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  width: 100%;
+  background:
+    linear-gradient(90deg, rgba(39, 162, 156, 0.1) 50%, transparent 50%) 0 0 / 1.1rem 1.1rem,
+    linear-gradient(rgba(39, 162, 156, 0.1) 50%, transparent 50%) 0 0 / 1.1rem 1.1rem,
+    #fff;
+  border: 1px solid rgba(39, 162, 156, 0.14);
+  border-radius: 1.25rem;
+}
+
+.placeholderText {
+  color: rgba(39, 162, 156, 0.6);
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+.placeholderCopy {
+  min-width: 0;
+}
+
+.placeholderTitle {
+  margin: 0;
+  color: #303133;
+  font-size: 1.35rem;
+  font-weight: 700;
+}
+
+.placeholderBody {
+  margin: 0.85rem 0 0;
+  color: #606266;
+  font-size: 0.98rem;
+  line-height: 1.8;
+}
+
+@media (max-width: 767px) {
+  .contactSection {
+    padding: 0 0 3rem;
+  }
+
+  .contactInner {
+    width: min(calc(100% - 28px), 36rem);
+  }
+
+  .sectionLabel {
+    margin-bottom: 0.7rem;
+    font-size: 0.72rem;
+  }
+
+  .sectionTitle {
+    font-size: 2rem;
+  }
+
+  .sectionLead,
+  .placeholderBody {
+    font-size: 0.92rem;
+    line-height: 1.8;
+  }
+
+  .placeholderCard {
+    grid-template-columns: 1fr;
+    gap: 0.95rem;
+    margin-top: 1.4rem;
+    padding: 1rem;
+    border-radius: 1.15rem;
+  }
+
+  .qrPlaceholder {
+    max-width: 12rem;
+  }
+
+  .placeholderTitle {
+    font-size: 1.15rem;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1279px) {
+  .contactInner {
+    width: min(76rem, calc(100% - 40px));
+  }
+}
