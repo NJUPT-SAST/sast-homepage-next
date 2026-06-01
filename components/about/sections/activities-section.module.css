@@ -2,7 +2,7 @@
   position: relative;
   z-index: 2;
   margin-top: -2.5rem;
-  padding: 3.25rem 0 3rem;
+  padding: 3.25rem 0 2rem;
   background: transparent;
 }
 
@@ -94,7 +94,7 @@
 .storyCardInner {
   padding: 1.5rem;
   background: #fff;
-  box-shadow: 0 0.9rem 2rem rgba(220, 223, 230, 0.36);
+  box-shadow: 0 0.9rem 2rem rgba(220, 223, 230, 0.75);
   border-radius: 1.5rem;
 }
 
@@ -131,7 +131,7 @@
 }
 
 .textCard {
-  padding-top: 1.35rem;
+  padding-top: 0rem;
 }
 
 .principleImage {
