@@ -3,7 +3,7 @@
   overflow: hidden;
   z-index: 1;
   isolation: isolate;
-  padding: calc(0.24 * var(--introduce-unit)) 0 calc(0.6 * var(--introduce-unit));
+  padding: calc(0.24 * var(--introduce-unit)) 0 calc(0.3 * var(--introduce-unit));
   --introduce-unit: 100px;
 }
 
@@ -109,7 +109,7 @@
 
 .question {
   width: calc(3.56 * var(--introduce-unit));
-  margin: 0 0 calc(0.42 * var(--introduce-unit));
+  margin: 0 0 calc(0.3 * var(--introduce-unit));
   font-size: 0.33em;
   line-height: 1.15;
   font-weight: 700;
@@ -124,6 +124,41 @@
   font-size: 0.14em;
   line-height: 1.72;
   color: #606266;
+}
+
+.sectionLink {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.42rem;
+  padding: calc(0.07 * var(--introduce-unit)) calc(0.12 * var(--introduce-unit));
+  color: #27a29c;
+  font-size: calc(0.12 * var(--introduce-unit));
+  font-weight: 650;
+  line-height: 1.1;
+  text-decoration: none;
+  white-space: nowrap;
+  vertical-align: baseline;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(39, 162, 156, 0.16);
+  border-radius: 999px;
+  box-shadow: 0 0.42rem 1rem rgba(220, 223, 230, 0.18);
+  backdrop-filter: blur(0.18rem);
+  transition: color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.sectionLink:hover {
+  color: #1d7f79;
+  background: rgba(255, 255, 255, 1);
+  border-color: rgba(39, 162, 156, 0.24);
+  transform: translateX(0.18rem);
+  box-shadow: 0 0.6rem 1.25rem rgba(39, 162, 156, 0.16);
+}
+
+.sectionLink:focus-visible {
+  outline: 2px solid rgba(39, 162, 156, 0.24);
+  outline-offset: 2px;
 }
 
 .tree {
@@ -272,6 +307,12 @@
     font-size: 0.12em;
     line-height: 1.68;
     text-align: center;
+  }
+
+  .sectionLink {
+    gap: 0.24rem;
+    padding: 0.36rem 0.7rem;
+    font-size: 0.72rem;
   }
 }
 

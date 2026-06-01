@@ -51,6 +51,7 @@ export const slides = homeContent.hero.slides.map((slide, index) => ({
 export const introduceCards = homeContent.introduce.cards.map((item, index) => ({
   ...item,
   ...summaryMeta[index],
+  
 }));
 
 export const stats = homeContent.data.stats.map((item, index) => ({

@@ -42,6 +42,11 @@ export default function IntroduceSection() {
                 ) : null}
               </span>
             ))}
+            <br />
+            <br />
+            <a href={homeContent.introduce.moreLink.href} className={styles.sectionLink}>
+              {homeContent.introduce.moreLink.text}
+            </a>
           </p>
         </div>
       </div>
