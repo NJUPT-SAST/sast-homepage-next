@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Image from "next/image";
 import styles from "./dock.module.css";
 
@@ -11,20 +12,20 @@ const links = [
 export default function Dock() {
   return (
     <header className={styles.dockShell}>
-      <a href="./" className={styles.desktopLogoLink} aria-label="返回首页">
+      <Link href="/" className={styles.desktopLogoLink} aria-label="返回首页">
         <Image src="/share/logos/logo-color.png" alt="SAST" width={135} height={55} className={styles.logo} priority />
-      </a>
+      </Link>
 
       <div className={styles.dock}>
-        <a href="./" className={styles.logoLink} aria-label="返回首页">
+        <Link href="/" className={styles.logoLink} aria-label="返回首页">
           <Image src="/share/logos/logo-color.png" alt="SAST" width={135} height={55} className={styles.logo} priority />
-        </a>
+        </Link>
 
         <nav className={styles.nav} aria-label="主导航">
           {links.map((item) => (
-            <a key={item.href} href={item.href} className={styles.link}>
+            <Link key={item.href} href={item.href} className={styles.link}>
               {item.label}
-            </a>
+            </Link>
           ))}
         </nav>
       </div>
