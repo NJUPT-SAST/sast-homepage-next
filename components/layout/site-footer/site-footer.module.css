@@ -10,7 +10,7 @@
   column-gap: 4.1875rem;
   row-gap: 1.125rem;
   width: min(60rem, calc(100% - 3rem));
-  min-height: 14.375rem;
+  height: 16.25rem;
   margin: 0 auto;
   padding: 2.625rem 0 1.75rem;
 }
@@ -97,7 +97,7 @@
     justify-items: center;
     row-gap: 1.125rem;
     width: min(23rem, calc(100% - 1.75rem));
-    min-height: auto;
+    height: 25rem;
     padding: 1.875rem 0 1.5rem;
   }
 

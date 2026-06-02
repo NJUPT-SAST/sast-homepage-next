@@ -1,0 +1,132 @@
+.notFoundSection {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 16.25rem);
+  padding: 8.5rem 1.5rem 4.5rem;
+  overflow: hidden;
+  isolation: isolate;
+  --hero-unit: 100px;
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  width: min(100%, 48rem);
+  padding: 3.25rem 3rem;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  border-radius: 2rem;
+  box-shadow: 0 1.125rem 3rem rgba(210, 216, 228, 0.32);
+  backdrop-filter: blur(0.75rem);
+}
+
+.code {
+  margin: 0;
+  color: #53a0fd;
+  font-size: clamp(4.5rem, 11vw, 7rem);
+  line-height: 0.92;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
+
+.title {
+  margin: 1.125rem 0 0;
+  color: #27a29c;
+  font-size: clamp(1.75rem, 3.4vw, 2.5rem);
+  line-height: 1.15;
+  font-weight: 700;
+}
+
+.description {
+  margin: 1.25rem auto 0;
+  max-width: 31rem;
+  color: #606266;
+  font-size: 1rem;
+  line-height: 1.9;
+}
+
+.tipCard {
+  width: min(100%, 27rem);
+  margin: 2.25rem auto 0;
+  padding: 1.25rem 1.5rem;
+  text-align: left;
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(111, 240, 223, 0.2);
+  border-radius: 1.25rem;
+}
+
+.tipTitle {
+  margin: 0;
+  color: #5d6778;
+  font-size: 0.95rem;
+  font-weight: 650;
+}
+
+.tipList {
+  margin: 0.75rem 0 0;
+  padding-left: 1.2rem;
+  color: #606266;
+  font-size: 0.92rem;
+  line-height: 1.8;
+}
+
+.tipFooter {
+  margin: 1rem 0 0;
+  color: #606266;
+  font-size: 0.92rem;
+  line-height: 1.8;
+}
+
+.tipFooter a {
+  color: #53a0fd;
+  text-decoration: none;
+  font-weight: 600;
+  border-bottom: 1px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.tipFooter a:hover {
+  border-bottom-color: #53a0fd;
+}
+
+@media (max-width: 767px) {
+  .notFoundSection {
+    min-height: calc(100vh - 25rem);
+    padding: 6.5rem 0.875rem 3rem;
+    --hero-unit: calc(100vw / 3.75);
+  }
+
+  .content {
+    padding: 2.5rem 1.25rem 2rem;
+    border-radius: 1.5rem;
+  }
+
+  .description {
+    font-size: 0.9rem;
+    line-height: 1.8;
+  }
+
+  .tipCard {
+    margin-top: 1.875rem;
+    padding: 1rem 1.125rem;
+  }
+
+  .tipList {
+    font-size: 0.86rem;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1279px) {
+  .notFoundSection {
+    --hero-unit: calc(100vw / 12.8);
+  }
+}
+
+@media (min-width: 1921px) {
+  .notFoundSection {
+    --hero-unit: calc(100vw / 19.2);
+  }
+}
