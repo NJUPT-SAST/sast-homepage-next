@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import styles from "./carousel.module.css";
 
 export type CarouselSlide = {
@@ -214,9 +215,9 @@ export default function HomeCarousel({ slides }: { slides: CarouselSlide[] }) {
                     </h2>
                     <div className={styles.line} />
                     <p className={styles.text}>{slide.description}</p>
-                    <p className={styles.more} style={{ color: slide.moreColor }}>
+                    <Link href={slide.ctaHref} className={styles.more} style={{ color: slide.moreColor }}>
                       {slide.ctaText}
-                    </p>
+                    </Link>
                   </div>
                 </div>
               </div>

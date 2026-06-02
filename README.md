@@ -290,3 +290,8 @@ sast-homepage-next/
 - [content/about.json](./content/about.json)
 - [content/activities.json](./content/activities.json)
 - [content/departments.json](./content/departments.json)
+
+## 计划更新
+
+- [ ] 页面切换时动画效果
+- [ ] Dock栏高亮显示当前页面

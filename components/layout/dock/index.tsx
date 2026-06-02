@@ -4,8 +4,8 @@ import styles from "./dock.module.css";
 
 const links = [
   { href: "/", label: "首页" },
-  { href: "/activities", label: "活动" },
   { href: "/about", label: "关于" },
+  { href: "/activities", label: "活动" },
   { href: "/departments", label: "部门" },
 ];
 
