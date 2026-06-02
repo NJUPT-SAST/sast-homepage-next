@@ -1,52 +1,51 @@
 .dataSection {
   position: relative;
-  padding: calc(0.4 * var(--data-unit)) 0 calc(0.48 * var(--data-unit));
   overflow: hidden;
+  padding: 2.5rem 0 3rem;
   --data-unit: 100px;
 }
 
 .dataInner {
   position: relative;
-  width: min(calc(10.58 * var(--data-unit)), calc(100% - 48px));
-  margin: 0 auto;
   z-index: 2;
-  font-size: var(--data-unit);
+  width: min(66.125rem, calc(100% - 3rem));
+  margin: 0 auto;
 }
 
 .dataTitle {
-  width: 2.01em;
+  width: 12.5625rem;
   height: auto;
-  margin-left: 0.2em;
+  margin-left: 1.25rem;
 }
 
 .dataGrid {
   display: grid;
-  grid-template-columns: repeat(2, 5.14em);
-  gap: 0.3em;
-  margin-top: 0.36em;
+  grid-template-columns: repeat(2, 32.125rem);
+  gap: 1.875rem;
+  margin-top: 2.25rem;
 }
 
 .dataCard {
   display: flex;
   align-items: center;
-  min-height: 1.08em;
-  padding: 0.2em 0.3em 0.2em 0.35em;
+  min-height: 6.75rem;
+  padding: 1.25rem 1.875rem 1.25rem 2.1875rem;
   background: #fff;
-  box-shadow: 0 0 0.15em rgba(219, 219, 219, 0.5);
-  border-radius: 0.13em;
+  border-radius: 0.8125rem;
+  box-shadow: 0 0 0.9375rem rgba(219, 219, 219, 0.5);
   transition: background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .dataCard:hover {
   background: #03e5bf;
-  box-shadow: 0 0 0.15em rgba(169, 169, 169, 0.47);
+  box-shadow: 0 0 0.9375rem rgba(169, 169, 169, 0.47);
 }
 
 .dataNum {
   display: flex;
   align-items: flex-end;
-  min-width: calc(1.5 * var(--data-unit));
-  font-size: 0.18em;
+  min-width: 9.375rem;
+  font-size: 1.125rem;
   font-weight: 700;
   transition: color 0.2s ease;
 }
@@ -64,22 +63,22 @@
 }
 
 .dataValue {
-  font-size: 3.555556em;
+  font-size: 4rem;
   line-height: 0.95;
 }
 
 .dataUnit {
-  margin-left: calc(0.06 * var(--data-unit));
-  margin-bottom: calc(0.08 * var(--data-unit));
-  font-size: 1em;
+  margin-bottom: 0.5rem;
+  margin-left: 0.375rem;
+  font-size: 1.125rem;
 }
 
 .dataText {
-  width: calc(2.7 * var(--data-unit));
-  margin: 0 0 0 calc(0.35 * var(--data-unit));
-  font-size: 0.14em;
-  line-height: 1.45;
+  width: 16.875rem;
+  margin: 0 0 0 2.1875rem;
   color: #606266;
+  font-size: 0.875rem;
+  line-height: 1.45;
   transition: color 0.2s ease;
 }
 
@@ -89,47 +88,47 @@
 
 @media (max-width: 767px) {
   .dataSection {
-    padding: calc(0.32 * var(--data-unit)) 0;
+    padding: 2rem 0;
     --data-unit: calc(100vw / 3.75);
   }
 
   .dataInner {
-    width: min(3.13em, calc(100% - 28px));
+    width: min(23.4375rem, calc(100% - 1.75rem));
   }
 
   .dataTitle {
-    width: 1.6em;
+    width: 10rem;
     margin-left: 0;
   }
 
   .dataGrid {
     grid-template-columns: 1fr;
-    gap: 0.21em;
-    margin-top: 0.24em;
+    gap: 1.3125rem;
+    margin-top: 1.5rem;
   }
 
   .dataCard {
-    min-height: 1.08em;
-    padding: 0.18em 0.18em 0.18em 0.21em;
+    min-height: 6.75rem;
+    padding: 1.125rem 1.125rem 1.125rem 1.3125rem;
   }
 
   .dataNum {
-    min-width: calc(0.96 * var(--data-unit));
-    font-size: 0.14em;
+    min-width: 6rem;
+    font-size: 0.875rem;
   }
 
   .dataValue {
-    font-size: 2.571429em;
+    font-size: 2.25rem;
   }
 
   .dataUnit {
-    margin-bottom: calc(0.04 * var(--data-unit));
+    margin-bottom: 0.25rem;
   }
 
   .dataText {
     width: auto;
-    margin-left: calc(0.21 * var(--data-unit));
-    font-size: 0.12em;
+    margin-left: 1.3125rem;
+    font-size: 0.75rem;
     line-height: 1.55;
     display: -webkit-box;
     overflow: hidden;
@@ -141,6 +140,14 @@
 @media (min-width: 768px) and (max-width: 1279px) {
   .dataSection {
     --data-unit: calc(100vw / 12.8);
+  }
+
+  .dataInner {
+    width: min(66.125rem, calc(100% - 2.5rem));
+  }
+
+  .dataGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 

@@ -1,70 +1,64 @@
 .hero {
   position: relative;
-  min-height: calc(8.75 * var(--hero-unit));
+  min-height: 52.5rem;
   overflow: visible;
-  z-index: 2;
+  z-index: 0;
+  isolation: isolate;
   --hero-unit: 100px;
-  font-size: var(--hero-unit);
 }
 
 .heroInner {
   position: relative;
-  width: min(calc(12 * var(--hero-unit)), calc(100% - 48px));
-  min-height: calc(8.75 * var(--hero-unit));
+  z-index: 1;
+  width: min(75rem, calc(100% - 3rem));
+  min-height: 52.5rem;
   margin: 0 auto;
-  z-index: 2;
 }
 
 .heroForegroundScene {
   position: absolute;
   top: 0;
   left: 50%;
-  width: 19.2em;
-  height: 9.25em;
+  width: max(120rem, 100vw);
   transform: translateX(-50%);
-  font-size: var(--hero-unit);
   pointer-events: none;
 }
 
 .cube {
   position: absolute;
-  left: 14.25em;
-  top: 5.49em;
-  width: 1.31em;
+  top: 31.75rem;
+  left: calc(50% + 27rem);
+  width: 8.1875rem;
   height: auto;
   z-index: 7;
 }
 
 .word1 {
   position: absolute;
-  left: 7.49em;
-  top: 7.4em;
-  width: 4.23em;
+  top: 46rem;
+  left: calc(50% - 26.4375rem / 2);
+  width: 26.4375rem;
   height: auto;
   z-index: 6;
 }
 
 @media (max-width: 767px) {
   .hero {
-    min-height: 6.42em;
-    overflow: visible;
-    z-index: 2;
+    min-height: 38.25rem;
     --hero-unit: calc(100vw / 3.75);
   }
 
   .heroInner {
-    width: 3.75em;
-    min-height: 6.42em;
-    margin: 0 auto;
-    font-size: var(--hero-unit);
+    width: min(calc(100% - 1.75rem), 23.4375rem);
+    min-height: 38.25rem;
   }
 
   .heroForegroundScene {
     left: 0;
-    width: 3.75em;
-    height: 6.42em;
+    width: 23.4375rem;
+    height: 38.25rem;
     transform: none;
-    z-index: 3;
+    z-index: 1;
   }
 
   .cube {
@@ -72,14 +66,18 @@
   }
 
   .word1 {
-    left: 0.73em;
-    top: 5.61em;
-    width: 2.29em;
+    top: 35rem;
+    left: 4.5625rem;
+    width: 14.3125rem;
     z-index: 8;
   }
 }
 
 @media (min-width: 768px) and (max-width: 1279px) {
+  .heroInner {
+    width: min(75rem, calc(100% - 2.5rem));
+  }
+
   .hero {
     --hero-unit: calc(100vw / 12.8);
   }
