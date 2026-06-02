@@ -1,9 +1,20 @@
 import Image from "next/image";
-import { introduceCards } from "@/components/home/data/homepage-data";
+import { ActionLink } from "@/components/shared";
 import homeContent from "@/content/home.json";
 import styles from "./introduce-section.module.css";
 
 export default function IntroduceSection() {
+  const summaryMeta = [
+    { icon: "/home/icons/summary/summary-1.png", color: "#53A0FD" },
+    { icon: "/home/icons/summary/summary-2.png", color: "#27A29C" },
+    { icon: "/home/icons/summary/summary-3.png", color: "#53A0FD" },
+    { icon: "/home/icons/summary/summary-4.png", color: "#27A29C" },
+  ];
+  const introduceCards = homeContent.introduce.cards.map((item, index) => ({
+    ...item,
+    ...summaryMeta[index],
+  }));
+
   return (
     <section className={styles.introduce}>
       <div className={styles.waveLayer} aria-hidden>
@@ -44,9 +55,9 @@ export default function IntroduceSection() {
             ))}
             <br />
             <br />
-            <a href={homeContent.introduce.moreLink.href} className={styles.sectionLink}>
+            <ActionLink href={homeContent.introduce.moreLink.href} className={styles.sectionLink}>
               {homeContent.introduce.moreLink.text}
-            </a>
+            </ActionLink>
           </p>
         </div>
       </div>

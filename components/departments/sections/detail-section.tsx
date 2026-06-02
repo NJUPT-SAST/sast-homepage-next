@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
+import { ActionLink } from "@/components/shared";
 import departmentsContent from "@/content/departments.json";
 import styles from "./detail-section.module.css";
 
@@ -145,9 +146,9 @@ export default function DepartmentsDetailSection() {
                   <div className={styles.departmentTitleRow}>
                     <h3 className={styles.departmentName}>{activeDepartment.name}</h3>
                     {departmentMoreLink ? (
-                      <a href={departmentMoreLink.href} className={styles.sectionLink} target="_blank" rel="noopener noreferrer">
+                      <ActionLink href={departmentMoreLink.href} className={styles.sectionLink} openInNewTab>
                         {departmentMoreLink.text}
-                      </a>
+                      </ActionLink>
                     ) : null}
                   </div>
                 </div>

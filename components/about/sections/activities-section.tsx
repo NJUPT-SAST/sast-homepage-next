@@ -3,7 +3,8 @@
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 import aboutContent from "@/content/about.json";
-import { renderRichText } from "@/components/about/utils/render-rich-text";
+import { ActionLink } from "@/components/shared";
+import { renderRichText } from "@/components/shared/render-rich-text";
 import styles from "./activities-section.module.css";
 
 export default function AboutActivitiesSection() {
@@ -80,9 +81,9 @@ export default function AboutActivitiesSection() {
             <p className={styles.sectionLabel}>{aboutContent.activities.eyebrow}</p>
             <div className={styles.titleRow}>
               <h2 className={styles.sectionTitle}>{aboutContent.activities.title}</h2>
-              <a href={aboutContent.activities.moreLink.href} className={styles.sectionLink}>
+              <ActionLink href={aboutContent.activities.moreLink.href} className={styles.sectionLink}>
                 {aboutContent.activities.moreLink.text}
-              </a>
+              </ActionLink>
             </div>
           </div>
           <p className={styles.sectionLead}>{aboutContent.activities.intro}</p>
@@ -105,9 +106,9 @@ export default function AboutActivitiesSection() {
                       </p>
                     ))}
                     <p className={styles.featureText}>
-                      <a href={aboutContent.activities.calendarCta.href} className={styles.moreLink}>
+                      <ActionLink href={aboutContent.activities.calendarCta.href} className={styles.moreLink}>
                         {aboutContent.activities.calendarCta.text}
-                      </a>
+                      </ActionLink>
                     </p>
                   </>
                 ) : (

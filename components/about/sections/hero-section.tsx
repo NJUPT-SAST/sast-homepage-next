@@ -1,6 +1,6 @@
 import { Backgroud1 } from "@/components/shared";
 import aboutContent from "@/content/about.json";
-import { renderRichText } from "@/components/about/utils/render-rich-text";
+import { renderRichText } from "@/components/shared/render-rich-text";
 import styles from "./hero-section.module.css";
 
 export default function AboutHeroSection() {

@@ -1,9 +1,15 @@
 import Image from "next/image";
-import { stats } from "@/components/home/data/homepage-data";
 import { Backgroud2 } from "@/components/shared";
+import homeContent from "@/content/home.json";
 import styles from "./data-section.module.css";
 
 export default function DataSection() {
+  const statTones = ["sky", "mint", "sky", "mint", "sky", "mint"] as const;
+  const stats = homeContent.data.stats.map((item, index) => ({
+    ...item,
+    tone: statTones[index] ?? "sky",
+  }));
+
   return (
     <section className={styles.dataSection}>
       <Backgroud2 />

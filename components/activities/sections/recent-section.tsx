@@ -1,4 +1,4 @@
-import { Backgroud1 } from "@/components/shared";
+import { ActionLink, Backgroud1 } from "@/components/shared";
 import activitiesContent from "@/content/activities.json";
 import styles from "./recent-section.module.css";
 
@@ -12,9 +12,9 @@ export default function ActivitiesRecentSection() {
           <p className={styles.sectionLabel}>{activitiesContent.recentSection.eyebrow}</p>
           <div className={styles.sectionTitleRow}>
             <h2 className={styles.sectionTitle}>{activitiesContent.recentSection.title}</h2>
-            <a href={activitiesContent.recentSection.moreLink.href} className={styles.sectionLink} target="_blank" rel="noopener noreferrer">
+            <ActionLink href={activitiesContent.recentSection.moreLink.href} className={styles.sectionLink} openInNewTab>
               {activitiesContent.recentSection.moreLink.text}
-            </a>
+            </ActionLink>
           </div>
           {activitiesContent.recentSection.intro.map((paragraph, index) => (
             <p key={index} className={styles.sectionIntro}>
@@ -40,9 +40,9 @@ export default function ActivitiesRecentSection() {
                   </div>
                 </div>
                 <p className={styles.cardText}>{activity.details}</p>
-                <a className={styles.cardLink} href={activity.link} target="_blank" rel="noopener noreferrer">
+                <ActionLink href={activity.link} className={styles.cardLink} openInNewTab>
                   查看详情
-                </a>
+                </ActionLink>
               </article>
             );
           })}

@@ -1,6 +1,6 @@
-import { Backgroud2 } from "@/components/shared";
+import { ActionLink, Backgroud2 } from "@/components/shared";
 import aboutContent from "@/content/about.json";
-import { renderRichText } from "@/components/about/utils/render-rich-text";
+import { renderRichText } from "@/components/shared/render-rich-text";
 import styles from "./structure-section.module.css";
 
 export default function AboutStructureSection() {
@@ -14,9 +14,9 @@ export default function AboutStructureSection() {
 
           <div className={styles.titleRow}>
             <h2 className={styles.sectionTitle}>{aboutContent.structure.title}</h2>
-            <a href={aboutContent.structure.moreLink.href} className={styles.sectionLink}>
+            <ActionLink href={aboutContent.structure.moreLink.href} className={styles.sectionLink}>
               {aboutContent.structure.moreLink.text}
-            </a>
+            </ActionLink>
           </div>
 
           <div className={styles.headerBody}>
