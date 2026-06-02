@@ -207,7 +207,7 @@
 .eventBlock {
   position: absolute;
   top: 50%;
-  z-index: 2;
+  z-index: 0;
   display: flex;
   align-items: center;
   min-width: 5rem;
