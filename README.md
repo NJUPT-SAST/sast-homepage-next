@@ -293,5 +293,6 @@ sast-homepage-next/
 
 ## 计划更新
 
+- [ ] 新增成员展示页 `/members`，计划对接 SAST Link 用于展示个人名片
 - [ ] 页面切换时动画效果
 - [ ] Dock栏高亮显示当前页面
