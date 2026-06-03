@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { ActionLink } from "@/components/shared";
 import styles from "./site-footer.module.css";
 
 export default function SiteFooter() {
@@ -10,9 +9,9 @@ export default function SiteFooter() {
         <div className={styles.footerDetail}>
           <p>
             <Image src="/share/icons/contact/mail.png" alt="" width={15} height={15} className={styles.footerIcon} />
-            <ActionLink href="mailto:njuptsast@163.com" openInNewTab>
+            <a href="mailto:njuptsast@163.com">
               njuptsast@163.com
-            </ActionLink>
+            </a>
           </p>
           <p>
             <Image src="/share/icons/contact/address.png" alt="" width={15} height={15} className={styles.footerIcon} />

@@ -97,6 +97,26 @@
   border: 1px solid rgba(255, 255, 255, 0.9);
   border-radius: 1.25rem;
   backdrop-filter: blur(0.25rem);
+  opacity: 0;
+  animation-duration: 720ms;
+  animation-fill-mode: forwards;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.heroRow .highlightCard {
+  animation-name: heroCardEnterRight;
+}
+
+.heroRowReverse .highlightCard {
+  animation-name: heroCardEnterLeft;
+}
+
+.highlightCard:nth-child(2) {
+  animation-delay: 100ms;
+}
+
+.highlightCard:nth-child(3) {
+  animation-delay: 200ms;
 }
 
 .highlightValue {
@@ -112,6 +132,30 @@
   color: #606266;
   font-size: 0.9rem;
   line-height: 1.65;
+}
+
+@keyframes heroCardEnterRight {
+  from {
+    opacity: 0;
+    transform: translateX(2rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes heroCardEnterLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-2rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 @media (max-width: 767px) {
@@ -187,5 +231,12 @@
 @media (min-width: 1921px) {
   .heroSection {
     --about-hero-unit: calc(100vw / 19.2);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .highlightCard {
+    opacity: 1;
+    animation: none;
   }
 }
