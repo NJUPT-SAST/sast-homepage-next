@@ -1,5 +1,4 @@
 import { Backgroud1 } from "@/components/shared";
-import { ActionLink } from "@/components/shared";
 import departmentsContent from "@/content/departments.json";
 import styles from "./hero-section.module.css";
 
@@ -29,9 +28,9 @@ export default function DepartmentsHeroSection() {
               <ul className={styles.departmentList}>
                 {group.departments.map((department) => (
                   <li key={department}>
-                    <ActionLink href={departmentLinkMap.get(department)!} className={styles.departmentItem}>
+                    <a href={departmentLinkMap.get(department)!} className={styles.departmentItem}>
                       {department}
-                    </ActionLink>
+                    </a>
                   </li>
                 ))}
               </ul>
