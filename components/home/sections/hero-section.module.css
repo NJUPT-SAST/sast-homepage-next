@@ -55,7 +55,7 @@
 
   .heroForegroundScene {
     left: 0;
-    width: 23.4375rem;
+    width: 100%;
     height: 38.25rem;
     transform: none;
     z-index: 1;
@@ -67,8 +67,9 @@
 
   .word1 {
     top: 35rem;
-    left: 4.5625rem;
-    width: 14.3125rem;
+    left: 50%;
+    width: 14rem;
+    transform: translateX(-50%);
     z-index: 8;
   }
 }

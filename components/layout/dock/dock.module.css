@@ -95,7 +95,7 @@
 
   .nav {
     gap: 0.1875rem;
-    padding: 0 0 0 3rem;
+    padding: 0 0 0 max(0px, calc(360px - 80vw));
     overflow-x: auto;
     border: none;
     border-radius: 0;
