@@ -59,6 +59,12 @@
   transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+.activeLink {
+  background: #03e5bf;
+  color: #fff;
+  box-shadow: 0 0.1125rem 0.25rem rgba(3, 229, 191, 0.32);
+}
+
 .link:hover {
   background: #03e5bf;
   color: #fff;
