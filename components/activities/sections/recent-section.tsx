@@ -1,8 +1,12 @@
 import { ActionLink, Backgroud1 } from "@/components/shared";
 import activitiesContent from "@/content/activities.json";
 import styles from "./recent-section.module.css";
+import { Activity } from "@/app/activities/page";
 
-export default function ActivitiesRecentSection() {
+export default function ActivitiesRecentSection({ LarkActivities }: { LarkActivities: Activity[] }) {
+  const LocalActivities: Activity[] = activitiesContent.recentSection.activities;
+  const AllActivities = [...LocalActivities, ...LarkActivities];
+
   return (
     <section className={styles.recentSection}>
       <Backgroud1 />
@@ -24,25 +28,24 @@ export default function ActivitiesRecentSection() {
         </header>
 
         <div className={styles.activityGrid}>
-          {activitiesContent.recentSection.activities.map((activity) => {
+          {AllActivities.map((activity) => {
             return (
               <article key={`${activity.title}-${activity.time}`} className={styles.activityCard}>
-                <div className={styles.cardHeader}>
-                  <div className={styles.cardMain}>
-                    <span className={styles.cardTag}>{activity.organizer}</span>
-                    <h2 className={styles.cardTitle}>{activity.title}</h2>
-                  </div>
-
-                  <div className={styles.cardMeta}>
+                <span className={styles.cardTag}>{activity.organizer}</span>
+                {activity.link ? (
+                  <ActionLink href={activity.link} className={styles.cardTitle}>
+                    {activity.title.length > 8 ? activity.title.slice(0, 6) + "..." : activity.title}
+                  </ActionLink>
+                ) : (
+                  <h2 className={styles.cardTitle}>{activity.title.length > 8 ? activity.title.slice(0, 6) + "..." : activity.title}</h2>
+                )}
+                <div className={styles.cardMeta}>
+                  <div className={styles.metaRow}>
                     <p className={styles.metaValue}>{activity.date}</p>
                     <p className={styles.metaValue}>{activity.time}</p>
-                    <p className={styles.metaValue}>{activity.location}</p>
                   </div>
+                  <p className={styles.metaValue}>{activity.location}</p>
                 </div>
-                <p className={styles.cardText}>{activity.details}</p>
-                <ActionLink href={activity.link} className={styles.cardLink} openInNewTab>
-                  查看详情
-                </ActionLink>
               </article>
             );
           })}

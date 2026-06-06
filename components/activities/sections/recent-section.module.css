@@ -78,7 +78,7 @@
 
 .activityGrid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
   gap: 1rem;
   margin-top: 2.2rem;
 }
@@ -86,25 +86,13 @@
 .activityCard {
   display: grid;
   align-content: start;
-  gap: 1rem;
+  gap: 0.65rem;
   min-height: 100%;
   background: rgba(255, 255, 255, 0.94);
   border: 1px solid rgba(255, 255, 255, 0.75);
-  border-radius: 1.7rem;
-  box-shadow: 0 1rem 2.5rem rgba(220, 223, 230, 0.38);
-  padding: 1.3rem 1.35rem 1.4rem;
-}
-
-.cardHeader {
-  display: grid;
-  grid-template-columns: max-content minmax(0, 1fr);
-  gap: 0.5rem;
-  align-items: start;
-}
-
-.cardMain {
-  display: grid;
-  gap: 0.7rem;
+  border-radius: 1.35rem;
+  box-shadow: 0 0.85rem 2rem rgba(220, 223, 230, 0.28);
+  padding: 1.1rem 1.15rem 1.15rem;
 }
 
 .cardTag {
@@ -117,62 +105,53 @@
 .cardTitle {
   margin: 0;
   color: #303133;
-  font-size: 1.4rem;
+  font-size: 1.45rem;
   font-weight: 700;
   line-height: 1.2;
 }
 
+a.cardTitle {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  color: #303133;
+  text-decoration: none;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+a.cardTitle::after {
+  content: ">";
+  margin-left: 0.42rem;
+  font-size: 0.9em;
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+
+a.cardTitle:hover {
+  color: #1d7f79;
+}
+
+a.cardTitle:hover::after {
+  transform: translateX(0.14rem);
+}
+
 .cardMeta {
   display: grid;
-  gap: 0rem;
-  width: 100%;
-  text-align: right;
+  gap: 0.28rem;
+}
+
+.metaRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.7rem;
+  align-items: center;
 }
 
 .metaValue {
   margin: 0;
   color: #606266;
-  font-size: 0.85rem;
-  line-height: 1.3;
-}
-
-.cardText {
-  margin: 0;
-  color: #606266;
-  font-size: 0.97rem;
-  line-height: 1.85;
-}
-
-.cardLink {
-  justify-self: start;
-  align-self: end;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.42rem;
-  margin-top: auto;
-  padding: 0.45rem 0.8rem;
-  color: #27a29c;
-  font-size: 0.85rem;
-  font-weight: 700;
-  line-height: 1;
-  text-decoration: none;
-  white-space: nowrap;
-  background: rgba(39, 162, 156, 0.08);
-  border: 1px solid rgba(39, 162, 156, 0.16);
-  border-radius: 999px;
-  transition: transform 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
-}
-
-.cardLink::after {
-  content: ">";
-  letter-spacing: 0.06em;
-}
-
-.cardLink:hover {
-  color: #1d7f79;
-  background: rgba(39, 162, 156, 0.12);
-  box-shadow: 0 0.45rem 1rem rgba(39, 162, 156, 0.12);
-  transform: translateX(0.16rem);
+  font-size: 0.88rem;
+  line-height: 1.35;
 }
 
 @media (max-width: 767px) {
@@ -204,8 +183,7 @@
     align-items: flex-start;
   }
 
-  .sectionLead,
-  .cardText {
+  .sectionLead {
     font-size: 0.92rem;
     line-height: 1.8;
   }
@@ -216,32 +194,57 @@
   }
 
   .activityGrid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: 0.9rem;
     margin-top: 1.5rem;
   }
 
   .activityCard {
-    gap: 0.85rem;
-    padding: 1.1rem 1.1rem 1.2rem;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.45rem 0.8rem;
+    align-items: start;
+    padding: 1rem 1rem 1.05rem;
   }
 
-  .cardMain {
-    gap: 0.55rem;
+  .cardTag {
+    grid-column: 1;
+    grid-row: 1;
   }
 
   .cardTitle {
-    font-size: 1.4rem;
+    grid-column: 1;
+    grid-row: 2;
+    font-size: 1.28rem;
+  }
+
+  a.cardTitle {
+    max-width: 100%;
   }
 
   .cardMeta {
-    min-width: 0;
-    gap: 0rem;
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    display: grid;
+    gap: 0.18rem;
+    align-self: start;
+    justify-items: end;
+    text-align: right;
+    max-width: 10rem;
   }
 
-  .cardLink {
-    padding: 0.56rem 0.82rem;
-    font-size: 0.84rem;
+  .metaRow {
+    display: grid;
+    gap: 0.18rem;
+    justify-items: end;
+  }
+
+  .cardMeta > .metaValue {
+    text-align: right;
+  }
+
+  .metaValue {
+    font-size: 0.82rem;
   }
 }
 
@@ -255,7 +258,7 @@
   }
 
   .activityGrid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
   }
 }
 
