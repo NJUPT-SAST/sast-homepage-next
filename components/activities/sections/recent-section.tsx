@@ -4,7 +4,22 @@ import styles from "./recent-section.module.css";
 import { Activity } from "@/app/activities/page";
 
 export default function ActivitiesRecentSection({ LarkActivities }: { LarkActivities: Activity[] }) {
-  const LocalActivities: Activity[] = activitiesContent.recentSection.activities;
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const LocalActivities: Activity[] = activitiesContent.recentSection.activities.filter((activity) => {
+    const startDate = new Date(activity.date);
+    const endDate = new Date(activity.time);
+    console.log(endDate);
+
+    if (Number.isNaN(startDate.getTime())) {
+      return true;
+    }
+
+    startDate.setHours(0, 0, 0, 0);
+    endDate.setHours(0, 0, 0, 0);
+    return isNaN(endDate.getTime()) ? startDate > today : startDate > today;
+  });
   const AllActivities = [...LocalActivities, ...LarkActivities];
 
   return (
