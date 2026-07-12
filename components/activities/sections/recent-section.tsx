@@ -10,7 +10,6 @@ export default function ActivitiesRecentSection({ LarkActivities }: { LarkActivi
   const LocalActivities: Activity[] = activitiesContent.recentSection.activities.filter((activity) => {
     const startDate = new Date(activity.date);
     const endDate = new Date(activity.time);
-    console.log(endDate);
 
     if (Number.isNaN(startDate.getTime())) {
       return true;

@@ -1,9 +1,9 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import Image from "next/image";
 import { ActionLink } from "@/components/shared";
 import departmentsContent from "@/content/departments.json";
+import DepartmentsQr from "../departments-qr";
 import styles from "./detail-section.module.css";
 
 export default function DepartmentsDetailSection() {
@@ -173,15 +173,13 @@ export default function DepartmentsDetailSection() {
                   {activeDepartment.group != "管理部门" && (
                     <section className={styles.infoCard}>
                       <p className={styles.infoTitle}>招新群二维码</p>
-                      {activeDepartment.qrCode ? (
-                        <div className={styles.qrImageWrap}>
-                          <Image src={activeDepartment.qrCode} alt={`${activeDepartment.name} 招新群二维码`} width={480} height={480} className={styles.qrImage} />
-                        </div>
-                      ) : (
-                        <div className={styles.qrPlaceholder} aria-hidden>
-                          <span className={styles.qrPlaceholderText}>QR</span>
-                        </div>
-                      )}
+                      <DepartmentsQr
+                        src={activeDepartment.qrCode || undefined}
+                        alt={`${activeDepartment.name} 招新群二维码`}
+                        width={480}
+                        height={480}
+                        className={styles.qrCard}
+                      />
                     </section>
                   )}
                 </div>

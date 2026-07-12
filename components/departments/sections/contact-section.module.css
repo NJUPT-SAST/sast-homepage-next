@@ -48,24 +48,10 @@
   border-radius: 1.5rem;
 }
 
-.qrPlaceholder {
-  display: grid;
-  place-items: center;
-  aspect-ratio: 1;
-  width: 100%;
-  background:
-    linear-gradient(90deg, rgba(39, 162, 156, 0.1) 50%, transparent 50%) 0 0 / 1.1rem 1.1rem,
-    linear-gradient(rgba(39, 162, 156, 0.1) 50%, transparent 50%) 0 0 / 1.1rem 1.1rem,
-    #fff;
-  border: 1px solid rgba(39, 162, 156, 0.14);
-  border-radius: 1.25rem;
-}
-
-.placeholderText {
-  color: rgba(39, 162, 156, 0.6);
-  font-size: 2rem;
-  font-weight: 700;
-  letter-spacing: 0.16em;
+.qrCard {
+  --departments-qr-radius: 1.25rem;
+  --departments-qr-pattern-size: 1.1rem;
+  --departments-qr-placeholder-size: 2rem;
 }
 
 .placeholderCopy {
@@ -118,7 +104,7 @@
     border-radius: 1.15rem;
   }
 
-  .qrPlaceholder {
+  .qrCard {
     max-width: 12rem;
   }
 

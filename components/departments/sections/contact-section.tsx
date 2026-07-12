@@ -1,4 +1,5 @@
 import departmentsContent from "@/content/departments.json";
+import DepartmentsQr from "../departments-qr";
 import styles from "./contact-section.module.css";
 
 export default function DepartmentsContactSection() {
@@ -16,9 +17,7 @@ export default function DepartmentsContactSection() {
         </header>
 
         <div className={styles.placeholderCard}>
-          <div className={styles.qrPlaceholder} aria-hidden>
-            <span className={styles.placeholderText}>QR</span>
-          </div>
+          <DepartmentsQr src={departmentsContent.contact.qrCode || undefined} alt="SAST 招新群二维码" width={480} height={480} className={styles.qrCard} />
 
           <div className={styles.placeholderCopy}>
             <h3 className={styles.placeholderTitle}>{departmentsContent.contact.placeholder.title}</h3>
