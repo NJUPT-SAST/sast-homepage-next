@@ -18,7 +18,7 @@ export default function SiteFooter() {
   return (
     <footer className={styles.footer}>
       <div className={styles.footerInner}>
-        <Image src="/share/logos/logo-white.png" alt="SAST" width={135} height={55} className={styles.footerLogo} />
+        <Image src="/share/logos/logo-white.png" alt="SAST" width={135} height={78} className={styles.footerLogo} style={{ height: "auto" }} />
         <div className={styles.footerDetail}>
           <p>
             <Image src="/share/icons/contact/mail.png" alt="" width={15} height={15} className={styles.footerIcon} />

@@ -208,7 +208,7 @@ export default function HomeCarousel({ slides }: { slides: CarouselSlide[] }) {
             return (
               <div key={`${slide.title}-${index}`} className={styles.slide} data-slide={slideIndex}>
                 <div className={styles.card}>
-                  <Image src={slide.image} alt={slide.imageAlt} width={slide.imageWidth} height={slide.imageHeight} className={styles.slideImage} priority={isPrioritySlide} />
+                  <Image src={slide.image} alt={slide.imageAlt} width={slide.imageWidth} height={slide.imageHeight} className={styles.slideImage} style={isPrioritySlide ? { height: "auto" } : undefined} loading={isPrioritySlide ? "eager" : "lazy"} />
                   <div className={styles.textPanel}>
                     <h2 className={styles.title} style={{ color: slide.titleColor }}>
                       {slide.title}

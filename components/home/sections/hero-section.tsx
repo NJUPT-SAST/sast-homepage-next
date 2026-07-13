@@ -26,7 +26,7 @@ export default function HeroSection() {
             image: "/home/carousel/slide-3.png",
             imageAlt: "SAST 管理部门",
             imageWidth: 650,
-            imageHeight: 440,
+            imageHeight: 441,
             titleColor: "#27A29C",
             moreColor: "#27A29C",
         },
@@ -44,8 +44,8 @@ export default function HeroSection() {
                 <HomeCarousel slides={slides} />
 
                 <div className={styles.heroForegroundScene} aria-hidden>
-                    <Image src="/home/branding/cube.png" alt="" width={131} height={131} className={styles.cube} />
-                    <Image src="/home/branding/word-1.png" alt="" width={423} height={120} className={styles.word1} />
+                    <Image src="/home/branding/cube.png" alt="" width={256} height={246} className={styles.cube} style={{ width: "auto", height: "auto" }} loading="eager" />
+                    <Image src="/home/branding/word-1.png" alt="" width={423} height={227} className={styles.word1} style={{ height: "auto" }} />
                 </div>
             </div>
         </section>

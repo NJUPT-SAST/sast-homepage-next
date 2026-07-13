@@ -18,12 +18,12 @@ export default function Dock() {
   return (
     <header className={styles.dockShell}>
       <ActionLink href="/" className={styles.desktopLogoLink} aria-label="返回首页">
-        <Image src="/share/logos/logo-color.png" alt="SAST" width={135} height={55} className={styles.logo} priority />
+        <Image src="/share/logos/logo-color.png" alt="SAST" width={135} height={78} className={styles.logo} style={{ height: "auto" }} priority />
       </ActionLink>
 
       <div className={styles.dock}>
         <ActionLink href="/" className={styles.logoLink} aria-label="返回首页">
-          <Image src="/share/logos/logo-color.png" alt="SAST" width={135} height={55} className={styles.logo} priority />
+          <Image src="/share/logos/logo-color.png" alt="SAST" width={135} height={78} className={styles.logo} style={{ height: "auto" }} priority />
         </ActionLink>
 
         <nav className={styles.nav} aria-label="主导航">

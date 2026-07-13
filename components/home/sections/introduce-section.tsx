@@ -18,9 +18,9 @@ export default function IntroduceSection() {
   return (
     <section className={styles.introduce}>
       <div className={styles.waveLayer} aria-hidden>
-        <Image src="/share/backgrounds/waves/wave-1.png" alt="" width={2286} height={718} className={styles.wave1} />
-        <Image src="/share/backgrounds/waves/wave-2.png" alt="" width={2488} height={977} className={styles.wave2} />
-        <Image src="/share/backgrounds/waves/wave-3.png" alt="" width={2424} height={700} className={styles.wave3} />
+        <Image src="/share/backgrounds/waves/wave-1.png" alt="" width={2286} height={718} className={styles.wave1} style={{ height: "auto" }} />
+        <Image src="/share/backgrounds/waves/wave-2.png" alt="" width={2488} height={977} className={styles.wave2} style={{ height: "auto" }} />
+        <Image src="/share/backgrounds/waves/wave-3.png" alt="" width={2424} height={700} className={styles.wave3} style={{ height: "auto" }} loading="eager" />
       </div>
 
       <div className={styles.introduceInner}>
@@ -40,7 +40,7 @@ export default function IntroduceSection() {
 
         <div className={styles.aboutColumn}>
           <h2 className={styles.question}>{homeContent.introduce.title}</h2>
-          <Image src="/home/illustrations/tree.png" alt="" width={535} height={463} className={styles.tree} aria-hidden />
+          <Image src="/home/illustrations/tree.png" alt="" width={535} height={727} className={styles.tree} style={{ height: "auto" }} aria-hidden />
           <p className={styles.answer}>
             {homeContent.introduce.paragraphs.map((paragraph, index) => (
               <span key={paragraph}>

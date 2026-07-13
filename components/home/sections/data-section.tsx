@@ -19,8 +19,9 @@ export default function DataSection() {
           src="/home/titles/data-title.png"
           alt="数据概览"
           width={201}
-          height={60}
+          height={66}
           className={styles.dataTitle}
+          style={{ height: "auto" }}
         />
         <div className={styles.dataGrid}>
           {stats.map((item, index) => (

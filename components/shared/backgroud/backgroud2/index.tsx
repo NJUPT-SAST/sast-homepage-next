@@ -13,7 +13,7 @@ export default function Backgroud2() {
         <Image src="/share/backgrounds/data/rectangle-16.png" alt="" width={336} height={336} className={`${styles.shape} ${styles.rectangle16}`} />
         <Image src="/share/backgrounds/data/rectangle-17.png" alt="" width={219} height={219} className={`${styles.shape} ${styles.rectangle17}`} />
         <Image src="/share/backgrounds/data/rectangle-18.png" alt="" width={164} height={164} className={`${styles.shape} ${styles.rectangle18}`} />
-        <Image src="/share/backgrounds/data/rectangle-19.png" alt="" width={117} height={116} className={`${styles.shape} ${styles.rectangle19}`} />
+        <Image src="/share/backgrounds/data/rectangle-19.png" alt="" width={114} height={114} className={`${styles.shape} ${styles.rectangle19}`} style={{ height: "auto" }} />
       </div>
     </div>
   );
