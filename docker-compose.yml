@@ -1,0 +1,49 @@
+services:
+  sast-homepage-next:
+    # Build the production image from the Dockerfile in this repository.
+    # The build also receives .env as a BuildKit secret because Next.js
+    # currently fetches Lark calendar data while building /activities.
+    build:
+      context: .
+      dockerfile: Dockerfile
+      secrets:
+        - app_env
+
+    image: sast-homepage-next:latest
+    container_name: sast-homepage-next
+
+    # Host port can be changed in .env with APP_PORT=8080.
+    # Container port must stay 3000 because Next.js runs there.
+    ports:
+      - "${APP_PORT:-3000}:3000"
+
+    # Load runtime variables from .env without committing secrets.
+    env_file:
+      - .env
+
+    environment:
+      NODE_ENV: production
+      NEXT_TELEMETRY_DISABLED: "1"
+      PORT: "3000"
+      HOSTNAME: "0.0.0.0"
+
+      # Required by lib/lark.ts for server-side Lark calendar calls.
+      # Values are resolved from .env by Docker Compose.
+      LARK_APP_ID: ${LARK_APP_ID:?LARK_APP_ID is required}
+      LARK_APP_SECRET: ${LARK_APP_SECRET:?LARK_APP_SECRET is required}
+
+    restart: unless-stopped
+
+    # Basic availability check for the Next.js server.
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:3000/ >/dev/null 2>&1 || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+# Build-time secret source. This file is not copied into the image because
+# .dockerignore excludes .env, and Docker mounts it only for the build step.
+secrets:
+  app_env:
+    file: .env
