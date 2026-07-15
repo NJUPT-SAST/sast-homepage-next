@@ -24,13 +24,9 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 # The app imports server-side Lark helpers from /activities during build.
-# Mount .env as a BuildKit secret so LARK_APP_ID / LARK_APP_SECRET are
-# available to `next build` without copying secrets into the image layers.
-RUN --mount=type=secret,id=app_env \
-    set -a; \
-    . /run/secrets/app_env; \
-    set +a; \
-    npm run build
+# Mount .env at /app/.env so Next.js loads it with its normal env-file parser.
+# This avoids sourcing .env through sh, which can mangle secrets containing shell characters.
+RUN --mount=type=secret,id=app_env,target=/app/.env,required=true npm run build
 
 # Install production-only dependencies inside Docker for the final image.
 FROM node:22-alpine AS prod-deps

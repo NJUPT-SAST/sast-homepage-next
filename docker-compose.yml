@@ -37,10 +37,10 @@ services:
     # Basic availability check for the Next.js server.
     healthcheck:
       test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:3000/ >/dev/null 2>&1 || exit 1"]
-      interval: 30s
+      interval: 60s
       timeout: 10s
-      retries: 3
-      start_period: 30s
+      retries: 5
+      start_period: 60s
 
 # Build-time secret source. This file is not copied into the image because
 # .dockerignore excludes .env, and Docker mounts it only for the build step.
