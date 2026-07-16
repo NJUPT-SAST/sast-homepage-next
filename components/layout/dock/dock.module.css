@@ -129,6 +129,13 @@
     transform: none;
     box-shadow: none;
   }
+
+  .link.activeLink:hover {
+    background: #03e5bf;
+    color: #fff;
+    transform: none;
+    box-shadow: 0 0.1125rem 0.25rem rgba(3, 229, 191, 0.32);
+  }
 }
 
 @media (min-width: 768px) and (max-width: 1279px) {
