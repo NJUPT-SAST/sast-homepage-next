@@ -9,7 +9,7 @@ services:
       secrets:
         - app_env
 
-    image: sast/sast-homepage-next:latest
+    image: sast/sast-homepage-next:${IMAGE_TAG:?IMAGE_TAG is required}
     container_name: sast-homepage-next
 
     # Host port can be changed in .env with APP_PORT=8080.

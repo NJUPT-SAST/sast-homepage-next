@@ -1,0 +1,286 @@
+name: Release Deploy
+
+on:
+  push:
+    tags:
+      - "*.*.*"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: production-release
+  cancel-in-progress: false
+
+env:
+  IMAGE_NAME: sast/sast-homepage-next
+  SERVICE_NAME: sast-homepage-next
+  SERVICE_DIR: /home/sast-homepage-next
+
+jobs:
+  build-and-deploy:
+    name: Build and deploy release image
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout release source
+        uses: actions/checkout@v4
+
+      - name: Validate release tag
+        id: release
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          tag="${GITHUB_REF_NAME}"
+          if [[ ! "$tag" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Invalid release tag: $tag" >&2
+            echo "Expected tag format: x.y.z, for example 1.2.3" >&2
+            exit 1
+          fi
+
+          tar_file="${SERVICE_NAME}-${tag}.tar"
+          env_file="env-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}.tmp"
+          compose_file="docker-compose-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}.yml"
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          echo "tar_file=$tar_file" >> "$GITHUB_OUTPUT"
+          echo "env_file=$env_file" >> "$GITHUB_OUTPUT"
+          echo "compose_file=$compose_file" >> "$GITHUB_OUTPUT"
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Create build and runtime env file
+        shell: bash
+        env:
+          IMAGE_TAG: ${{ steps.release.outputs.tag }}
+          APP_PORT: ${{ secrets.APP_PORT }}
+          CONTAINER_PORT: ${{ secrets.CONTAINER_PORT }}
+          LARK_APP_ID: ${{ secrets.LARK_APP_ID }}
+          LARK_APP_SECRET: ${{ secrets.LARK_APP_SECRET }}
+        run: |
+          set -euo pipefail
+          umask 077
+
+          require_secret() {
+            key="$1"
+            value="$2"
+            if [[ -z "$value" ]]; then
+              echo "Missing required secret: $key" >&2
+              exit 1
+            fi
+            echo "::add-mask::$value"
+          }
+
+          require_secret APP_PORT "$APP_PORT"
+          require_secret CONTAINER_PORT "$CONTAINER_PORT"
+          require_secret LARK_APP_ID "$LARK_APP_ID"
+          require_secret LARK_APP_SECRET "$LARK_APP_SECRET"
+
+          {
+            printf 'IMAGE_TAG=%s\n' "$IMAGE_TAG"
+            printf 'APP_PORT=%s\n' "$APP_PORT"
+            printf 'CONTAINER_PORT=%s\n' "$CONTAINER_PORT"
+            printf 'LARK_APP_ID=%s\n' "$LARK_APP_ID"
+            printf 'LARK_APP_SECRET=%s\n' "$LARK_APP_SECRET"
+          } > .env
+
+      - name: Build release image archive
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          push: false
+          tags: ${{ env.IMAGE_NAME }}:${{ steps.release.outputs.tag }}
+          secret-files: |
+            app_env=.env
+          outputs: type=docker,dest=./${{ steps.release.outputs.tar_file }}
+
+      - name: Configure SSH
+        shell: bash
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_PORT: ${{ secrets.DEPLOY_PORT }}
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          DEPLOY_KNOWN_HOSTS: ${{ secrets.DEPLOY_KNOWN_HOSTS }}
+        run: |
+          set -euo pipefail
+
+          require_secret() {
+            key="$1"
+            value="$2"
+            if [[ -z "$value" ]]; then
+              echo "Missing required secret: $key" >&2
+              exit 1
+            fi
+            echo "::add-mask::$value"
+          }
+
+          require_secret DEPLOY_HOST "$DEPLOY_HOST"
+          require_secret DEPLOY_PORT "$DEPLOY_PORT"
+          require_secret DEPLOY_USER "$DEPLOY_USER"
+          require_secret DEPLOY_SSH_KEY "$DEPLOY_SSH_KEY"
+          require_secret DEPLOY_KNOWN_HOSTS "$DEPLOY_KNOWN_HOSTS"
+
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          printf '%s\n' "$DEPLOY_SSH_KEY" > ~/.ssh/deploy_key
+          printf '%s\n' "$DEPLOY_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/known_hosts
+
+      - name: Transfer release files to server
+        shell: bash
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_PORT: ${{ secrets.DEPLOY_PORT }}
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+          TAR_FILE: ${{ steps.release.outputs.tar_file }}
+          ENV_FILE: ${{ steps.release.outputs.env_file }}
+          COMPOSE_FILE: ${{ steps.release.outputs.compose_file }}
+        run: |
+          set -euo pipefail
+
+          cp .env "$ENV_FILE"
+          cp docker-compose.yml "$COMPOSE_FILE"
+
+          ssh_common=(
+            -i "$HOME/.ssh/deploy_key"
+            -o BatchMode=yes
+            -o StrictHostKeyChecking=yes
+            -o UserKnownHostsFile="$HOME/.ssh/known_hosts"
+            -p "$DEPLOY_PORT"
+          )
+
+          ssh "${ssh_common[@]}" "$DEPLOY_USER@$DEPLOY_HOST" \
+            "mkdir -p '${SERVICE_DIR}/releases' && chmod 700 '${SERVICE_DIR}/releases'"
+
+          scp \
+            -i "$HOME/.ssh/deploy_key" \
+            -o BatchMode=yes \
+            -o StrictHostKeyChecking=yes \
+            -o UserKnownHostsFile="$HOME/.ssh/known_hosts" \
+            -P "$DEPLOY_PORT" \
+            "$TAR_FILE" \
+            "$ENV_FILE" \
+            "$COMPOSE_FILE" \
+            "$DEPLOY_USER@$DEPLOY_HOST:${SERVICE_DIR}/releases/"
+
+      - name: Remove local env files
+        if: always()
+        shell: bash
+        env:
+          ENV_FILE: ${{ steps.release.outputs.env_file }}
+          COMPOSE_FILE: ${{ steps.release.outputs.compose_file }}
+        run: |
+          rm -f .env "$ENV_FILE" "$COMPOSE_FILE"
+
+      - name: Deploy release on server
+        shell: bash
+        env:
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
+          DEPLOY_PORT: ${{ secrets.DEPLOY_PORT }}
+          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+          IMAGE_TAG: ${{ steps.release.outputs.tag }}
+          TAR_FILE: ${{ steps.release.outputs.tar_file }}
+          ENV_FILE: ${{ steps.release.outputs.env_file }}
+          COMPOSE_FILE: ${{ steps.release.outputs.compose_file }}
+        run: |
+          set -euo pipefail
+
+          remote_script=$(cat <<'REMOTE_SCRIPT'
+          set -euo pipefail
+
+          cd "$SERVICE_DIR"
+          mkdir -p releases
+
+          staged_env="releases/$ENV_FILE"
+          staged_compose="releases/$COMPOSE_FILE"
+          staged_tar="releases/$TAR_FILE"
+
+          cleanup() {
+            rm -f "$staged_env" "$staged_compose"
+          }
+          trap cleanup EXIT
+
+          if [[ ! -f "$staged_env" ]]; then
+            echo "Missing staged env file: $staged_env" >&2
+            exit 1
+          fi
+
+          if [[ ! -f "$staged_tar" ]]; then
+            echo "Missing staged image archive: $staged_tar" >&2
+            exit 1
+          fi
+
+          if [[ ! -f "$staged_compose" ]]; then
+            echo "Missing staged compose file: $staged_compose" >&2
+            exit 1
+          fi
+
+          chmod 600 "$staged_env"
+
+          docker load -i "$staged_tar"
+          docker image inspect "$IMAGE_NAME:$IMAGE_TAG" >/dev/null
+
+          mv -f "$staged_env" .env
+          mv -f "$staged_compose" docker-compose.yml
+          chmod 600 .env
+          chmod 644 docker-compose.yml
+          trap - EXIT
+
+          docker compose config --quiet
+          docker compose up -d --no-build --remove-orphans
+
+          container_id="$(docker compose ps -q "$SERVICE_NAME")"
+          if [[ -z "$container_id" ]]; then
+            echo "Container was not created for service $SERVICE_NAME" >&2
+            docker compose ps
+            exit 1
+          fi
+
+          for attempt in $(seq 1 30); do
+            status="$(docker inspect --format '{{if .State.Health}}{{.State.Health.Status}}{{else}}no-healthcheck{{end}}' "$container_id")"
+            if [[ "$status" == "healthy" || "$status" == "no-healthcheck" ]]; then
+              break
+            fi
+            if [[ "$status" == "unhealthy" ]]; then
+              echo "Container became unhealthy" >&2
+              docker compose ps
+              exit 1
+            fi
+            sleep 5
+          done
+
+          final_status="$(docker inspect --format '{{if .State.Health}}{{.State.Health.Status}}{{else}}no-healthcheck{{end}}' "$container_id")"
+          if [[ "$final_status" != "healthy" && "$final_status" != "no-healthcheck" ]]; then
+            echo "Timed out waiting for container health. Last status: $final_status" >&2
+            docker compose ps
+            exit 1
+          fi
+
+          app_port="$(awk -F= '$1 == "APP_PORT" {print substr($0, index($0, "=") + 1)}' .env | tail -n 1)"
+          if [[ -z "$app_port" ]]; then
+            app_port="3000"
+          fi
+
+          if command -v curl >/dev/null 2>&1; then
+            curl -fsS "http://127.0.0.1:${app_port}/" >/dev/null
+          else
+            wget -qO- "http://127.0.0.1:${app_port}/" >/dev/null
+          fi
+
+          rm -f "$staged_tar"
+          docker image prune -f
+          echo "Deployed $IMAGE_NAME:$IMAGE_TAG"
+          REMOTE_SCRIPT
+          )
+
+          ssh \
+            -i "$HOME/.ssh/deploy_key" \
+            -o BatchMode=yes \
+            -o StrictHostKeyChecking=yes \
+            -o UserKnownHostsFile="$HOME/.ssh/known_hosts" \
+            -p "$DEPLOY_PORT" \
+            "$DEPLOY_USER@$DEPLOY_HOST" \
+            "SERVICE_DIR='$SERVICE_DIR' SERVICE_NAME='$SERVICE_NAME' IMAGE_NAME='$IMAGE_NAME' IMAGE_TAG='$IMAGE_TAG' TAR_FILE='$TAR_FILE' ENV_FILE='$ENV_FILE' COMPOSE_FILE='$COMPOSE_FILE' bash -s" <<< "$remote_script"
