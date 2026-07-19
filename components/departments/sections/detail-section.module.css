@@ -388,13 +388,45 @@
     border-radius: 1.1rem;
   }
 
+  .departmentListWrapOpen {
+    max-height: 8rem;
+  }
+
+  .departmentList {
+    display: flex;
+    gap: 0.45rem;
+    padding-bottom: 0.15rem;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .departmentList::-webkit-scrollbar {
+    height: 0.25rem;
+  }
+
+  .departmentList::-webkit-scrollbar-thumb {
+    background: rgba(39, 162, 156, 0.2);
+    border-radius: 999px;
+  }
+
+  .departmentList::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
   .groupTitle {
     font-size: 1.2rem;
   }
 
   .departmentButton {
+    flex: 1 1 0;
+    min-width: 0;
     padding: 0.66rem 0.78rem;
     font-size: 0.9rem;
+    text-align: center;
+    white-space: nowrap;
+    scroll-snap-align: start;
   }
 
   .departmentCard {
@@ -404,12 +436,16 @@
   }
 
   .departmentHeader {
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(9.5rem, 0.82fr);
+    gap: 0.85rem;
+    align-items: start;
   }
 
   .departmentTagline {
+    align-self: center;
     max-width: none;
-    text-align: left;
+    text-align: right;
   }
 
   .departmentName {
