@@ -21,6 +21,7 @@ type RecruitmentTimelineProps = {
 
 const TIMELINE_MARKER_GAP_REM = 8;
 const EVENT_LABEL_EDGE_GUTTER_PX = 18;
+const MIN_RAIL_WIDTH_REM = 52;
 
 function toDayValue(dateText: string) {
   const [monthText, dayText] = dateText.split("/");
@@ -34,6 +35,32 @@ function clamp(value: number, min: number, max: number) {
   return Math.min(Math.max(value, min), max);
 }
 
+function getVisibleLabelOffset({
+  eventRect,
+  labelWidth,
+  viewportRect,
+}: {
+  eventRect: DOMRect;
+  labelWidth: number;
+  viewportRect: DOMRect;
+}) {
+  const eventCenter = eventRect.left + eventRect.width / 2;
+  const labelHalfWidth = labelWidth / 2;
+  const naturalLabelLeft = eventCenter - labelHalfWidth;
+  const naturalLabelRight = eventCenter + labelHalfWidth;
+  const eventMinCenter = eventRect.left + EVENT_LABEL_EDGE_GUTTER_PX + labelHalfWidth;
+  const eventMaxCenter = eventRect.right - EVENT_LABEL_EDGE_GUTTER_PX - labelHalfWidth;
+  let targetCenter = eventCenter;
+
+  if (naturalLabelLeft < viewportRect.left) {
+    targetCenter = viewportRect.left + labelHalfWidth;
+  } else if (naturalLabelRight > viewportRect.right) {
+    targetCenter = viewportRect.right - labelHalfWidth;
+  }
+
+  return clamp(targetCenter, eventMinCenter, eventMaxCenter) - eventCenter;
+}
+
 export default function RecruitmentTimeline({ tracks }: RecruitmentTimelineProps) {
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const eventLabelRefs = useRef(new Map<string, HTMLSpanElement>());
@@ -44,7 +71,7 @@ export default function RecruitmentTimeline({ tracks }: RecruitmentTimelineProps
   const uniqueDates = [...new Set(allDates)].sort((a, b) => toDayValue(a) - toDayValue(b));
   const markerOffsetByDate = new Map(uniqueDates.map((dateText, index) => [dateText, index * TIMELINE_MARKER_GAP_REM]));
   const dateSpan = Math.max((uniqueDates.length - 1) * TIMELINE_MARKER_GAP_REM, 1);
-  const railWidthRem = Math.max(dateSpan, 52);
+  const railWidthRem = Math.max(dateSpan, MIN_RAIL_WIDTH_REM);
   const [isDragging, setIsDragging] = useState(false);
   const getMarkerOffset = (dateText: string) => markerOffsetByDate.get(dateText) ?? 0;
   const getPosition = (dateText: string) => (getMarkerOffset(dateText) / dateSpan) * 100;
@@ -65,14 +92,6 @@ export default function RecruitmentTimeline({ tracks }: RecruitmentTimelineProps
         }
 
         const eventRect = eventElement.getBoundingClientRect();
-        const eventCenter = eventRect.left + eventRect.width / 2;
-        const labelRect = labelElement.getBoundingClientRect();
-        const labelHalfWidth = labelRect.width / 2;
-        const naturalLabelLeft = eventCenter - labelHalfWidth;
-        const naturalLabelRight = eventCenter + labelHalfWidth;
-        const halfPadding = EVENT_LABEL_EDGE_GUTTER_PX;
-        const eventMinCenter = eventRect.left + halfPadding + labelHalfWidth;
-        const eventMaxCenter = eventRect.right - halfPadding - labelHalfWidth;
         const eventTouchesViewport = eventRect.right > viewportRect.left && eventRect.left < viewportRect.right;
 
         if (eventTouchesViewport) {
@@ -84,18 +103,9 @@ export default function RecruitmentTimeline({ tracks }: RecruitmentTimelineProps
           return;
         }
 
-        let targetCenter = eventCenter;
-
-        // Once the label has naturally entered the viewport, keep it visible until
-        // the event block's rounded edge pushes it out.
-        if (naturalLabelLeft < viewportRect.left) {
-          targetCenter = viewportRect.left + labelHalfWidth;
-        } else if (naturalLabelRight > viewportRect.right) {
-          targetCenter = viewportRect.right - labelHalfWidth;
-        }
-
-        targetCenter = clamp(targetCenter, eventMinCenter, eventMaxCenter);
-        labelElement.style.setProperty("--event-label-offset", `${targetCenter - eventCenter}px`);
+        const labelWidth = labelElement.getBoundingClientRect().width;
+        const labelOffset = getVisibleLabelOffset({ eventRect, labelWidth, viewportRect });
+        labelElement.style.setProperty("--event-label-offset", `${labelOffset}px`);
       });
     };
 
