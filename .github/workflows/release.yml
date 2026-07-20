@@ -152,10 +152,10 @@ jobs:
             -p "$DEPLOY_PORT"
           )
 
-          ssh "${ssh_common[@]}" "$DEPLOY_USER@$DEPLOY_HOST" \
+          ssh -v "${ssh_common[@]}" "$DEPLOY_USER@$DEPLOY_HOST" \
             "mkdir -p '${SERVICE_DIR}/releases' && chmod 700 '${SERVICE_DIR}/releases'"
 
-          scp \
+          scp -v \
             -i "$HOME/.ssh/deploy_key" \
             -o BatchMode=yes \
             -o StrictHostKeyChecking=yes \
