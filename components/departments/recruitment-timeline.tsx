@@ -35,6 +35,40 @@ function clamp(value: number, min: number, max: number) {
   return Math.min(Math.max(value, min), max);
 }
 
+function getTimelineOffset(dateText: string, dates: string[]) {
+  const dateValue = toDayValue(dateText);
+  const firstDateValue = toDayValue(dates[0]);
+  const lastDateValue = toDayValue(dates[dates.length - 1]);
+
+  if (dateValue < firstDateValue || dateValue > lastDateValue) {
+    return null;
+  }
+
+  const exactDateIndex = dates.findIndex((item) => item === dateText);
+  if (exactDateIndex >= 0) {
+    return exactDateIndex * TIMELINE_MARKER_GAP_REM;
+  }
+
+  const nextDateIndex = dates.findIndex((item) => toDayValue(item) > dateValue);
+  if (nextDateIndex <= 0) {
+    return null;
+  }
+
+  const previousDate = dates[nextDateIndex - 1];
+  const nextDate = dates[nextDateIndex];
+  const previousDateValue = toDayValue(previousDate);
+  const nextDateValue = toDayValue(nextDate);
+  const segmentProgress = (dateValue - previousDateValue) / (nextDateValue - previousDateValue);
+
+  return (nextDateIndex - 1 + segmentProgress) * TIMELINE_MARKER_GAP_REM;
+}
+
+function getCurrentDateText() {
+  const today = new Date();
+
+  return `${today.getMonth() + 1}/${today.getDate()}`;
+}
+
 function getVisibleLabelOffset({
   eventRect,
   labelWidth,
@@ -72,6 +106,7 @@ export default function RecruitmentTimeline({ tracks }: RecruitmentTimelineProps
   const markerOffsetByDate = new Map(uniqueDates.map((dateText, index) => [dateText, index * TIMELINE_MARKER_GAP_REM]));
   const dateSpan = Math.max((uniqueDates.length - 1) * TIMELINE_MARKER_GAP_REM, 1);
   const railWidthRem = Math.max(dateSpan, MIN_RAIL_WIDTH_REM);
+  const todayOffsetRem = getTimelineOffset(getCurrentDateText(), uniqueDates);
   const [isDragging, setIsDragging] = useState(false);
   const getMarkerOffset = (dateText: string) => markerOffsetByDate.get(dateText) ?? 0;
   const getPosition = (dateText: string) => (getMarkerOffset(dateText) / dateSpan) * 100;
@@ -172,6 +207,14 @@ export default function RecruitmentTimeline({ tracks }: RecruitmentTimelineProps
         onPointerUp={handlePointerEnd}
         onPointerCancel={handlePointerEnd}>
         <div className={styles.timelineCanvas} style={{ "--timeline-rail-width": `${railWidthRem}rem` } as CSSProperties}>
+          {todayOffsetRem !== null ? (
+            <div
+              className={styles.todayGuide}
+              style={{ left: `calc(var(--timeline-name-width) + var(--timeline-row-gap) + ${todayOffsetRem}rem)` }}>
+              <span className={styles.todayGuideLabel}>今天</span>
+            </div>
+          ) : null}
+
           <div className={styles.axisRow}>
             <div className={styles.axisCorner} aria-hidden />
 

@@ -49,6 +49,45 @@
   min-width: calc(var(--timeline-name-width) + var(--timeline-row-gap) + var(--timeline-rail-width));
 }
 
+.todayGuide {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 1;
+  width: 0;
+  pointer-events: none;
+}
+
+.todayGuide::after {
+  content: "";
+  position: absolute;
+  top: 3.5rem;
+  bottom: 0.4rem;
+  left: 0;
+  width: 1px;
+  background: #ff0000;
+}
+
+.todayGuideLabel {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.16rem 0.42rem;
+  color: #ff0000;
+  font-size: 0.68rem;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid #ff0000;
+  border-radius: 999px;
+  box-shadow: 0 0.2rem 0.55rem rgba(220, 223, 230, 0.16);
+  transform: translateX(-50%);
+}
+
 .axisRow {
   display: grid;
   grid-template-columns: var(--timeline-name-width) minmax(0, 1fr);
@@ -230,6 +269,14 @@
 
   .axisTick {
     margin-top: 1.16rem;
+  }
+
+  .todayGuide::after {
+    top: 3.2rem;
+  }
+
+  .todayGuideLabel {
+    font-size: 0.62rem;
   }
 
   .trackTitle {
