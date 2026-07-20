@@ -80,3 +80,25 @@ compose.override.yml
 .turbo
 .turbo/*
 .eslintcache
+
+# Documentation and metadata (not needed at runtime).
+*.md
+LICENSE
+CHANGELOG*
+CONTRIBUTING*
+
+# CI / GitHub workflows and tooling configs.
+.github
+.github/*
+.cursor
+.cursor/*
+.claude
+.claude/*
+.next
+.next/*
+
+# Temporary and cache directories.
+cache
+cache/*
+tmp
+tmp/*

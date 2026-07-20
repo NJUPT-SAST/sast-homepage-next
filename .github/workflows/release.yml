@@ -39,13 +39,7 @@ jobs:
             exit 1
           fi
 
-          tar_file="${SERVICE_NAME}-${tag}.tar"
-          env_file="env-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}.tmp"
-          compose_file="docker-compose-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}.yml"
           echo "tag=$tag" >> "$GITHUB_OUTPUT"
-          echo "tar_file=$tar_file" >> "$GITHUB_OUTPUT"
-          echo "env_file=$env_file" >> "$GITHUB_OUTPUT"
-          echo "compose_file=$compose_file" >> "$GITHUB_OUTPUT"
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -85,7 +79,7 @@ jobs:
             printf 'LARK_APP_SECRET=%s\n' "$LARK_APP_SECRET"
           } > .env
 
-      - name: Build release image archive
+      - name: Build release image archive (gzip compressed)
         uses: docker/build-push-action@v7
         with:
           context: .
@@ -93,7 +87,13 @@ jobs:
           tags: ${{ env.IMAGE_NAME }}:${{ steps.release.outputs.tag }}
           secret-files: |
             app_env=.env
-          outputs: type=docker,dest=./${{ steps.release.outputs.tar_file }}
+          outputs: type=docker,dest=./image.tar.gz,compression=gzip
+
+      - name: Show image archive size
+        shell: bash
+        run: |
+          echo "Image archive size:"
+          ls -lh image.tar.gz
 
       - name: Configure SSH
         shell: bash
@@ -116,18 +116,31 @@ jobs:
             echo "::add-mask::$value"
           }
 
-          require_secret DEPLOY_HOST "$DEPLOY_HOST"
-          require_secret DEPLOY_PORT "$DEPLOY_PORT"
-          require_secret DEPLOY_USER "$DEPLOY_USER"
-          require_secret DEPLOY_SSH_KEY "$DEPLOY_SSH_KEY"
+          require_secret DEPLOY_HOST     "$DEPLOY_HOST"
+          require_secret DEPLOY_PORT     "$DEPLOY_PORT"
+          require_secret DEPLOY_USER     "$DEPLOY_USER"
+          require_secret DEPLOY_SSH_KEY  "$DEPLOY_SSH_KEY"
           require_secret DEPLOY_KNOWN_HOSTS "$DEPLOY_KNOWN_HOSTS"
 
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
-          printf '%s\n' "$DEPLOY_SSH_KEY" > ~/.ssh/deploy_key
+          printf '%s\n' "$DEPLOY_SSH_KEY"     > ~/.ssh/deploy_key
           printf '%s\n' "$DEPLOY_KNOWN_HOSTS" > ~/.ssh/known_hosts
-          chmod 600 ~/.ssh/deploy_key
-          chmod 600 ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/deploy_key ~/.ssh/known_hosts
+
+          # Shared SSH settings for all connections in this job.
+          # ConnectTimeout / ServerAlive* prevent silent hangs during transfer.
+          cat >> ~/.ssh/config <<'SSH_CONFIG'
+          Host *
+            IdentityFile             ~/.ssh/deploy_key
+            UserKnownHostsFile       ~/.ssh/known_hosts
+            StrictHostKeyChecking    yes
+            BatchMode                yes
+            ConnectTimeout           30
+            ServerAliveInterval      30
+            ServerAliveCountMax      3
+          SSH_CONFIG
+          chmod 600 ~/.ssh/config
 
       - name: Transfer release files to server
         shell: bash
@@ -135,45 +148,32 @@ jobs:
           DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
           DEPLOY_PORT: ${{ secrets.DEPLOY_PORT }}
           DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
-          TAR_FILE: ${{ steps.release.outputs.tar_file }}
-          ENV_FILE: ${{ steps.release.outputs.env_file }}
-          COMPOSE_FILE: ${{ steps.release.outputs.compose_file }}
+          IMAGE_TAG: ${{ steps.release.outputs.tag }}
         run: |
           set -euo pipefail
 
-          cp .env "$ENV_FILE"
-          cp docker-compose.yml "$COMPOSE_FILE"
+          # Bundle env + compose + image into ONE file — one scp, not three.
+          cp docker-compose.yml compose.yml
+          tar czf deploy-bundle.tar.gz image.tar.gz .env compose.yml
 
-          ssh_common=(
-            -i "$HOME/.ssh/deploy_key"
-            -o BatchMode=yes
-            -o StrictHostKeyChecking=yes
-            -o UserKnownHostsFile="$HOME/.ssh/known_hosts"
-            -p "$DEPLOY_PORT"
-          )
+          echo "Deploy bundle size: $(ls -lh deploy-bundle.tar.gz | awk '{print $5}')"
 
-          ssh -v "${ssh_common[@]}" "$DEPLOY_USER@$DEPLOY_HOST" \
+          echo ">>> Connecting to server (ssh -v) …"
+          ssh -v -p "$DEPLOY_PORT" "$DEPLOY_USER@$DEPLOY_HOST" \
             "mkdir -p '${SERVICE_DIR}/releases' && chmod 700 '${SERVICE_DIR}/releases'"
 
-          scp -v \
-            -i "$HOME/.ssh/deploy_key" \
-            -o BatchMode=yes \
-            -o StrictHostKeyChecking=yes \
-            -o UserKnownHostsFile="$HOME/.ssh/known_hosts" \
-            -P "$DEPLOY_PORT" \
-            "$TAR_FILE" \
-            "$ENV_FILE" \
-            "$COMPOSE_FILE" \
-            "$DEPLOY_USER@$DEPLOY_HOST:${SERVICE_DIR}/releases/"
+          echo ">>> Transferring deploy bundle (scp -v) …"
+          scp -v -P "$DEPLOY_PORT" \
+            deploy-bundle.tar.gz \
+            "$DEPLOY_USER@$DEPLOY_HOST:${SERVICE_DIR}/releases/deploy-bundle.tar.gz"
 
-      - name: Remove local env files
+          echo ">>> Transfer complete."
+
+      - name: Remove local sensitive files
         if: always()
         shell: bash
-        env:
-          ENV_FILE: ${{ steps.release.outputs.env_file }}
-          COMPOSE_FILE: ${{ steps.release.outputs.compose_file }}
         run: |
-          rm -f .env "$ENV_FILE" "$COMPOSE_FILE"
+          rm -f .env compose.yml image.tar.gz deploy-bundle.tar.gz
 
       - name: Deploy release on server
         shell: bash
@@ -182,71 +182,85 @@ jobs:
           DEPLOY_PORT: ${{ secrets.DEPLOY_PORT }}
           DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
           IMAGE_TAG: ${{ steps.release.outputs.tag }}
-          TAR_FILE: ${{ steps.release.outputs.tar_file }}
-          ENV_FILE: ${{ steps.release.outputs.env_file }}
-          COMPOSE_FILE: ${{ steps.release.outputs.compose_file }}
         run: |
           set -euo pipefail
 
           remote_script=$(cat <<'REMOTE_SCRIPT'
           set -euo pipefail
 
+          SERVICE_DIR="${SERVICE_DIR:?}"
+          SERVICE_NAME="${SERVICE_NAME:?}"
+          IMAGE_NAME="${IMAGE_NAME:?}"
+          IMAGE_TAG="${IMAGE_TAG:?}"
+
           cd "$SERVICE_DIR"
           mkdir -p releases
 
-          staged_env="releases/$ENV_FILE"
-          staged_compose="releases/$COMPOSE_FILE"
-          staged_tar="releases/$TAR_FILE"
+          bundle="releases/deploy-bundle.tar.gz"
 
-          cleanup() {
-            rm -f "$staged_env" "$staged_compose"
-          }
-          trap cleanup EXIT
-
-          if [[ ! -f "$staged_env" ]]; then
-            echo "Missing staged env file: $staged_env" >&2
+          if [[ ! -f "$bundle" ]]; then
+            echo "ERROR: missing deploy bundle: $bundle" >&2
             exit 1
           fi
 
-          if [[ ! -f "$staged_tar" ]]; then
-            echo "Missing staged image archive: $staged_tar" >&2
-            exit 1
-          fi
+          # Unpack into a staging directory so we never clobber running state.
+          stage="releases/stage-${IMAGE_TAG}"
+          rm -rf "$stage"
+          mkdir -p "$stage"
 
-          if [[ ! -f "$staged_compose" ]]; then
-            echo "Missing staged compose file: $staged_compose" >&2
-            exit 1
-          fi
+          echo ">>> Unpacking deploy bundle…"
+          tar xzf "$bundle" -C "$stage"
+
+          staged_env="$stage/.env"
+          staged_compose="$stage/compose.yml"
+          staged_image="$stage/image.tar.gz"
+
+          for f in "$staged_env" "$staged_compose" "$staged_image"; do
+            if [[ ! -f "$f" ]]; then
+              echo "ERROR: missing staged file: $f" >&2
+              exit 1
+            fi
+          done
 
           chmod 600 "$staged_env"
 
-          docker load -i "$staged_tar"
+          echo ">>> Loading Docker image…"
+          docker load -i "$staged_image"
           docker image inspect "$IMAGE_NAME:$IMAGE_TAG" >/dev/null
+          echo ">>> Image loaded: $IMAGE_NAME:$IMAGE_TAG"
 
+          # Atomically swap in .env and compose file.
           mv -f "$staged_env" .env
           mv -f "$staged_compose" docker-compose.yml
           chmod 600 .env
           chmod 644 docker-compose.yml
-          trap - EXIT
+
+          # Cleanup staging and bundle.
+          rm -rf "$stage" "$bundle"
 
           docker compose config --quiet
+
+          echo ">>> Starting container…"
           docker compose up -d --no-build --remove-orphans
 
           container_id="$(docker compose ps -q "$SERVICE_NAME")"
           if [[ -z "$container_id" ]]; then
-            echo "Container was not created for service $SERVICE_NAME" >&2
+            echo "ERROR: container was not created for service $SERVICE_NAME" >&2
             docker compose ps
             exit 1
           fi
 
+          # Wait up to 150 s for the container to become healthy.
           for attempt in $(seq 1 30); do
             status="$(docker inspect --format '{{if .State.Health}}{{.State.Health.Status}}{{else}}no-healthcheck{{end}}' "$container_id")"
+            echo "[$attempt/30] container status: $status"
             if [[ "$status" == "healthy" || "$status" == "no-healthcheck" ]]; then
               break
             fi
             if [[ "$status" == "unhealthy" ]]; then
-              echo "Container became unhealthy" >&2
+              echo "ERROR: container became unhealthy" >&2
               docker compose ps
+              docker logs --tail 50 "$container_id" || true
               exit 1
             fi
             sleep 5
@@ -254,15 +268,15 @@ jobs:
 
           final_status="$(docker inspect --format '{{if .State.Health}}{{.State.Health.Status}}{{else}}no-healthcheck{{end}}' "$container_id")"
           if [[ "$final_status" != "healthy" && "$final_status" != "no-healthcheck" ]]; then
-            echo "Timed out waiting for container health. Last status: $final_status" >&2
+            echo "ERROR: timed out waiting for container health (status: $final_status)" >&2
             docker compose ps
+            docker logs --tail 50 "$container_id" || true
             exit 1
           fi
 
+          # Quick smoke test against the app port.
           app_port="$(awk -F= '$1 == "APP_PORT" {print substr($0, index($0, "=") + 1)}' .env | tail -n 1)"
-          if [[ -z "$app_port" ]]; then
-            app_port="3000"
-          fi
+          app_port="${app_port:-3000}"
 
           if command -v curl >/dev/null 2>&1; then
             curl -fsS "http://127.0.0.1:${app_port}/" >/dev/null
@@ -270,17 +284,11 @@ jobs:
             wget -qO- "http://127.0.0.1:${app_port}/" >/dev/null
           fi
 
-          rm -f "$staged_tar"
           docker image prune -f
-          echo "Deployed $IMAGE_NAME:$IMAGE_TAG"
+          echo ">>> Deployed $IMAGE_NAME:$IMAGE_TAG"
           REMOTE_SCRIPT
           )
 
-          ssh \
-            -i "$HOME/.ssh/deploy_key" \
-            -o BatchMode=yes \
-            -o StrictHostKeyChecking=yes \
-            -o UserKnownHostsFile="$HOME/.ssh/known_hosts" \
-            -p "$DEPLOY_PORT" \
-            "$DEPLOY_USER@$DEPLOY_HOST" \
-            "SERVICE_DIR='$SERVICE_DIR' SERVICE_NAME='$SERVICE_NAME' IMAGE_NAME='$IMAGE_NAME' IMAGE_TAG='$IMAGE_TAG' TAR_FILE='$TAR_FILE' ENV_FILE='$ENV_FILE' COMPOSE_FILE='$COMPOSE_FILE' bash -s" <<< "$remote_script"
+          echo ">>> Running remote deploy script…"
+          ssh -v -p "$DEPLOY_PORT" "$DEPLOY_USER@$DEPLOY_HOST" \
+            "SERVICE_DIR='$SERVICE_DIR' SERVICE_NAME='$SERVICE_NAME' IMAGE_NAME='$IMAGE_NAME' IMAGE_TAG='$IMAGE_TAG' bash -s" <<< "$remote_script"
