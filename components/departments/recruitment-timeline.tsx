@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState, type CSSProperties, type PointerEvent as ReactPointerEvent } from "react";
+import { useEffect, useRef, useState, type CSSProperties, type PointerEvent as ReactPointerEvent } from "react";
 import styles from "./recruitment-timeline.module.css";
 
 type RecruitmentEvent = {
@@ -19,6 +19,9 @@ type RecruitmentTimelineProps = {
   tracks: RecruitmentTrack[];
 };
 
+const TIMELINE_MARKER_GAP_REM = 8;
+const EVENT_LABEL_EDGE_GUTTER_PX = 18;
+
 function toDayValue(dateText: string) {
   const [monthText, dayText] = dateText.split("/");
   const month = Number(monthText);
@@ -27,28 +30,85 @@ function toDayValue(dateText: string) {
   return month * 31 + day;
 }
 
+function clamp(value: number, min: number, max: number) {
+  return Math.min(Math.max(value, min), max);
+}
+
 export default function RecruitmentTimeline({ tracks }: RecruitmentTimelineProps) {
   const scrollRef = useRef<HTMLDivElement | null>(null);
+  const eventLabelRefs = useRef(new Map<string, HTMLSpanElement>());
+  const activeLabelKeysRef = useRef(new Set<string>());
   const dragStartXRef = useRef(0);
   const dragStartScrollLeftRef = useRef(0);
   const allDates = tracks.flatMap((track) => track.events.flatMap((event) => [event.startDate, event.endDate]));
   const uniqueDates = [...new Set(allDates)].sort((a, b) => toDayValue(a) - toDayValue(b));
-  const minDateValue = Math.min(...uniqueDates.map(toDayValue));
-  const maxDateValue = Math.max(...uniqueDates.map(toDayValue));
-  const dateSpan = Math.max(maxDateValue - minDateValue, 1);
-  const railWidthRem = Math.max(dateSpan * 8, 52);
+  const markerOffsetByDate = new Map(uniqueDates.map((dateText, index) => [dateText, index * TIMELINE_MARKER_GAP_REM]));
+  const dateSpan = Math.max((uniqueDates.length - 1) * TIMELINE_MARKER_GAP_REM, 1);
+  const railWidthRem = Math.max(dateSpan, 52);
   const [isDragging, setIsDragging] = useState(false);
-  const todayOffsetRem = useMemo(() => {
-    const today = new Date();
-    const todayValue = (today.getMonth() + 1) * 31 + today.getDate();
-    if (todayValue < minDateValue || todayValue > maxDateValue) {
-      return null;
+  const getMarkerOffset = (dateText: string) => markerOffsetByDate.get(dateText) ?? 0;
+  const getPosition = (dateText: string) => (getMarkerOffset(dateText) / dateSpan) * 100;
+
+  useEffect(() => {
+    const scrollElement = scrollRef.current;
+    if (!scrollElement) {
+      return;
     }
 
-    return (((todayValue - minDateValue) / dateSpan) * railWidthRem);
-  }, [dateSpan, maxDateValue, minDateValue, railWidthRem]);
+    const updateLabelPositions = () => {
+      const viewportRect = scrollElement.getBoundingClientRect();
 
-  const getPosition = (dateText: string) => ((toDayValue(dateText) - minDateValue) / dateSpan) * 100;
+      eventLabelRefs.current.forEach((labelElement, labelKey) => {
+        const eventElement = labelElement.parentElement;
+        if (!eventElement) {
+          return;
+        }
+
+        const eventRect = eventElement.getBoundingClientRect();
+        const eventCenter = eventRect.left + eventRect.width / 2;
+        const labelRect = labelElement.getBoundingClientRect();
+        const labelHalfWidth = labelRect.width / 2;
+        const naturalLabelLeft = eventCenter - labelHalfWidth;
+        const naturalLabelRight = eventCenter + labelHalfWidth;
+        const halfPadding = EVENT_LABEL_EDGE_GUTTER_PX;
+        const eventMinCenter = eventRect.left + halfPadding + labelHalfWidth;
+        const eventMaxCenter = eventRect.right - halfPadding - labelHalfWidth;
+        const eventTouchesViewport = eventRect.right > viewportRect.left && eventRect.left < viewportRect.right;
+
+        if (eventTouchesViewport) {
+          activeLabelKeysRef.current.add(labelKey);
+        }
+
+        if (!activeLabelKeysRef.current.has(labelKey)) {
+          labelElement.style.setProperty("--event-label-offset", "0px");
+          return;
+        }
+
+        let targetCenter = eventCenter;
+
+        // Once the label has naturally entered the viewport, keep it visible until
+        // the event block's rounded edge pushes it out.
+        if (naturalLabelLeft < viewportRect.left) {
+          targetCenter = viewportRect.left + labelHalfWidth;
+        } else if (naturalLabelRight > viewportRect.right) {
+          targetCenter = viewportRect.right - labelHalfWidth;
+        }
+
+        targetCenter = clamp(targetCenter, eventMinCenter, eventMaxCenter);
+        labelElement.style.setProperty("--event-label-offset", `${targetCenter - eventCenter}px`);
+      });
+    };
+
+    updateLabelPositions();
+    scrollElement.addEventListener("scroll", updateLabelPositions, { passive: true });
+    const resizeObserver = new ResizeObserver(updateLabelPositions);
+    resizeObserver.observe(scrollElement);
+
+    return () => {
+      scrollElement.removeEventListener("scroll", updateLabelPositions);
+      resizeObserver.disconnect();
+    };
+  }, [tracks]);
   const handlePointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
     if (event.pointerType === "touch" || event.button !== 0) {
       return;
@@ -102,14 +162,6 @@ export default function RecruitmentTimeline({ tracks }: RecruitmentTimelineProps
         onPointerUp={handlePointerEnd}
         onPointerCancel={handlePointerEnd}>
         <div className={styles.timelineCanvas} style={{ "--timeline-rail-width": `${railWidthRem}rem` } as CSSProperties}>
-          {todayOffsetRem !== null ? (
-            <div
-              className={styles.todayGuide}
-              style={{ left: `calc(var(--timeline-name-width) + var(--timeline-row-gap) + ${todayOffsetRem}rem)` }}>
-              <span className={styles.todayGuideLabel}>今天</span>
-            </div>
-          ) : null}
-
           <div className={styles.axisRow}>
             <div className={styles.axisCorner} aria-hidden />
 
@@ -140,9 +192,21 @@ export default function RecruitmentTimeline({ tracks }: RecruitmentTimelineProps
                     const right = getPosition(event.endDate);
                     const width = Math.max(right - left, (1 / dateSpan) * 100);
 
+                    const eventKey = `${track.id}-${event.startDate}-${event.endDate}-${event.label}`;
+
                     return (
-                      <div key={`${event.startDate}-${event.endDate}-${event.label}`} className={styles.eventBlock} style={{ left: `${left+0.1}%`, width: `${width-0.2}%` }}>
-                        <span className={styles.eventLabel}>{event.label}</span>
+                      <div key={eventKey} className={styles.eventBlock} style={{ left: `${left+0.1}%`, width: `${width-0.2}%` }}>
+                        <span
+                          ref={(element) => {
+                            if (element) {
+                              eventLabelRefs.current.set(eventKey, element);
+                            } else {
+                              eventLabelRefs.current.delete(eventKey);
+                            }
+                          }}
+                          className={styles.eventLabel}>
+                          {event.label}
+                        </span>
                       </div>
                     );
                   })}

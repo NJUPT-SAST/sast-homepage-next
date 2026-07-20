@@ -214,7 +214,7 @@
     ]
   },
   "recruitment": {
-    "eyebrow": "RECRUITMENT",
+    "eyebrow": "RECRUITMENT 2026",
     "title": "招新流程",
     "paragraphs": [
       "每年暑假开始，校科协各部门都会举行一系列的招新活动。下图时间表可供参考，具体时间节点请以招新群内通知为准。欢迎小柚子们积极参与！🎉"
@@ -225,24 +225,14 @@
         "title": "软件研发部",
         "events": [
           {
-            "startDate": "06/01",
-            "endDate": "06/10",
-            "label": "招新宣讲会"
+            "startDate": "08/01",
+            "endDate": "10/08",
+            "label": "各方向免试"
           },
           {
-            "startDate": "06/12",
-            "endDate": "06/13",
-            "label": "领取并完成笔试题"
-          },
-          {
-            "startDate": "06/14",
-            "endDate": "06/15",
-            "label": "现场面试与改卷"
-          },
-          {
-            "startDate": "06/16",
-            "endDate": "06/18",
-            "label": "录取结果与群通知"
+            "startDate": "10/12",
+            "endDate": "10/26",
+            "label": "完成开卷笔试+线下面批"
           }
         ]
       },
@@ -251,24 +241,14 @@
         "title": "多媒体部",
         "events": [
           {
-            "startDate": "06/01",
-            "endDate": "06/10",
-            "label": "招新宣讲会"
+            "startDate": "08/01",
+            "endDate": "10/12",
+            "label": "各方向免试"
           },
           {
-            "startDate": "06/12",
-            "endDate": "06/13",
-            "label": "领取并完成笔试题"
-          },
-          {
-            "startDate": "06/14",
-            "endDate": "06/15",
-            "label": "现场面试与改卷"
-          },
-          {
-            "startDate": "06/16",
-            "endDate": "06/30",
-            "label": "录取结果与群通知"
+            "startDate": "10/12",
+            "endDate": "10/26",
+            "label": "完成开卷笔试+线下面批"
           }
         ]
       },
@@ -277,24 +257,14 @@
         "title": "电子部",
         "events": [
           {
-            "startDate": "06/01",
-            "endDate": "06/10",
-            "label": "招新宣讲会"
+            "startDate": "08/01",
+            "endDate": "10/24",
+            "label": "各方向免试"
           },
           {
-            "startDate": "06/11",
-            "endDate": "06/12",
-            "label": "招新授课与资料准备"
-          },
-          {
-            "startDate": "06/13",
-            "endDate": "06/13",
-            "label": "半开卷笔试"
-          },
-          {
-            "startDate": "06/14",
-            "endDate": "06/16",
-            "label": "公布面试名单并完成面试"
+            "startDate": "10/24",
+            "endDate": "10/25",
+            "label": "线下半开卷笔试"
           }
         ]
       },
@@ -303,24 +273,14 @@
         "title": "办公部门",
         "events": [
           {
-            "startDate": "06/01",
-            "endDate": "06/10",
-            "label": "招新宣讲会"
+            "startDate": "10/15",
+            "endDate": "10/16",
+            "label": "线下第一轮面试"
           },
           {
-            "startDate": "06/11",
-            "endDate": "06/13",
-            "label": "报名与初筛通知"
-          },
-          {
-            "startDate": "06/14",
-            "endDate": "06/15",
-            "label": "第一轮面试"
-          },
-          {
-            "startDate": "06/16",
-            "endDate": "06/18",
-            "label": "第二轮面试与录取通知"
+            "startDate": "10/18",
+            "endDate": "10/19",
+            "label": "线下第二轮面试"
           }
         ]
       }
