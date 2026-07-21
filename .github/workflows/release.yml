@@ -240,6 +240,23 @@ jobs:
 
           docker compose config --quiet
 
+          echo ">>> Cleaning up old containers for $SERVICE_NAME…"
+          old_container_ids="$(
+            {
+              docker ps -aq --filter "name=^/${SERVICE_NAME}$"
+              docker ps -aq --filter "label=com.docker.compose.service=${SERVICE_NAME}"
+            } | sort -u
+          )"
+
+          if [[ -n "$old_container_ids" ]]; then
+            while IFS= read -r container_id; do
+              [[ -z "$container_id" ]] && continue
+              docker rm -f "$container_id"
+            done <<< "$old_container_ids"
+          else
+            echo ">>> No old containers found."
+          fi
+
           echo ">>> Starting container…"
           docker compose up -d --no-build --remove-orphans
 
@@ -284,7 +301,21 @@ jobs:
             wget -qO- "http://127.0.0.1:${app_port}/" >/dev/null
           fi
 
-          docker image prune -f
+          echo ">>> Pruning old $IMAGE_NAME images, keeping the latest 3 tags…"
+          mapfile -t old_image_ids < <(
+            docker image ls "$IMAGE_NAME" \
+              --format '{{.CreatedAt}}\t{{.ID}}\t{{.Repository}}:{{.Tag}}' |
+              sort -r |
+              awk 'NR > 3 {print $2}' |
+              sort -u
+          )
+
+          if (( ${#old_image_ids[@]} > 0 )); then
+            docker image rm "${old_image_ids[@]}" || true
+          else
+            echo ">>> No old $IMAGE_NAME images to prune."
+          fi
+
           echo ">>> Deployed $IMAGE_NAME:$IMAGE_TAG"
           REMOTE_SCRIPT
           )

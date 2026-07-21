@@ -46,14 +46,12 @@ ENV HOSTNAME=0.0.0.0
 ENV PORT=3000
 
 # standalone/ contains server.js + an auto-traced minimal node_modules tree.
-COPY --from=builder /app/.next/standalone ./
+COPY --chown=node:node --from=builder /app/.next/standalone ./
 
 # Static files are NOT bundled into standalone — copy them explicitly.
-COPY --from=builder /app/.next/static ./.next/static
-COPY --from=builder /app/public ./public
+COPY --chown=node:node --from=builder /app/.next/static ./.next/static
+COPY --chown=node:node --from=builder /app/public ./public
 
-# Ensure the non-root user owns everything so Next.js can write ISR / cache.
-RUN chown -R node:node /app
 USER node
 
 EXPOSE 3000
