@@ -22,7 +22,7 @@ export default function SiteFooter() {
         <div className={styles.footerDetail}>
           <p>
             <Image src="/share/icons/contact/mail.png" alt="" width={15} height={15} className={styles.footerIcon} />
-            <a href="mailto:njuptsast@163.com">njuptsast@163.com</a>
+            <a href="mailto:sast@njupt.edu.cn">sast@njupt.edu.cn</a>
           </p>
           <p>
             <Image src="/share/icons/contact/bilibili.png" alt="" width={15} height={15} className={styles.footerIcon} />
