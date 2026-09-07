@@ -230,8 +230,8 @@
             "label": "各方向免试"
           },
           {
-            "startDate": "10/12",
-            "endDate": "10/26",
+            "startDate": "9/23",
+            "endDate": "10/18",
             "label": "完成开卷笔试+线下面批"
           }
         ]
@@ -242,12 +242,12 @@
         "events": [
           {
             "startDate": "08/01",
-            "endDate": "10/12",
+            "endDate": "10/18",
             "label": "各方向免试"
           },
           {
-            "startDate": "10/12",
-            "endDate": "10/26",
+            "startDate": "9/23",
+            "endDate": "10/18",
             "label": "完成开卷笔试+线下面批"
           }
         ]
@@ -258,11 +258,11 @@
         "events": [
           {
             "startDate": "08/01",
-            "endDate": "10/24",
+            "endDate": "10/25",
             "label": "各方向免试"
           },
           {
-            "startDate": "10/24",
+            "startDate": "10/25",
             "endDate": "10/25",
             "label": "线下半开卷笔试"
           }
@@ -273,13 +273,13 @@
         "title": "办公部门",
         "events": [
           {
-            "startDate": "10/15",
-            "endDate": "10/16",
+            "startDate": "10/14",
+            "endDate": "10/14",
             "label": "线下第一轮面试"
           },
           {
             "startDate": "10/18",
-            "endDate": "10/19",
+            "endDate": "10/18",
             "label": "线下第二轮面试"
           }
         ]

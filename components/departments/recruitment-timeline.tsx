@@ -35,6 +35,40 @@ function clamp(value: number, min: number, max: number) {
   return Math.min(Math.max(value, min), max);
 }
 
+function assignLanes(events: RecruitmentEvent[]): { lanes: number[]; totalLanes: number } {
+  const lanes: number[] = new Array(events.length).fill(0);
+  const laneEndValues: number[] = [];
+
+  const sortedIndices = events
+    .map((_, i) => i)
+    .sort((a, b) => toDayValue(events[a].startDate) - toDayValue(events[b].startDate));
+
+  for (const idx of sortedIndices) {
+    const event = events[idx];
+    const startDay = toDayValue(event.startDate);
+    const endDay = toDayValue(event.endDate);
+
+    let assignedLane = -1;
+    for (let lane = 0; lane < laneEndValues.length; lane++) {
+      if (laneEndValues[lane] < startDay) {
+        assignedLane = lane;
+        break;
+      }
+    }
+
+    if (assignedLane === -1) {
+      assignedLane = laneEndValues.length;
+      laneEndValues.push(endDay);
+    } else {
+      laneEndValues[assignedLane] = endDay;
+    }
+
+    lanes[idx] = assignedLane;
+  }
+
+  return { lanes, totalLanes: Math.max(laneEndValues.length, 1) };
+}
+
 function getTimelineOffset(dateText: string, dates: string[]) {
   const dateValue = toDayValue(dateText);
   const firstDateValue = toDayValue(dates[0]);
@@ -108,6 +142,7 @@ export default function RecruitmentTimeline({ tracks }: RecruitmentTimelineProps
   const railWidthRem = Math.max(dateSpan, MIN_RAIL_WIDTH_REM);
   const todayOffsetRem = getTimelineOffset(getCurrentDateText(), uniqueDates);
   const [isDragging, setIsDragging] = useState(false);
+  const trackLaneData = tracks.map((track) => assignLanes(track.events));
   const getMarkerOffset = (dateText: string) => markerOffsetByDate.get(dateText) ?? 0;
   const getPosition = (dateText: string) => (getMarkerOffset(dateText) / dateSpan) * 100;
 
@@ -123,6 +158,11 @@ export default function RecruitmentTimeline({ tracks }: RecruitmentTimelineProps
       eventLabelRefs.current.forEach((labelElement, labelKey) => {
         const eventElement = labelElement.parentElement;
         if (!eventElement) {
+          return;
+        }
+
+        // Skip same-day events - they should stay centered
+        if (labelElement.dataset.sameDay === "true") {
           return;
         }
 
@@ -233,39 +273,64 @@ export default function RecruitmentTimeline({ tracks }: RecruitmentTimelineProps
           </div>
 
           <div className={styles.timelineTable}>
-            {tracks.map((track) => (
-              <article key={track.id} className={styles.timelineRow}>
-                <h3 className={styles.trackTitle}>{track.title}</h3>
+            {tracks.map((track, trackIndex) => {
+              const { lanes, totalLanes } = trackLaneData[trackIndex];
 
-                <div className={styles.eventRail}>
-                  <span className={styles.rowLine} aria-hidden />
+              return (
+                <article key={track.id} className={styles.timelineRow}>
+                  <h3 className={styles.trackTitle}>{track.title}</h3>
 
-                  {track.events.map((event) => {
-                    const left = getPosition(event.startDate);
-                    const right = getPosition(event.endDate);
-                    const width = Math.max(right - left, (1 / dateSpan) * 100);
+                  <div
+                    className={styles.eventRail}
+                    style={{ "--event-lane-count": totalLanes } as CSSProperties}>
+                    <span className={styles.rowLine} aria-hidden />
 
-                    const eventKey = `${track.id}-${event.startDate}-${event.endDate}-${event.label}`;
+                    {track.events.map((event, eventIndex) => {
+                      const lane = lanes[eventIndex];
+                      const isSameDay = event.startDate === event.endDate;
+                      const leftPercent = getPosition(event.startDate);
+                      const rightPercent = getPosition(event.endDate);
+                      const rawWidth = rightPercent - leftPercent;
 
-                    return (
-                      <div key={eventKey} className={styles.eventBlock} style={{ left: `${left+0.1}%`, width: `${width-0.2}%` }}>
-                        <span
-                          ref={(element) => {
-                            if (element) {
-                              eventLabelRefs.current.set(eventKey, element);
-                            } else {
-                              eventLabelRefs.current.delete(eventKey);
-                            }
-                          }}
-                          className={styles.eventLabel}>
-                          {event.label}
-                        </span>
-                      </div>
-                    );
-                  })}
-                </div>
-              </article>
-            ))}
+                      const eventKey = `${track.id}-${event.startDate}-${event.endDate}-${event.label}`;
+                      const topPercent = ((lane + 0.5) / totalLanes) * 100;
+
+                      const blockStyle: CSSProperties = {
+                        top: `${topPercent}%`,
+                      };
+
+                      if (isSameDay) {
+                        blockStyle.left = `${leftPercent}%`;
+                        blockStyle.transform = `translate(-50%, -50%)`;
+                      } else {
+                        blockStyle.left = `${leftPercent + 0.1}%`;
+                        blockStyle.width = `${Math.max(rawWidth - 0.2, (1 / dateSpan) * 100 - 0.2)}%`;
+                        blockStyle.transform = `translate(0, -50%)`;
+                      }
+
+                      return (
+                        <div key={eventKey} className={styles.eventBlock} style={blockStyle}>
+                          <span
+                            ref={(element) => {
+                              if (element) {
+                                if (isSameDay) {
+                                  element.dataset.sameDay = "true";
+                                }
+                                eventLabelRefs.current.set(eventKey, element);
+                              } else {
+                                eventLabelRefs.current.delete(eventKey);
+                              }
+                            }}
+                            className={styles.eventLabel}>
+                            {event.label}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </article>
+              );
+            })}
           </div>
         </div>
       </div>
