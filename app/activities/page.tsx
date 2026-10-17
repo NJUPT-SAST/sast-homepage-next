@@ -34,6 +34,25 @@ const possibleDepartments: mapping = {
 };
 
 
+// 飞书日程时间戳是 UTC 绝对时刻，显式按北京时间格式化，避免依赖服务器时区
+function formatInBeijing(timestamp: number) {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone: "Asia/Shanghai",
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    hourCycle: "h23",
+  }).formatToParts(new Date(timestamp * 1000));
+  const get = (type: string) => parts.find((p) => p.type === type)?.value ?? "";
+  return {
+    date: `${get("year")}/${get("month")}/${get("day")}`,
+    time: `${get("hour")}:${get("minute")}`,
+  };
+}
+
+
 export default async function Activities() {
   const LarkActivities: Activity[] = await getCalendarEventsList().then((res) => {
     return Promise.all(
@@ -48,14 +67,15 @@ export default async function Activities() {
         }
 
         const LarkDetails = (await getCalendarEventDetails(item.event_id!)).data!.event!;
-        const location = LarkDetails.attendees?.[0]?.room_id && LarkDetails.attendees?.[0]?.rsvp_status ? Rooms[LarkDetails.attendees[0].room_id] : item.location ? item.location.name! : "";
+        const roomLocation = LarkDetails.attendees?.[0]?.room_id && LarkDetails.attendees?.[0]?.rsvp_status
+          ? Rooms[LarkDetails.attendees[0].room_id]
+          : undefined;
+        const location = roomLocation ?? item.location?.name ?? "";
 
-        const startDateObj = new Date(Number(item.start_time.timestamp!) * 1000);
-        const endDateObj = new Date(Number(item.end_time.timestamp!) * 1000);
-        const date = `${startDateObj.getFullYear()}/${(startDateObj.getMonth() + 1).toString()}/${startDateObj.getDate().toString()}`;
-        const startTime = `${startDateObj.getHours().toString().padStart(2, "0")}:${startDateObj.getMinutes().toString().padStart(2, "0")}`;
-        const endTime = `${endDateObj.getHours().toString().padStart(2, "0")}:${endDateObj.getMinutes().toString().padStart(2, "0")}`;
-        const time = `${startTime}-${endTime}`;
+        const start = formatInBeijing(Number(item.start_time.timestamp!));
+        const end = formatInBeijing(Number(item.end_time.timestamp!));
+        const date = start.date;
+        const time = `${start.time}-${end.time}`;
 
         return {
           title: title,
