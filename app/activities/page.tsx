@@ -55,8 +55,12 @@ function formatInBeijing(timestamp: number) {
 
 export default async function Activities() {
   const LarkActivities: Activity[] = await getCalendarEventsList().then((res) => {
+    // 按开始时间升序，不依赖飞书接口的默认返回顺序
+    const items = [...res.data!.items!].sort(
+      (a, b) => Number(a.start_time.timestamp) - Number(b.start_time.timestamp),
+    );
     return Promise.all(
-      res.data!.items!.map(async (item) => {
+      items.map(async (item) => {
         let organizer = "校科协";
         let title = item.summary!;
         const deptKey = item.summary!.split(" ")[0];
