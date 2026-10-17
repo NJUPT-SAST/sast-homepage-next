@@ -225,8 +225,11 @@ jobs:
           DEPLOY_PORT: ${{ secrets.DEPLOY_PORT }}
           DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
           IMAGE_TAG: ${{ steps.release.outputs.tag }}
-          GHCR_PULL_TOKEN: ${{ secrets.GHCR_PULL_TOKEN }}
-          GHCR_PULL_USER: ${{ secrets.GHCR_PULL_USER }}
+          # Use the workflow's short-lived GITHUB_TOKEN for the server-side pull:
+          # org policy forbids long-lived classic PATs, and this token already has
+          # packages access via the repo link (it pushed the image in this same run).
+          GHCR_PULL_TOKEN: ${{ github.token }}
+          GHCR_PULL_USER: ${{ github.actor }}
         run: |
           set -euo pipefail
 
@@ -274,8 +277,9 @@ jobs:
           chmod 600 .env
           chmod 644 docker-compose.yml
 
-          # Pull the release image from GHCR. If the package is private,
-          # GHCR_PULL_TOKEN / GHCR_PULL_USER (repo secrets) enable server-side login.
+          # Pull the release image from GHCR. The workflow's short-lived
+          # GITHUB_TOKEN (passed via GHCR_PULL_TOKEN/USER) enables server-side login
+          # for this private org package.
           if [[ -n "${GHCR_PULL_TOKEN:-}" ]]; then
             echo ">>> Logging in to ghcr.io…"
             printf '%s' "$GHCR_PULL_TOKEN" | docker login ghcr.io -u "${GHCR_PULL_USER:-}" --password-stdin
